@@ -1,0 +1,432 @@
+//
+//  ViewController.swift
+//  BilgiArenaApp
+//
+//  Created by Zemfira Asadzade on 30.03.25.
+//
+
+import UIKit
+
+class HomeViewController: UIViewController{
+    
+    private let quizList: [Quiz] = Quiz.sampleData
+    
+    //MARK: UI Elements
+    
+    //    private let sunIconImageView: UIImageView = {
+    //        let imageView = UIImageView()
+    //        imageView.translatesAutoresizingMaskIntoConstraints = false
+    //        imageView.image = UIImage(systemName: "sun.max")
+    //        imageView.tintColor = UIColor(red: 0.8, green: 0.72, blue: 0.7, alpha: 2)
+    //        imageView.contentMode = .scaleAspectFit
+    //        imageView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+    //        imageView.heightAnchor.constraint(equalToConstant: 15).isActive = true
+    //        return imageView
+    //    }()
+    //    private let greetingLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "GOOD MORNING"
+    //        label.font = UIFont.systemFont(ofSize: 12, weight: .heavy)
+    //        label.textColor = UIColor(red: 0.8, green: 0.72, blue: 0.7, alpha: 2)
+    //        return label
+    //    }()
+    //
+    //    private let userNameLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "Madelyn Dias"
+    //        label.font = UIFont.boldSystemFont(ofSize: 20)
+    //        label.textColor = .white
+    //        return label
+    //    }()
+    
+    private let headerView = CustomHeaderView()
+    
+    
+    private let recentQuizView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "recent_quiz_image")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 16
+        return imageView
+    }()
+    
+    private let recentQuizLabel: UILabel = {
+        let label = UILabel()
+        label.text = "RECENT QUIZ"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.textColor = UIColor(red: 0.85, green: 0.5, blue: 0.5, alpha: 1.0)
+        return label
+    }()
+    
+    private let musicIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "recent_quiz_headphones")
+        imageView.tintColor = UIColor(red: 0.4, green: 0.2, blue: 0.3, alpha: 1.0)
+        imageView.contentMode = .scaleAspectFit
+        
+        return imageView
+    }()
+    
+    private let recentQuizNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "A Basic Music Quiz"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.textColor = UIColor(red: 0.4, green: 0.2, blue: 0.3, alpha: 1.0)
+        return label
+    }()
+    
+    private let percentageCircleView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 24
+        view.backgroundColor = UIColor(red: 255/255, green: 143/255, blue: 162/255, alpha: 1.0)
+        return view
+    }()
+    
+    private let recentQuizPercentageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "65%"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textColor = .white
+        return label
+    }()
+    
+    private let featuredView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "featured_view_image")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 16
+        return imageView
+    }()
+    
+    private let featuredAvatarLeftImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "featured_avatar_left")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let featuredAvatarRightImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "featured_avatar_right")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let featuredTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "FEATURED"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    
+    private let featuredLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Take part in challenges \nwith friends or other \nplayers"
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 3
+        label.lineBreakMode = .byWordWrapping
+        
+        return label
+    }()
+    
+    private let findFriendsButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.image = UIImage(named: "Image")
+        config.title = "Find Friends"
+        if let originalImage = UIImage(named: "Image") {
+            config.image = originalImage.resized(to: CGSize(width: 20, height: 20))
+        }
+        config.baseBackgroundColor = .white
+        config.baseForegroundColor = UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0)
+        config.imagePadding = 12 // İkona ilə yazı arasındakı boşluq
+        
+        // Font tənzimləmək üçün:
+        var textAttributes = AttributeContainer()
+        textAttributes.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        config.attributedTitle = AttributedString("Find Friends", attributes: textAttributes)
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let quizTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "QuizCell")
+        tableView.backgroundColor = .clear
+        return tableView
+    }()
+    
+    private let floatingAddButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("+", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .light)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0)
+        button.layer.cornerRadius = 24
+        return button
+    }()
+    
+    private let liveQuizzesContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 24
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    private let liveQuizzesTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Live Quizzes"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .black
+        return label
+    }()
+    
+    private let seeAllButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("See all", for: .normal)
+        button.setTitleColor(UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        return button
+    }()
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.bringSubviewToFront(floatingAddButton)
+        recentQuizView.bringSubviewToFront(percentageCircleView) // ✅ bu sətir əlavə olundu
+        recentQuizView.bringSubviewToFront(recentQuizPercentageLabel)
+        
+    }
+    private func configureUI() {
+        view.backgroundColor = UIColor(named: "app_color")
+        
+        addSubviews()
+        configureTableView()
+        configureConstraints()
+    }
+    
+    private func addSubviews() {
+        // Main view
+        [/*sunIconImageView,*/
+            //         greetingLabel,
+            //         userNameLabel,
+            headerView,
+            recentQuizView,
+            musicIconImageView,
+            featuredView,
+            liveQuizzesContainer,
+            floatingAddButton
+        ].forEach { view.addSubview($0) }
+        
+        
+        // recentQuizView
+        [recentQuizLabel,
+         musicIconImageView,
+         recentQuizNameLabel,
+         percentageCircleView,
+        ].forEach { recentQuizView.addSubview($0) }
+        
+        percentageCircleView.addSubview(recentQuizPercentageLabel)
+        
+        
+        // featuredView
+        [featuredAvatarLeftImageView,
+         featuredAvatarRightImageView,
+         featuredTitleLabel,
+         featuredLabel,
+         findFriendsButton
+        ].forEach { featuredView.addSubview($0) }
+        
+        // liveQuizzesContainer
+        [liveQuizzesTitleLabel,
+         seeAllButton,
+         quizTableView
+        ].forEach { liveQuizzesContainer.addSubview($0) }
+    }
+    
+    private func configureTableView() {
+        quizTableView.delegate = self
+        quizTableView.dataSource = self
+        quizTableView.register(QuizTableViewCell.self, forCellReuseIdentifier: "QuizCell")
+        quizTableView.separatorStyle = .none
+        quizTableView.separatorInset = .zero
+        quizTableView.layoutMargins = .zero
+        quizTableView.contentInset = .zero
+        quizTableView.preservesSuperviewLayoutMargins = false
+    }
+    
+    private func configureConstraints() {
+        //        sunIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        //        greetingLabel.translatesAutoresizingMaskIntoConstraints = false
+        //        userNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        recentQuizView.translatesAutoresizingMaskIntoConstraints = false
+        recentQuizLabel.translatesAutoresizingMaskIntoConstraints = false
+        musicIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        recentQuizNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        recentQuizPercentageLabel.translatesAutoresizingMaskIntoConstraints = false
+        featuredView.translatesAutoresizingMaskIntoConstraints = false
+        featuredTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        featuredLabel.translatesAutoresizingMaskIntoConstraints = false
+        findFriendsButton.translatesAutoresizingMaskIntoConstraints = false
+        quizTableView.translatesAutoresizingMaskIntoConstraints = false
+        floatingAddButton.translatesAutoresizingMaskIntoConstraints = false
+        liveQuizzesContainer.translatesAutoresizingMaskIntoConstraints = false
+        liveQuizzesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        seeAllButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            
+            //            sunIconImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            //            sunIconImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            //
+            //            greetingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
+            //            greetingLabel.leadingAnchor.constraint(equalTo: sunIconImageView.leadingAnchor, constant:20),
+            //
+            //            userNameLabel.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 12),
+            //            userNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            headerView.heightAnchor.constraint(equalToConstant: 60),
+            
+            
+            recentQuizView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 20),
+            recentQuizView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            recentQuizView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            recentQuizView.heightAnchor.constraint(equalToConstant: 84),
+            
+            recentQuizLabel.topAnchor.constraint(equalTo: recentQuizView.topAnchor, constant: 16),
+            recentQuizLabel.leadingAnchor.constraint(equalTo: recentQuizView.leadingAnchor, constant: 24),
+            
+            musicIconImageView.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
+            musicIconImageView.leadingAnchor.constraint(equalTo: recentQuizView.leadingAnchor, constant: 24),
+            musicIconImageView.widthAnchor.constraint(equalToConstant: 24),
+            musicIconImageView.heightAnchor.constraint(equalToConstant: 24),
+            
+            recentQuizNameLabel.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
+            recentQuizNameLabel.leadingAnchor.constraint(equalTo: musicIconImageView.leadingAnchor, constant: 28),
+            
+            percentageCircleView.widthAnchor.constraint(equalToConstant: 48),
+            percentageCircleView.heightAnchor.constraint(equalToConstant: 48),
+            percentageCircleView.trailingAnchor.constraint(equalTo: recentQuizView.trailingAnchor, constant: -16),
+            percentageCircleView.centerYAnchor.constraint(equalTo: recentQuizView.centerYAnchor),
+            
+            
+            
+            recentQuizPercentageLabel.centerXAnchor.constraint(equalTo: percentageCircleView.centerXAnchor),
+            recentQuizPercentageLabel.centerYAnchor.constraint(equalTo: percentageCircleView.centerYAnchor),
+            
+            //            recentQuizPercentageLabel.centerYAnchor.constraint(equalTo: recentQuizView.centerYAnchor),
+            //            recentQuizPercentageLabel.trailingAnchor.constraint(equalTo: recentQuizView.trailingAnchor, constant: -16),
+            
+            featuredView.topAnchor.constraint(equalTo: recentQuizView.bottomAnchor, constant: 20),
+            featuredView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            featuredView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            featuredView.heightAnchor.constraint(equalToConstant: 232),
+            
+            featuredAvatarLeftImageView.topAnchor.constraint(equalTo: featuredView.topAnchor, constant: 16),
+            featuredAvatarLeftImageView.leadingAnchor.constraint(equalTo: featuredView.leadingAnchor, constant: 16),
+            featuredAvatarLeftImageView.widthAnchor.constraint(equalToConstant: 48),
+            featuredAvatarLeftImageView.heightAnchor.constraint(equalToConstant: 48),
+            
+            featuredAvatarRightImageView.bottomAnchor.constraint(equalTo: featuredView.bottomAnchor, constant: -40),
+            featuredAvatarRightImageView.trailingAnchor.constraint(equalTo: featuredView.trailingAnchor, constant: -16),
+            featuredAvatarRightImageView.widthAnchor.constraint(equalToConstant: 64),
+            featuredAvatarRightImageView.heightAnchor.constraint(equalToConstant: 56),
+            
+            featuredTitleLabel.topAnchor.constraint(equalTo: featuredView.topAnchor, constant: 40),
+            featuredTitleLabel.leadingAnchor.constraint(equalTo: featuredView.leadingAnchor, constant: 16),
+            featuredTitleLabel.trailingAnchor.constraint(equalTo: featuredView.trailingAnchor, constant: -16),
+            
+            featuredLabel.topAnchor.constraint(equalTo: featuredTitleLabel.bottomAnchor, constant: 20),
+            featuredLabel.leadingAnchor.constraint(equalTo: featuredView.leadingAnchor, constant: 40),
+            featuredLabel.trailingAnchor.constraint(equalTo: featuredView.trailingAnchor, constant: -40),
+            
+            findFriendsButton.topAnchor.constraint(equalTo: featuredLabel.bottomAnchor, constant: 20),
+            findFriendsButton.centerXAnchor.constraint(equalTo: featuredView.centerXAnchor),
+            findFriendsButton.widthAnchor.constraint(equalToConstant: 146),
+            findFriendsButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            liveQuizzesContainer.topAnchor.constraint(equalTo: featuredView.bottomAnchor, constant: 24),
+            liveQuizzesContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            liveQuizzesContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            liveQuizzesContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            liveQuizzesTitleLabel.topAnchor.constraint(equalTo: liveQuizzesContainer.topAnchor, constant: 24),
+            liveQuizzesTitleLabel.leadingAnchor.constraint(equalTo: liveQuizzesContainer.leadingAnchor, constant: 20),
+            
+            seeAllButton.centerYAnchor.constraint(equalTo: liveQuizzesTitleLabel.centerYAnchor),
+            seeAllButton.trailingAnchor.constraint(equalTo: liveQuizzesContainer.trailingAnchor, constant: -20),
+            
+            quizTableView.topAnchor.constraint(equalTo: liveQuizzesTitleLabel.bottomAnchor, constant: 16),
+            quizTableView.leadingAnchor.constraint(equalTo: liveQuizzesContainer.leadingAnchor),
+            quizTableView.trailingAnchor.constraint(equalTo: liveQuizzesContainer.trailingAnchor),
+            quizTableView.bottomAnchor.constraint(equalTo: liveQuizzesContainer.bottomAnchor),
+            
+            floatingAddButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
+            floatingAddButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            floatingAddButton.widthAnchor.constraint(equalToConstant: 48),
+            floatingAddButton.heightAnchor.constraint(equalToConstant: 48),
+            
+        ])
+        headerView.configure(name: "Madelyn Dias", avatarImage: UIImage(named: "profile_avatar"))
+        
+    }
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return quizList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
+            return UITableViewCell()
+        }
+        let quiz = quizList[indexPath.row]
+        cell.configure(with: quiz)
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+}
+
+extension UIImage {
+    func resized(to size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+}
+    
+    
+    
