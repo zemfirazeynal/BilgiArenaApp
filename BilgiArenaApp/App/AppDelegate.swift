@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  BilgiArenaApp
 //
-//  Created by Zemfira Asadzade on 02.04.25.
+//  Created by Zemfira Asadzade on 30.03.25.
 //
 
 import UIKit

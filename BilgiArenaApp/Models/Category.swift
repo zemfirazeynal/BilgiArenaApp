@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct Category {
+    let name: String
+    let quizCount: Int
+    let imageName: String
+}
+
+

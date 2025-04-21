@@ -9,11 +9,20 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-   
     private let emailField = AuthTextField(placeholder: "Your email address", icon: "login_envelope_icon")
     private let passwordField = AuthTextField(placeholder: "Your password", icon: "login_lock_icon", isSecure: true)
-        
+    
     private let navigationHeader = CustomNavigationHeaderView()
+    private let viewModel: LoginViewModel //+
+    
+    init(viewModel: LoginViewModel) {  //+
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {  //+
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -26,7 +35,6 @@ class LoginViewController: UIViewController {
     
     private let googleButton = LoginSocialButton(title: "Login with Google", imageName: "google_icon")
     
-    
     private let orLabel: UILabel = {
         let label = UILabel()
         label.text = "OR"
@@ -37,7 +45,6 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    
     private let emailLabel: UILabel = {
         let label = UILabel()
         label.text = "Email Address"
@@ -46,7 +53,6 @@ class LoginViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
     
     private let passwordLabel: UILabel = {
         let label = UILabel()
@@ -78,23 +84,27 @@ class LoginViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray6
-        
-        navigationHeader.onBackTap = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        
+        configureUI()
         setupLayout()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    fileprivate func configureUI() {
+        view.backgroundColor = UIColor(named: "app_background_color")
+        
+        navigationHeader.onBackTap = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        forgotPasswordButton.addTarget(self, action: #selector(handleForgotPassword), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
+    }
     
     private func setupLayout() {
         [navigationHeader, titleLabel, googleButton, orLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton, forgotPasswordButton, termsLabel].forEach {
@@ -149,7 +159,12 @@ class LoginViewController: UIViewController {
         ])
     }
     
-//    @objc private func handleLoginTap() {
-//        coordinator.showLogin()
-//    }
+    @objc private func handleForgotPassword() {
+        viewModel.forgotPasswordTapped()
+    }
+    
+    @objc private func didTapLogin() {
+        print("🔵 ViewController: Login button tapped")
+        viewModel.loginTapped()
+    }
 }

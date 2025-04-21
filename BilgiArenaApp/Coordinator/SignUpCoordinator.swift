@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-class SignUpCoordinator: Coordinator {
+class SignUpCoordinator: Coordinator{
+    
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -16,49 +17,13 @@ class SignUpCoordinator: Coordinator {
     }
     
     func start() {
-        let signUpVC = SignUpViewController(coordinator: self)
-        navigationController.pushViewController(signUpVC, animated: false)
+        let signupFlowCoordinator = SignupFlowCoordinator(navigationController: navigationController)
+        signupFlowCoordinator.start() 
     }
     
     func showLogin() {
-        let loginVC = LoginViewController()
+        let viewModel = LoginViewModel()
+        let loginVC = LoginViewController(viewModel: viewModel)
         navigationController.pushViewController(loginVC, animated: true)
     }
 }
-
-
-
-
-
-
-
-//    var navigationController: UINavigationController
-//
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//    }
-//    
-//    func start() {
-//        let onboardingVC = OnboardingViewController()
-//        
-////        onboardingVC.onLoginTapped = { [weak self] in
-////            self?.showLogin()
-////        }
-////        
-//        
-//        navigationController.pushViewController(onboardingVC, animated: false)
-//
-//        
-////        let signupVC = SignUpViewController(coordinator: self)
-////        navigationController.pushViewController(signupVC, animated: false)
-//    }
-//    
-//    func showLogin() {
-//        let coordinator = SignUpCoordinator(navigationController: navigationController)
-//        coordinator.showLogin()
-//        
-////        let loginVC = LoginViewController(coordinator: OnboardingCoordinator)
-////        print("Showing LoginViewController")
-////        navigationController.pushViewController(loginVC, animated: true)
-//    }
-//}

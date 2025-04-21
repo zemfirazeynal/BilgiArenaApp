@@ -14,6 +14,7 @@ private enum SelectedAction {
 
 class OnboardingViewController: UIViewController {
     private var selectedAction: SelectedAction = .login
+    
     var onLoginTapped: (() -> Void)?
     var onCreateTapped: (() -> Void)?
 
@@ -67,25 +68,35 @@ class OnboardingViewController: UIViewController {
         ])
     }
     
-    private var coordinator: OnboardingCoordinator
+//    private var coordinator: OnboardingCoordinator
+//
+//        init(coordinator: OnboardingCoordinator) {
+//            self.coordinator = coordinator
+//            super.init(nibName: nil, bundle: nil)
+//        }
+//
+//        required init?(coder: NSCoder) {
+//            fatalError("init(coder:) has not been implemented")
+//        }
+    
+    private let viewModel: OnboardingViewModelProtocol
 
-        init(coordinator: OnboardingCoordinator) {
-            self.coordinator = coordinator
-            super.init(nibName: nil, bundle: nil)
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+    init(viewModel: OnboardingViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
      
+    required init?(coder: NSCoder) {
+                fatalError("init(coder:) has not been implemented")
+            }
 
         override func viewDidLoad() {
             super.viewDidLoad()
+            view.backgroundColor = UIColor(named: "app_background_color")
+
             setupBackground()
             setupLayout()
             
-//            loginButton.addTarget(self, action: #selector(handleLoginTap), for: .touchUpInside)
-//            createAccountButton.addTarget(self, action: #selector(handleCreateTap), for: .touchUpInside)
             loginButton.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
             createAccountButton.addTarget(self, action: #selector(handleCreateAccount), for: .touchUpInside)
             updateButtonStates()
@@ -134,24 +145,17 @@ class OnboardingViewController: UIViewController {
     
 
 
-//    @objc private func handleLoginTap() {
-//        selectedAction = .login
-//        updateButtonStates()
-//        onLoginTapped?()
-//    }
-//
-//    @objc private func handleCreateTap() {
-//        selectedAction = .create
-//        updateButtonStates()
-//        onCreateTapped?()
-//    }
     
     @objc private func handleLogin() {
-    coordinator.showLogin()
+        selectedAction = .login
+            updateButtonStates()
+        viewModel.showLogin()
 }
 
 @objc private func handleCreateAccount() {
-    coordinator.showSignup()
+    selectedAction = .create
+        updateButtonStates()
+    viewModel.showSignup()
 }
     private func updateButtonStates() {
         switch selectedAction {

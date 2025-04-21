@@ -70,6 +70,18 @@ class ProfileViewController: UIViewController {
             stack.translatesAutoresizingMaskIntoConstraints = false
             return stack
         }()
+    
+    private let viewModel: ProfileViewModel
+
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -83,6 +95,12 @@ class ProfileViewController: UIViewController {
             navigationHeader.onSettingsTap = {
                 print("Settings tapped")
             }
+            
+            navigationHeader.onSettingsTap = { [weak self] in
+                        self?.viewModel.didTapSettings()
+                    }
+
+
         }
 
         private func setupBackground() {
@@ -189,6 +207,7 @@ class ProfileViewController: UIViewController {
                     badgeStackView.addArrangedSubview(row)
                 }
             }
+    
 
 
 //        private func setupLayout() {

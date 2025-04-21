@@ -1,3 +1,13 @@
+//
+//  KeychainManager.swift
+//  BilgiArenaApp
+//
+//  Created by Zemfira Asadzade on 22.04.25.
+//
+
+import Foundation
+import Security
+
 class KeychainManager {
     
     static let shared = KeychainManager()

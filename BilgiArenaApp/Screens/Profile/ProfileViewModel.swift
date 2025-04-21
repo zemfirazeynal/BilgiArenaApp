@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+protocol ProfileViewModelProtocol: AnyObject {
+    var onSettingsTapped: (() -> Void)? { get set }
+    func didTapSettings()
+}
+
+final class ProfileViewModel: ProfileViewModelProtocol {
+    var onSettingsTapped: (() -> Void)?
+
+    func didTapSettings() {
+        onSettingsTapped?()
+    }
+}

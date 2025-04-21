@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+protocol HomeViewModelProtocol {
+    var onDiscoverTapped: (() -> Void)? { get set }
+    func didTapDiscoverCategories()
+}
+
+final class HomeViewModel: HomeViewModelProtocol {
+    var onDiscoverTapped: (() -> Void)?
+
+    func didTapDiscoverCategories() {
+        onDiscoverTapped?()
+    }
+}

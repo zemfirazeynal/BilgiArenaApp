@@ -1,3 +1,12 @@
+//
+//  SettingsViewController.swift
+//  BilgiArenaApp
+//
+//  Created by Zemfira Asadzade on 20.04.25.
+//
+
+import UIKit
+
 class SettingsViewController: UIViewController {
 
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)

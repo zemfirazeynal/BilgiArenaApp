@@ -59,8 +59,6 @@ class SearchNavigationHeaderView: UIView {
         }
     
     @objc private func backTapped() {
-        print("⬅️ Chevron tapped!")
-
             onBackTap?()
         }
 

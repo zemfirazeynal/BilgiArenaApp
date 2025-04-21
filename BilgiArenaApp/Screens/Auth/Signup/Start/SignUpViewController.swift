@@ -121,11 +121,14 @@ class SignUpViewController: UIViewController {
     }
     
     fileprivate func configureUI() {
-        view.backgroundColor = UIColor.systemGray6
+        view.backgroundColor = UIColor(named: "app_background_color")
         
         navigationHeader.onBackTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
+        
+        emailButton.addTarget(self, action: #selector(handleEmailSignup), for: .touchUpInside)
+
         loginLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleLoginTap)))
     }
     
@@ -167,5 +170,9 @@ class SignUpViewController: UIViewController {
     
     @objc private func handleLoginTap() {
         coordinator.showLogin()
+    }
+    
+    @objc private func handleEmailSignup() {
+        coordinator.start() 
     }
 }
