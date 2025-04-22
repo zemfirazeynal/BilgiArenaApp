@@ -164,7 +164,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func didTapLogin() {
-        print("🔵 ViewController: Login button tapped")
+        print("ViewController: Login button tapped")
         viewModel.loginTapped()
     }
 }

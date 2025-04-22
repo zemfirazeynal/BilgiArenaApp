@@ -28,7 +28,7 @@ import KeychainSwift
 ////        window?.makeKeyAndVisible()
 //        if KeychainManager.shared.retrieve(key: "userId") == nil {
 //                let onboardingNav = UINavigationController()
-//            let onboardingCoordinator = OnboardingCoordinator(navigationController: onboardingNav)
+//            let onboardingCoordinator = OnboardingCoordinator()
 //                onboardingCoordinator.start()
 //                self.window?.rootViewController = onboardingNav
 //            } else {
