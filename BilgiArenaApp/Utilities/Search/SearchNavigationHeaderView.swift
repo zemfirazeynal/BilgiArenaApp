@@ -22,7 +22,7 @@ class SearchNavigationHeaderView: UIView {
         
         private let titleLabel: UILabel = {
             let label = UILabel()
-            label.font = UIFont.boldSystemFont(ofSize: 20)
+            label.font = UIFont.boldSystemFont(ofSize: 24)
             label.textColor = .white
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
