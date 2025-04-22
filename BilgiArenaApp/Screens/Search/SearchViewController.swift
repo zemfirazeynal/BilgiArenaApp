@@ -12,7 +12,17 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     private let quizList: [Quiz] = Quiz.sampleData
 
-    private let navigationHeader = SearchNavigationHeaderView(title: "Discover")
+//    private let navigationHeader = SearchNavigationHeaderView(title: "Discover")
+    
+    private let navigationHeader: CustomNavigationHeaderView = {
+            let header = CustomNavigationHeaderView(title: "Discover", showsBackButton: false, titleColor: .white)
+            return header
+        }()
+
+    
+   
+    
+    
 
     // MARK: - UI Elements
     private let searchBar: UISearchBar = {
@@ -119,15 +129,13 @@ class SearchViewController: UIViewController {
 
         navigationHeader.translatesAutoresizingMaskIntoConstraints = false
 
-        navigationHeader.onBackTap = { [weak self] in
-            print(" Back tapped")
-            self?.getRootTabBarController()?.selectedIndex = 0
-        }
+//        navigationHeader.onBackTap = { [weak self] in
+//            print(" Back tapped")
+//            self?.getRootTabBarController()?.selectedIndex = 0
+//        }
         searchBar.delegate = self
         bindViewModel()
-        //        navigationHeader.onBackTap = { [weak self] in
-        //            self?.navigationController?.popViewController(animated: true)
-        //        }
+        
     }
 
     // MARK: - Setup Methods
@@ -149,6 +157,7 @@ class SearchViewController: UIViewController {
             view.addSubview($0)
         }
 
+        
         view.bringSubviewToFront(navigationHeader)
 
         quizHeaderStack.addArrangedSubview(quizLabel)
@@ -162,13 +171,15 @@ class SearchViewController: UIViewController {
         NSLayoutConstraint.activate([
 
             navigationHeader.topAnchor.constraint(
-                equalTo: view.topAnchor, constant: 60),
+                equalTo: view.topAnchor, constant: 80),
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor),
             navigationHeader.heightAnchor.constraint(equalToConstant: 36),  // MUTLƏQ!
 
+        
+            
             searchBar.topAnchor.constraint(
                 equalTo: navigationHeader.bottomAnchor, constant: 12),
             searchBar.leadingAnchor.constraint(
@@ -208,20 +219,20 @@ class SearchViewController: UIViewController {
         ])
     }
 
-    // MARK: - Actions
-    @objc private func handleBack() {
-        getRootTabBarController()?.selectedIndex = 0  // 0: Home
-
-    }
-
-    private func getRootTabBarController() -> UITabBarController? {
-        UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first?
-            .windows
-            .first?
-            .rootViewController as? UITabBarController
-    }
+//    // MARK: - Actions
+//    @objc private func handleBack() {
+//        getRootTabBarController()?.selectedIndex = 0  // 0: Home
+//
+//    }
+//
+//    private func getRootTabBarController() -> UITabBarController? {
+//        UIApplication.shared.connectedScenes
+//            .compactMap { $0 as? UIWindowScene }
+//            .first?
+//            .windows
+//            .first?
+//            .rootViewController as? UITabBarController
+//    }
 }
 
 // MARK: - UITableViewDelegate & UITableViewDataSource
