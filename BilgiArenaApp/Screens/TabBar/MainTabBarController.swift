@@ -51,7 +51,7 @@ class MainTabBarController: UITabBarController {
         
 
         let searchVC = createTabNavController(
-            rootVC: SearchViewController(),
+            rootVC: SearchViewController(viewModel: SearchViewModel()),
             imageName: "tab_search",
             tag: 1
         )
