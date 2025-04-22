@@ -9,7 +9,16 @@ import UIKit
 
 class CustomNavigationHeaderView: UIView {
     
+    var backButtonTintColor: UIColor = .black {// +
+            didSet {
+                backButton.tintColor = backButtonTintColor
+            }
+        }
+
+    
     var onBackTap: (() -> Void)?
+    
+    
     
     let backButton: UIButton = {
         let button = UIButton(type: .system)
@@ -60,4 +69,5 @@ class CustomNavigationHeaderView: UIView {
     @objc private func handleBack() {
         onBackTap?()
     }
+    
 }

@@ -132,8 +132,7 @@ class SearchViewController: UIViewController {
 
     // MARK: - Setup Methods
     private func configureView() {
-        view.backgroundColor = UIColor(
-            red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0)
+        view.backgroundColor = .app
 
         quizTableView.delegate = self
         quizTableView.dataSource = self
@@ -163,7 +162,7 @@ class SearchViewController: UIViewController {
         NSLayoutConstraint.activate([
 
             navigationHeader.topAnchor.constraint(
-                equalTo: view.topAnchor, constant: 80),
+                equalTo: view.topAnchor, constant: 60),
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(
