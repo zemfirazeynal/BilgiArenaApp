@@ -9,7 +9,6 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    
     private let customTabBarBackgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -43,12 +42,11 @@ class MainTabBarController: UITabBarController {
     }
     
     private func configureViewControllers() {
-        let homeVC = createTabNavController(
-            rootVC: HomeViewController(viewModel: HomeViewModel()),
-            imageName: "tab_home",
-            tag: 0
-        )
-        
+//        let homeVC = createTabNavController(
+//            rootVC: HomeViewController(viewModel: .init(coordinator: HomeCoordinator(navigationController: UINavigationController()))),
+//            imageName: "tab_home",
+//            tag: 0
+//        )
 
         let searchVC = createTabNavController(
             rootVC: SearchViewController(viewModel: SearchViewModel()),
@@ -67,8 +65,18 @@ class MainTabBarController: UITabBarController {
             imageName: "tab_profile",
             tag: 3
         )
-
-        viewControllers = [homeVC, searchVC, statisticsVC, profileVC]
+        
+        let homeController = HomeViewController()
+        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
+        let homeNav = UINavigationController(rootViewController: homeController)
+        homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
+        
+        /*
+         let homeCoordinator = HomeCoordinator(navigationController: homeNav)
+         homeCoordinator.start()
+         */
+        
+        viewControllers = [homeNav, searchVC, statisticsVC, profileVC]
     }
     
     private func configureTabBarAppearance() {
@@ -83,14 +91,14 @@ class MainTabBarController: UITabBarController {
     
     private func createTabNavController(rootVC: UIViewController, imageName: String, tag: Int) -> UINavigationController {
         let nav = UINavigationController(rootViewController: rootVC)
-
+        
         if let originalImage = UIImage(named: imageName) {
-                let resizedImage = originalImage.resized(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate)
-
-                let tabBarItem = UITabBarItem(title: nil, image: resizedImage, selectedImage: nil)
-                tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-                nav.tabBarItem = tabBarItem
-            }
-            return nav
+            let resizedImage = originalImage.resized(to: CGSize(width: 24, height: 24)).withRenderingMode(.alwaysTemplate)
+            
+            let tabBarItem = UITabBarItem(title: nil, image: resizedImage, selectedImage: nil)
+            tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+            nav.tabBarItem = tabBarItem
+        }
+        return nav
     }
 }

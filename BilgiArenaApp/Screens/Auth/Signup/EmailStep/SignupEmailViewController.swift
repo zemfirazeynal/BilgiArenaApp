@@ -14,7 +14,7 @@ final class SignupEmailViewController: UIViewController {
     
 
 
-    private let viewModel: SignupEmailViewModel
+    private let viewModel: OTPCodeViewModel
 
         // MARK: - UI Elements
         private let titleLabel: UILabel = {
@@ -79,7 +79,7 @@ final class SignupEmailViewController: UIViewController {
         }()
 
         // MARK: - Init
-        init(viewModel: SignupEmailViewModel) {
+        init(viewModel: OTPCodeViewModel) {
             self.viewModel = viewModel
             super.init(nibName: nil, bundle: nil)
         }

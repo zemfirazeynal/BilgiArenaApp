@@ -55,25 +55,6 @@ class OnboardingViewController: UIViewController {
     private let createAccountButton = SecondaryButton(
         title: "Create an account")
 
-    private func setupBackground() {
-        let backgroundImageView = UIImageView(
-            image: UIImage(named: "login_signup_background_view"))
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgroundImageView)
-        view.sendSubviewToBack(backgroundImageView)
-
-        NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor),
-            backgroundImageView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-        ])
-    }
-
     //    private var coordinator: OnboardingCoordinator
     //
     //        init(coordinator: OnboardingCoordinator) {
@@ -108,6 +89,25 @@ class OnboardingViewController: UIViewController {
         createAccountButton.addTarget(
             self, action: #selector(handleCreateAccount), for: .touchUpInside)
         updateButtonStates()
+    }
+    
+    private func setupBackground() {
+        let backgroundImageView = UIImageView(
+            image: UIImage(named: "login_signup_background_view"))
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)
+
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundImageView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor),
+            backgroundImageView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor),
+        ])
     }
 
     private func setupLayout() {
@@ -179,6 +179,7 @@ class OnboardingViewController: UIViewController {
         updateButtonStates()
         viewModel.showSignup()
     }
+    
     private func updateButtonStates() {
         switch selectedAction {
         case .login:

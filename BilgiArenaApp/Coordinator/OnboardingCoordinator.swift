@@ -12,7 +12,6 @@ class OnboardingCoordinator: Coordinator{
     
     var navigationController: UINavigationController
     private var signupCoordinator: SignUpCoordinator?
-    private var loginCoordinator: LoginCoordinator?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -28,14 +27,11 @@ class OnboardingCoordinator: Coordinator{
         }
 
         let onboardingVC = OnboardingViewController(viewModel: viewModel)
-        navigationController.pushViewController(onboardingVC, animated: false)
-
-
+        navigationController.show(onboardingVC, sender: nil)
     }
     
     func showLogin() {
         let coordinator = LoginCoordinator(navigationController: navigationController)
-        self.loginCoordinator = coordinator
         coordinator.start()
     }
     

@@ -171,7 +171,7 @@ class SearchViewController: UIViewController {
         NSLayoutConstraint.activate([
 
             navigationHeader.topAnchor.constraint(
-                equalTo: view.topAnchor, constant: 80),
+                equalTo: view.topAnchor, constant: 60),
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(
@@ -244,8 +244,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell
-    {
+        -> UITableViewCell {
         let cell =
             tableView.dequeueReusableCell(
                 withIdentifier: "QuizCell", for: indexPath)
