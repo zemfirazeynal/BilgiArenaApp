@@ -7,15 +7,18 @@
 
 import Foundation
 
-protocol ProfileViewModelProtocol: AnyObject {
-    var onSettingsTapped: (() -> Void)? { get set }
+protocol ProfileViewModelProtocol {
     func didTapSettings()
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol {
-    var onSettingsTapped: (() -> Void)?
+     let coordinator: ProfileCoordinator
+
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+    }
 
     func didTapSettings() {
-        onSettingsTapped?()
+        coordinator.showSettings()
     }
 }

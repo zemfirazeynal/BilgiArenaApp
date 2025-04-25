@@ -20,19 +20,17 @@ final class ProfileCoordinator: Coordinator {
     }
 
     func start() {
-        let viewModel = ProfileViewModel()
-//        viewModel.onBack = { [weak self] in
-//            self?.navigationController.popViewController(animated: true)
-//        }
-        viewModel.onSettingsTapped = { [weak self] in
-            self?.showSettings()
-        }
-        let profileVC = ProfileViewController(viewModel: viewModel)
-        navigationController.pushViewController(profileVC, animated: true)
+        let controller = ProfileViewController()
+        let tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tab_profile"), selectedImage: nil)
+        tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        controller.tabBarItem = tabBarItem
+        navigationController.setViewControllers([controller], animated: true)
     }
 
-    private func showSettings() {
-        let settingsVC = SettingsViewController()
-        navigationController.pushViewController(settingsVC, animated: true)
+     func showSettings() {
+         let controller = SettingsViewController()
+         controller.hidesBottomBarWhenPushed = true
+         navigationController.show(controller, sender: nil)
     }
 }
+

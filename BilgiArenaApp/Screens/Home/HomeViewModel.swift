@@ -15,7 +15,14 @@ protocol HomeViewModelProtocol {
 final class HomeViewModel: HomeViewModelProtocol {
     var onDiscoverTapped: (() -> Void)?
 
+    var coordinator: HomeCoordinator
+    
+    init(coordinator: HomeCoordinator) {
+        self.coordinator = coordinator
+    }
+    
     func didTapDiscoverCategories() {
-        onDiscoverTapped?()
+//        onDiscoverTapped?()
+        coordinator.showChooseCategoryScreen()
     }
 }

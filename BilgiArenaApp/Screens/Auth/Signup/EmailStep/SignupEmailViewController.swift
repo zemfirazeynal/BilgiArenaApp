@@ -61,7 +61,7 @@ final class SignupEmailViewController: UIViewController {
 
         private let progressLabel: UILabel = {
             let label = UILabel()
-            label.text = "1 of 2"
+            label.text = "1 of 3"
 //            label.font = .systemFont(ofSize: 16)
             label.textColor = UIColor(named: "app_color")
             label.textAlignment = .right
@@ -72,7 +72,7 @@ final class SignupEmailViewController: UIViewController {
 
         private let progressView: UIProgressView = {
             let progress = UIProgressView(progressViewStyle: .default)
-            progress.progress = 1.0 / 2.0
+            progress.progress = 1.0 / 3.0
             progress.tintColor = UIColor(named: "app_color") ?? .systemPurple
             progress.translatesAutoresizingMaskIntoConstraints = false
             return progress
@@ -164,5 +164,4 @@ final class SignupEmailViewController: UIViewController {
     
     
     }
-    
 

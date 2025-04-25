@@ -77,7 +77,7 @@ final class SignupPasswordViewController: UIViewController {
 
         private let progressLabel: UILabel = {
             let label = UILabel()
-            label.text = "2 of 2"
+            label.text = "3 of 3"
 //            label.font = .systemFont(ofSize: 16)
             label.textColor = UIColor(named: "app_color")
             label.textAlignment = .right

@@ -8,13 +8,13 @@
 import Foundation
 
 
-protocol SignupEmailViewModelProtocol {
+protocol SignUpEmailViewModelProtocol {
     var email: String { get set }
     var onNextStep: (() -> Void)? { get set }
     func proceedIfValid()
 }
 
-final class SignupEmailViewModel: SignupEmailViewModelProtocol {
+final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
     var email: String = ""
     var onNextStep: (() -> Void)?
 

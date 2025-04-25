@@ -8,6 +8,11 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
+    
+    private let navigationHeader: CustomNavigationHeaderView = {
+        let header = CustomNavigationHeaderView(title: "Settings", showsBackButton: true, titleColor: .black)
+            return header
+        }()
 
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private let settings = [
@@ -19,11 +24,21 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Settings"
-        view.backgroundColor = .systemGroupedBackground
-
+        view.backgroundColor = .appBackground
+        setupNavigationHeader()
         setupTableView()
         setupLogoutButton()
+    }
+    
+    private func setupNavigationHeader() {
+        view.addSubview(navigationHeader)
+                navigationHeader.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate([
+                    navigationHeader.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+                    navigationHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    navigationHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    navigationHeader.heightAnchor.constraint(equalToConstant: 60)
+                ])
     }
 
     private func setupTableView() {
@@ -34,7 +49,7 @@ class SettingsViewController: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: navigationHeader.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -44,7 +59,7 @@ class SettingsViewController: UIViewController {
     private func setupLogoutButton() {
         let logoutButton = UIButton(type: .system)
         logoutButton.setTitle("Logout", for: .normal)
-        logoutButton.setTitleColor(.red, for: .normal)
+        logoutButton.setTitleColor(.app, for: .normal)
         logoutButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.addTarget(self, action: #selector(didTapLogout), for: .touchUpInside)
@@ -58,14 +73,14 @@ class SettingsViewController: UIViewController {
     }
 
     @objc private func didTapLogout() {
-        print("🔴 Logout tapped")
+        print(" Logout tapped")
     }
 }
 
 // MARK: - UITableViewDataSource & Delegate
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return settings.count + 1 // +1 for notification toggle
+        return settings.count + 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,6 +104,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("📲 Selected:", indexPath.section == 2 ? "Notification toggle" : settings[indexPath.section][indexPath.row])
+        print(indexPath.section == 2 ? "Notification toggle" : settings[indexPath.section][indexPath.row])
     }
 }

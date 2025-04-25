@@ -11,6 +11,7 @@ import UIKit
 protocol LoginCoordinatorProtocol {
     func showResetPassword()
     func showHomeScreen()
+    func showMainApp()
 }
 
 final class LoginCoordinator: LoginCoordinatorProtocol {
@@ -21,19 +22,8 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
     }
     
     func start() {
-        let viewModel = LoginViewModel()
-        viewModel.onForgotPassword = { [weak self] in
-            self?.showResetPassword()
-        }
-        
-        viewModel.onLoginSuccess = { [weak self] in //+
-            self?.showMainApp()
-            }
-        
-        
-        
-        let loginVC = LoginViewController(viewModel: viewModel)
-        navigationController.pushViewController(loginVC, animated: false)
+        let loginVC = LoginViewController(viewModel: .init(coordinator: self))
+        navigationController.show(loginVC, sender: nil)
     }
     
     func showResetPassword() {
@@ -41,19 +31,20 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         navigationController.pushViewController(resetPasswordVC, animated: true)
     }
     
-     func showHomeScreen() { //+
-        let homeViewModel = HomeViewModel()
-           let homeVC = HomeViewController(viewModel: homeViewModel)
-           navigationController.setViewControllers([homeVC], animated: true)
+    func showHomeScreen() { //+
+        let homeVC = HomeViewController()
+        navigationController.setViewControllers([homeVC], animated: true)
     }
     
     func showMainApp() {
         let tabBarController = MainTabBarController()
-
-        // root-u dəyişirik ki, tabBar görünə bilsin
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            sceneDelegate.window?.rootViewController = tabBarController
-        }
+//        
+//        // root-u dəyişirik ki, tabBar görünə bilsin
+//        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//            sceneDelegate.window?.rootViewController = tabBarController
+//        }
+        
+        navigationController.show(tabBarController, sender: nil)
     }
 }
 

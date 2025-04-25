@@ -79,7 +79,7 @@ class StatisticsViewController: UIViewController {
         NSLayoutConstraint.activate([
             // Navigation Header
             navigationHeader.topAnchor.constraint(
-                equalTo: view.topAnchor, constant: 80),
+                equalTo: view.topAnchor, constant: 60),
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(
@@ -92,7 +92,7 @@ class StatisticsViewController: UIViewController {
 
             // Container View
             containerView.topAnchor.constraint(
-                equalTo: navigationHeader.bottomAnchor, constant: 20),
+                equalTo: navigationHeader.bottomAnchor, constant: 12),
             containerView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor, constant: 8),
             containerView.trailingAnchor.constraint(

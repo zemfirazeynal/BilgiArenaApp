@@ -15,7 +15,6 @@ class HomeViewController: UIViewController{
     
     private let headerView = CustomHeaderView()
     
-    
     private let recentQuizView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "recent_quiz_image")
@@ -118,7 +117,7 @@ class HomeViewController: UIViewController{
     private let discoverCategoriesButton: UIButton = {
         var config = UIButton.Configuration.filled()
         config.image = UIImage(named: "Image")
-   
+        
         config.title = "Discover categories"
         if let originalImage = UIImage(named: "Image") {
             config.image = originalImage.resized(to: CGSize(width: 20, height: 20))
@@ -139,11 +138,8 @@ class HomeViewController: UIViewController{
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.titleLabel?.numberOfLines = 1
-            button.titleLabel?.adjustsFontSizeToFitWidth = true
-            button.titleLabel?.lineBreakMode = .byTruncatingTail
-        
-
-
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleLabel?.lineBreakMode = .byTruncatingTail
         return button
     }()
     
@@ -154,15 +150,7 @@ class HomeViewController: UIViewController{
         return tableView
     }()
     
-//    private let floatingAddButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("+", for: .normal)
-//        button.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .light)
-//        button.setTitleColor(.white, for: .normal)
-//        button.backgroundColor = UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0)
-//        button.layer.cornerRadius = 24
-//        return button
-//    }()
+   
     
     private let newQuizzesContainer: UIView = {
         let view = UIView()
@@ -182,53 +170,50 @@ class HomeViewController: UIViewController{
     }()
     
     
-     let viewModel: HomeViewModel
-
-        init(viewModel: HomeViewModel) {
-            self.viewModel = viewModel
-            super.init(nibName: nil, bundle: nil)
-        }
-
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+    var viewModel: HomeViewModel?
+//
+//    init(viewModel: HomeViewModel) {
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
     
-    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+        
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureUI()
         discoverCategoriesButton.addTarget(self, action: #selector(discoverCategoriesTapped), for: .touchUpInside)
-
-
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        view.bringSubviewToFront(floatingAddButton)
-        recentQuizView.bringSubviewToFront(percentageCircleView) // ✅ bu sətir əlavə olundu
+        //        view.bringSubviewToFront(floatingAddButton)
+        recentQuizView.bringSubviewToFront(percentageCircleView) // bu sətir əlavə olundu
         recentQuizView.bringSubviewToFront(recentQuizPercentageLabel)
         
     }
     private func configureUI() {
+        
+        viewModel = .init(coordinator: .init(navigationController: navigationController ?? UINavigationController()))
         view.backgroundColor = UIColor(named: "app_color")
-       
-
+        
         addSubviews()
         configureTableView()
         configureConstraints()
-        featuredView.isUserInteractionEnabled = true 
-
-
+        featuredView.isUserInteractionEnabled = true
     }
     
     private func addSubviews() {
-
+        
         [   headerView,
             recentQuizView,
             musicIconImageView,
             featuredView,
             newQuizzesContainer,
-//            floatingAddButton
+            //            floatingAddButton
         ].forEach { view.addSubview($0) }
         
         
@@ -240,7 +225,7 @@ class HomeViewController: UIViewController{
         
         percentageCircleView.addSubview(recentQuizPercentageLabel)
         
-
+        
         [featuredAvatarLeftImageView,
          featuredAvatarRightImageView,
          featuredTitleLabel,
@@ -248,7 +233,7 @@ class HomeViewController: UIViewController{
          discoverCategoriesButton
         ].forEach { featuredView.addSubview($0) }
         
-
+        
         [liveQuizzesTitleLabel,
          quizTableView
         ].forEach { newQuizzesContainer.addSubview($0) }
@@ -277,7 +262,7 @@ class HomeViewController: UIViewController{
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         discoverCategoriesButton.translatesAutoresizingMaskIntoConstraints = false
         quizTableView.translatesAutoresizingMaskIntoConstraints = false
-//        floatingAddButton.translatesAutoresizingMaskIntoConstraints = false
+        //        floatingAddButton.translatesAutoresizingMaskIntoConstraints = false
         newQuizzesContainer.translatesAutoresizingMaskIntoConstraints = false
         liveQuizzesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -352,20 +337,14 @@ class HomeViewController: UIViewController{
             quizTableView.leadingAnchor.constraint(equalTo: newQuizzesContainer.leadingAnchor),
             quizTableView.trailingAnchor.constraint(equalTo: newQuizzesContainer.trailingAnchor),
             quizTableView.bottomAnchor.constraint(equalTo: newQuizzesContainer.bottomAnchor),
-            
-//            floatingAddButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
-//            floatingAddButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            floatingAddButton.widthAnchor.constraint(equalToConstant: 48),
-//            floatingAddButton.heightAnchor.constraint(equalToConstant: 48),
-            
+                        
         ])
         headerView.configure(name: "Madelyn Dias", avatarImage: UIImage(named: "profile_image"))
         
     }
     
     @objc private func discoverCategoriesTapped() {
-        print("🔵 VC: Discover button tapped")
-        viewModel.didTapDiscoverCategories()
+        viewModel?.didTapDiscoverCategories()
     }
 }
 
@@ -400,6 +379,19 @@ extension UIImage {
 }
 
 
-    
-    
-    
+extension UIViewController {
+    func setCustomTabBarItem(imageName: String) {
+        if let originalImage = UIImage(named: imageName) {
+            let resizedImage = originalImage
+                .resized(to: CGSize(width: 24, height: 24))
+                .withRenderingMode(.alwaysTemplate)
+            let tabBarItem = UITabBarItem(title: nil, image: resizedImage, selectedImage: nil)
+            tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+            self.tabBarItem = tabBarItem
+        }
+    }
+}
+
+
+
+
