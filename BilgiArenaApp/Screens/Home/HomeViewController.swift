@@ -150,15 +150,7 @@ class HomeViewController: UIViewController{
         return tableView
     }()
     
-    //    private let floatingAddButton: UIButton = {
-    //        let button = UIButton(type: .system)
-    //        button.setTitle("+", for: .normal)
-    //        button.titleLabel?.font = UIFont.systemFont(ofSize: 36, weight: .light)
-    //        button.setTitleColor(.white, for: .normal)
-    //        button.backgroundColor = UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0)
-    //        button.layer.cornerRadius = 24
-    //        return button
-    //    }()
+   
     
     private let newQuizzesContainer: UIView = {
         let view = UIView()
@@ -199,7 +191,7 @@ class HomeViewController: UIViewController{
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //        view.bringSubviewToFront(floatingAddButton)
-        recentQuizView.bringSubviewToFront(percentageCircleView) // ✅ bu sətir əlavə olundu
+        recentQuizView.bringSubviewToFront(percentageCircleView) // bu sətir əlavə olundu
         recentQuizView.bringSubviewToFront(recentQuizPercentageLabel)
         
     }
@@ -345,12 +337,7 @@ class HomeViewController: UIViewController{
             quizTableView.leadingAnchor.constraint(equalTo: newQuizzesContainer.leadingAnchor),
             quizTableView.trailingAnchor.constraint(equalTo: newQuizzesContainer.trailingAnchor),
             quizTableView.bottomAnchor.constraint(equalTo: newQuizzesContainer.bottomAnchor),
-            
-            //            floatingAddButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -4),
-            //            floatingAddButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            //            floatingAddButton.widthAnchor.constraint(equalToConstant: 48),
-            //            floatingAddButton.heightAnchor.constraint(equalToConstant: 48),
-            
+                        
         ])
         headerView.configure(name: "Madelyn Dias", avatarImage: UIImage(named: "profile_image"))
         

@@ -35,9 +35,9 @@ class ResetPasswordViewController: UIViewController {
             icon: "login_envelope_icon"
         )
         
-        private let continueButton: UIButton = {
+        private let nextButton: UIButton = {
             let button = UIButton(type: .system)
-            button.setTitle("Continue", for: .normal)
+            button.setTitle("Next", for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.backgroundColor = UIColor(named: "app_color") ?? .systemPurple
             button.layer.cornerRadius = 20
@@ -56,12 +56,12 @@ class ResetPasswordViewController: UIViewController {
             }
             
             setupLayout()
-            continueButton.addTarget(self, action: #selector(didTapContinue), for: .touchUpInside)
+            nextButton.addTarget(self, action: #selector(didTapContinue), for: .touchUpInside)
         }
         
         // MARK: - Layout
         private func setupLayout() {
-            [navigationHeader, titleLabel, subtitleLabel, emailTextField, continueButton].forEach {
+            [navigationHeader, titleLabel, subtitleLabel, emailTextField, nextButton].forEach {
                 view.addSubview($0)
             }
             
@@ -83,10 +83,10 @@ class ResetPasswordViewController: UIViewController {
                 emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
                 emailTextField.heightAnchor.constraint(equalToConstant: 56),
                 
-                continueButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
-                continueButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
-                continueButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
-                continueButton.heightAnchor.constraint(equalToConstant: 56)
+                nextButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 24),
+                nextButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+                nextButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+                nextButton.heightAnchor.constraint(equalToConstant: 56)
             ])
         }
         

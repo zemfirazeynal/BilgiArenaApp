@@ -9,8 +9,9 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let navigationHeader = ProfileNavigationHeaderView()
     private let profileHeaderView = ProfileHeaderView()
+    let navigationHeader = ProfileNavigationHeaderView(hideBackButton: true)
+
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -59,36 +60,50 @@ class ProfileViewController: UIViewController {
         return view
     }()
     
+    private let statsSummaryView = StatsSummaryView()
+ 
+
     
-    private let viewModel: ProfileViewModel
     
-    init(viewModel: ProfileViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var viewModel: ProfileViewModel?
+    
+//    init(viewModel: ProfileViewModel) {
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupBackground()
-        setupLayout()
+        configureUI()
         
-        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
-        navigationHeader.onBackTap = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        navigationHeader.onSettingsTap = {
-            print("Settings tapped")
-        }
-        
-        navigationHeader.onSettingsTap = { [weak self] in
-            self?.viewModel.didTapSettings()
-        }
         
     }
+    
+    private func configureUI() {
+        viewModel = .init(coordinator: .init(navigationController: navigationController ?? UINavigationController()))
+
+        setupBackground()
+        setupLayout()
+        setupActions()
+
+        
+    }
+    private func setupActions() {
+        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
+
+
+//            navigationHeader.onSettingsTap = { [weak self] in
+//                self?.viewModel?.didTapSettings()
+//            }
+        
+        navigationHeader.setSettingsTarget(target: self, action: #selector(didTapSettings))
+
+        }
     
     private func setupBackground() {
         let backgroundImageView = UIImageView(
@@ -112,8 +127,11 @@ class ProfileViewController: UIViewController {
     private func setupLayout() {
         view.addSubview(navigationHeader)
         view.addSubview(scrollView)
+//        view.addSubview(statsSummaryImageView) //+
+
         scrollView.addSubview(contentView)
         scrollView.addSubview(profileHeaderView)
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -123,13 +141,19 @@ class ProfileViewController: UIViewController {
         [whiteContainerView].forEach {
             contentView.addSubview($0)
         }
+
         
         whiteContainerView.addSubview(infoBoxContainerView)
+        whiteContainerView.addSubview(statsSummaryView)
+
+
         infoBoxContainerView.addSubview(infoBoxStackView)
         infoBoxContainerView.addSubview(dividerView)
         
         infoBoxStackView.addArrangedSubview(pointsView)
         infoBoxStackView.addArrangedSubview(rankView)
+        
+
         
         NSLayoutConstraint.activate([
             navigationHeader.topAnchor.constraint(
@@ -154,6 +178,7 @@ class ProfileViewController: UIViewController {
             contentView.bottomAnchor.constraint(
                 equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),  // Y
+
             
             profileHeaderView.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -184,9 +209,23 @@ class ProfileViewController: UIViewController {
             dividerView.centerXAnchor.constraint(equalTo: infoBoxContainerView.centerXAnchor),
             dividerView.topAnchor.constraint(equalTo: infoBoxContainerView.topAnchor, constant: 16),
             dividerView.bottomAnchor.constraint(equalTo: infoBoxContainerView.bottomAnchor, constant: -16),
-            dividerView.widthAnchor.constraint(equalToConstant: 1)
+            dividerView.widthAnchor.constraint(equalToConstant: 1),
+            
+            statsSummaryView.topAnchor.constraint(equalTo: infoBoxContainerView.bottomAnchor, constant: 16),
+                statsSummaryView.leadingAnchor.constraint(equalTo: whiteContainerView.leadingAnchor, constant: 8),
+                statsSummaryView.trailingAnchor.constraint(equalTo: whiteContainerView.trailingAnchor, constant: -8),
+                statsSummaryView.bottomAnchor.constraint(equalTo: whiteContainerView.bottomAnchor, constant: -16)
+            
+
+            
+            
+
             
         ])
         contentView.bottomAnchor.constraint(equalTo: whiteContainerView.bottomAnchor, constant: 16).isActive = true
     }
+    
+    @objc private func didTapSettings() {
+            viewModel?.didTapSettings()
+        }
 }

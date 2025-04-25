@@ -14,7 +14,7 @@ final class SignupEmailViewController: UIViewController {
     
 
 
-    private let viewModel: OTPCodeViewModel
+    private let viewModel: SignupEmailViewModel
 
         // MARK: - UI Elements
         private let titleLabel: UILabel = {
@@ -61,7 +61,7 @@ final class SignupEmailViewController: UIViewController {
 
         private let progressLabel: UILabel = {
             let label = UILabel()
-            label.text = "1 of 2"
+            label.text = "1 of 3"
 //            label.font = .systemFont(ofSize: 16)
             label.textColor = UIColor(named: "app_color")
             label.textAlignment = .right
@@ -72,14 +72,14 @@ final class SignupEmailViewController: UIViewController {
 
         private let progressView: UIProgressView = {
             let progress = UIProgressView(progressViewStyle: .default)
-            progress.progress = 1.0 / 2.0
+            progress.progress = 1.0 / 3.0
             progress.tintColor = UIColor(named: "app_color") ?? .systemPurple
             progress.translatesAutoresizingMaskIntoConstraints = false
             return progress
         }()
 
         // MARK: - Init
-        init(viewModel: OTPCodeViewModel) {
+        init(viewModel: SignupEmailViewModel) {
             self.viewModel = viewModel
             super.init(nibName: nil, bundle: nil)
         }
@@ -164,5 +164,4 @@ final class SignupEmailViewController: UIViewController {
     
     
     }
-    
 

@@ -20,9 +20,9 @@ struct SignupEmailBuilder {
 //        return viewController
 //    }
     static func build(coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
-            let viewModel = OTPCodeViewModel()
+            let viewModel = SignupEmailViewModel()
             viewModel.onNextStep = {
-                coordinator.showPasswordStep() // <-- Email addımından Password addımına keçid buradadır
+                coordinator.showOtpCodeStep() // <-- Email addımından Password addımına keçid buradadır
             }
 
             return SignupEmailViewController(viewModel: viewModel)

@@ -47,6 +47,12 @@ class MainTabBarController: UITabBarController {
 //            imageName: "tab_home",
 //            tag: 0
 //        )
+        
+        let homeController = HomeViewController()
+//        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
+        homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
+        let homeNav = UINavigationController(rootViewController: homeController)
+        homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
 
         let searchVC = createTabNavController(
             rootVC: SearchViewController(viewModel: SearchViewModel()),
@@ -60,25 +66,25 @@ class MainTabBarController: UITabBarController {
             tag: 2
         )
 
-        let profileVC = createTabNavController(
-            rootVC: ProfileViewController(viewModel: ProfileViewModel()),
-            imageName: "tab_profile",
-            tag: 3
-        )
         
-        let homeController = HomeViewController()
-//        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
+//        let profileVC = createTabNavController(
+//            rootVC: ProfileViewController(viewModel: ProfileViewModel(coordinator: <#ProfileCoordinator#>)),
+//            imageName: "tab_profile",
+//            tag: 3
+//        )
         
-        homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
-        let homeNav = UINavigationController(rootViewController: homeController)
-        homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
+        let profileController = ProfileViewController()
+        profileController.tabBarItem = UITabBarItem.customImageItem(named: "tab_profile") ?? UITabBarItem()
+        let profileNav = UINavigationController(rootViewController: profileController)
+        profileController.viewModel = .init(coordinator: .init(navigationController: profileNav))
+        
         
         /*
          let homeCoordinator = HomeCoordinator(navigationController: homeNav)
          homeCoordinator.start()
          */
         
-        viewControllers = [homeNav, searchVC, statisticsVC, profileVC]
+        viewControllers = [homeNav, searchVC, statisticsVC, profileNav]
     }
     
     private func configureTabBarAppearance() {

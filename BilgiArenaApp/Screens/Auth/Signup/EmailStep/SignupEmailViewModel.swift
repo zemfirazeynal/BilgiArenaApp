@@ -8,13 +8,13 @@
 import Foundation
 
 
-protocol OTPCodeViewModelProtocol {
+protocol SignUpEmailViewModelProtocol {
     var email: String { get set }
     var onNextStep: (() -> Void)? { get set }
     func proceedIfValid()
 }
 
-final class OTPCodeViewModel: OTPCodeViewModelProtocol {
+final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
     var email: String = ""
     var onNextStep: (() -> Void)?
 

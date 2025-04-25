@@ -27,6 +27,18 @@ class ProfileNavigationHeaderView: UIView {
            button.translatesAutoresizingMaskIntoConstraints = false
            return button
        }()
+   
+    
+    init(hideBackButton: Bool = false) {
+        super.init(frame: .zero)
+        setupView()
+
+        if hideBackButton {
+            backButton.isHidden = true
+        }
+    }
+    
+    
        
        override init(frame: CGRect) {
            super.init(frame: frame)
@@ -54,16 +66,16 @@ class ProfileNavigationHeaderView: UIView {
                settingsButton.heightAnchor.constraint(equalToConstant: 32)
            ])
            
-           backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-           settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
+//           settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
        }
        
-       @objc private func backTapped() {
-           onBackTap?()
-       }
        
-       @objc private func settingsTapped() {
-           onSettingsTap?()
-       }
+//    @objc private func settingsTapped() {
+//           onSettingsTap?()
+//       }
+    
+    func setSettingsTarget(target: Any?, action: Selector) {
+            settingsButton.addTarget(target, action: action, for: .touchUpInside)
+        }
 
 }
