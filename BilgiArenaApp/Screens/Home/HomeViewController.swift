@@ -357,7 +357,6 @@ class HomeViewController: UIViewController{
     }
     
     @objc private func discoverCategoriesTapped() {
-        print("🔵 VC: Discover button tapped")
         viewModel?.didTapDiscoverCategories()
     }
 }
@@ -392,6 +391,19 @@ extension UIImage {
     }
 }
 
+
+extension UIViewController {
+    func setCustomTabBarItem(imageName: String) {
+        if let originalImage = UIImage(named: imageName) {
+            let resizedImage = originalImage
+                .resized(to: CGSize(width: 24, height: 24))
+                .withRenderingMode(.alwaysTemplate)
+            let tabBarItem = UITabBarItem(title: nil, image: resizedImage, selectedImage: nil)
+            tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+            self.tabBarItem = tabBarItem
+        }
+    }
+}
 
 
 

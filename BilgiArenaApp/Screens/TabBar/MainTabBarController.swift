@@ -67,7 +67,9 @@ class MainTabBarController: UITabBarController {
         )
         
         let homeController = HomeViewController()
-        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
+//        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
+        
+        homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
         let homeNav = UINavigationController(rootViewController: homeController)
         homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
         
@@ -100,5 +102,15 @@ class MainTabBarController: UITabBarController {
             nav.tabBarItem = tabBarItem
         }
         return nav
+    }
+
+}
+extension UITabBarItem {
+    static func customImageItem(named imageName: String, size: CGSize = CGSize(width: 24, height: 24)) -> UITabBarItem? {
+        guard let originalImage = UIImage(named: imageName) else { return nil }
+        let resized = originalImage.resized(to: size).withRenderingMode(.alwaysTemplate)
+        let item = UITabBarItem(title: nil, image: resized, selectedImage: nil)
+        item.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        return item
     }
 }
