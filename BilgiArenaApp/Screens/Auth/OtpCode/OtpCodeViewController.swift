@@ -84,6 +84,18 @@ class OtpCodeViewController: UIViewController {
         }
         setupLayout()
         setupActions()
+        configureForFlowType()
+    }
+    
+    private func configureForFlowType() {
+        switch viewModel.flowType {
+        case .signup:
+            progressView.isHidden = false
+            progressLabel.isHidden = false
+        case .forgotPassword:
+            progressView.isHidden = true
+            progressLabel.isHidden = true
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

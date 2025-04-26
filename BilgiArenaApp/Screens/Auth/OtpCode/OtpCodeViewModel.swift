@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum OtpFlowType {
+enum OtpCodeFlowType {
     case signup
-    case resetPassword
+    case forgotPassword
 }
 
 protocol OtpCodeViewModelProtocol {
@@ -17,33 +17,43 @@ protocol OtpCodeViewModelProtocol {
     var onNextStep: (() -> Void)? { get set }
     func proceedIfValid()}
 
+//final class OtpCodeViewModel: OtpCodeViewModelProtocol {
+//    var otpCode: String = ""
+//    var onNextStep: (() -> Void)?
+//
+//     func proceedIfValid() {
+//         guard isValidOtpCode(otpCode) else {
+//             print("Invalid otp code")
+//             return
+//         }
+//         onNextStep?()
+//  }
+//
+//    private func isValidOtpCode(_ otpCode: String) -> Bool {
+//        return otpCode.contains("1111")
+//    }
+//}
+
+
 final class OtpCodeViewModel: OtpCodeViewModelProtocol {
+    let flowType: OtpCodeFlowType
     var otpCode: String = ""
     var onNextStep: (() -> Void)?
     
-//    let email: String
-//        let flowType: OtpFlowType
-//
-//        init(email: String, flowType: OtpFlowType) {
-//            self.email = email
-//            self.flowType = flowType
-//        }
-//
-//        var shouldShowProgress: Bool {
-//            return flowType == .signup
-//        }
-//    
+    init(flowType: OtpCodeFlowType) {
+            self.flowType = flowType
+        }
+
+
+    func proceedIfValid() {
+             guard isValidOtpCode(otpCode) else {
+                 print("Invalid otp code")
+                 return
+             }
+             onNextStep?()
+      }
     
-
-     func proceedIfValid() {
-         guard isValidOtpCode(otpCode) else {
-             print("Invalid otp code")
-             return
-         }
-         onNextStep?()
-  }
-
-    private func isValidOtpCode(_ otpCode: String) -> Bool {
-        return otpCode.contains("1111")
-    }
+        private func isValidOtpCode(_ otpCode: String) -> Bool {
+            return otpCode.count == 6
+        }
 }
