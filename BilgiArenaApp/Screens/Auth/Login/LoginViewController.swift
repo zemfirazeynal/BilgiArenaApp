@@ -11,12 +11,18 @@ class LoginViewController: UIViewController {
     
     private let emailField = AuthTextField(placeholder: "Your email address", icon: "login_envelope_icon")
     private let passwordField = AuthTextField(placeholder: "Your password", icon: "login_lock_icon", isSecure: true)
-    
-    private let navigationHeader = CustomNavigationHeaderView()
+    let showsBackButton: Bool
+
+    private lazy var navigationHeader = CustomNavigationHeaderView(
+        title: "Login",
+        showsBackButton: showsBackButton,
+        titleColor: .black
+    )
     private let viewModel: LoginViewModel //+
     
-    init(viewModel: LoginViewModel) {  //+
+    init(viewModel: LoginViewModel, showsBackButton: Bool = true) {
         self.viewModel = viewModel
+        self.showsBackButton = showsBackButton
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -24,14 +30,14 @@ class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Login"
-        label.font = .boldSystemFont(ofSize: 24)
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    private let titleLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Login"
+//        label.font = .boldSystemFont(ofSize: 24)
+//        label.textAlignment = .center
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private let googleButton = LoginSocialButton(title: "Login with Google", imageName: "google_icon")
     
@@ -107,7 +113,7 @@ class LoginViewController: UIViewController {
     }
     
     private func setupLayout() {
-        [navigationHeader, titleLabel, googleButton, orLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton, forgotPasswordButton, termsLabel].forEach {
+        [navigationHeader, /*titleLabel,*/ googleButton, orLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton, forgotPasswordButton, termsLabel].forEach {
             view.addSubview($0)
         }
         
@@ -117,8 +123,8 @@ class LoginViewController: UIViewController {
             navigationHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navigationHeader.heightAnchor.constraint(equalToConstant: 48),
             
-            titleLabel.centerYAnchor.constraint(equalTo: navigationHeader.centerYAnchor),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            titleLabel.centerYAnchor.constraint(equalTo: navigationHeader.centerYAnchor),
+//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             googleButton.topAnchor.constraint(equalTo: navigationHeader.bottomAnchor, constant: 48),
             googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
