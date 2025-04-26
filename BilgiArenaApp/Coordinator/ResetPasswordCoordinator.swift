@@ -44,8 +44,9 @@ final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
     }
 
     func goToLoginScreen() {
-            let loginViewModel = LoginViewModel(coordinator: nil) // optional coordinator
-            let loginVC = LoginViewController(viewModel: loginViewModel)
-            navigationController.setViewControllers([loginVC], animated: true)
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
+                    let loginViewModel = LoginViewModel(coordinator: loginCoordinator)
+                    let loginVC = LoginViewController(viewModel: loginViewModel)
+                    navigationController.setViewControllers([loginVC], animated: true)
         }
 }
