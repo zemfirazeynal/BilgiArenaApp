@@ -13,6 +13,7 @@ protocol ResetPasswordCoordinatorProtocol: AnyObject {
 
     func showNewPasswordScreen()
 
+    func goToLoginScreen()
 }
 
 final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
@@ -38,8 +39,13 @@ final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
         }
     
     func showNewPasswordScreen() {
-        let vc = ResetPasswordBuilder.buildNewPassword()
+        let vc = ResetPasswordBuilder.buildNewPassword(coordinator: self)
         navigationController.pushViewController(vc, animated: true)
     }
 
+    func goToLoginScreen() {
+            let loginViewModel = LoginViewModel(coordinator: nil) // optional coordinator
+            let loginVC = LoginViewController(viewModel: loginViewModel)
+            navigationController.setViewControllers([loginVC], animated: true)
+        }
 }

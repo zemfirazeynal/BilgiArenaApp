@@ -92,9 +92,20 @@ class NewPasswordViewController: UIViewController {
             button.translatesAutoresizingMaskIntoConstraints = false
             return button
         }()
+    
+    private let viewModel: NewPasswordViewModelProtocol
+
+        
+        init(viewModel: NewPasswordViewModelProtocol) {
+            self.viewModel = viewModel
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
         
         // MARK: - Lifecycle
-        
         override func viewDidLoad() {
             super.viewDidLoad()
             
@@ -204,21 +215,9 @@ class NewPasswordViewController: UIViewController {
         
         @objc private func didTapReset() {
             let password = passwordField.text ?? ""
-            let confirm = confirmPasswordField.text ?? ""
-            
-            guard password.count >= 8 else {
-                showAlert(title: "Error", message: "Password must be at least 8 characters.")
-                return
-            }
-            
-            guard password == confirm else {
-                showAlert(title: "Error", message: "Passwords do not match.")
-                return
-            }
-            
-            print("New password set: \(password)")
-            // Burada backendə API göndəriləcək
-            // navigationController?.popToRootViewController(animated: true)
+                   let confirmPassword = confirmPasswordField.text ?? ""
+
+                   viewModel.resetPassword(password: password, confirmPassword: confirmPassword)
         }
     
     @objc private func textFieldsDidChange() {

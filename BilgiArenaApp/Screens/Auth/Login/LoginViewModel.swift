@@ -14,19 +14,19 @@ protocol LoginViewModelProtocol {
 
 final class LoginViewModel: LoginViewModelProtocol {
     
-    var coordinator: LoginCoordinatorProtocol
+    var coordinator: LoginCoordinatorProtocol?
     
-    init(coordinator: LoginCoordinatorProtocol) {
+    init(coordinator: LoginCoordinatorProtocol?) {
         self.coordinator = coordinator
     }
 
     func forgotPasswordTapped() {
-        coordinator.showResetPassword()
+        coordinator?.showResetPassword()
     }
     
     func loginTapped() { //+
         // Burada email/password yoxlama və ya API call olacaq gələcəkdə
-        coordinator.showMainApp()
+        coordinator?.showMainApp()
         
     }
     
