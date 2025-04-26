@@ -48,6 +48,18 @@ class ResetPasswordViewController: UIViewController {
         return button
     }()
 
+    
+    private let viewModel: ResetPasswordViewModelProtocol
+
+        init(viewModel: ResetPasswordViewModelProtocol) {
+            self.viewModel = viewModel
+            super.init(nibName: nil, bundle: nil)
+        }
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,17 +124,8 @@ class ResetPasswordViewController: UIViewController {
     @objc private func didTapNext() {
         // API hələ hazır deyil amma biz NewPassword ekranına keçirik
 
-        let viewModel = OtpCodeViewModel(flowType: .forgotPassword)
-        viewModel.onNextStep = { [weak self] in
-            self?.showNewPasswordScreen()
-        }
-        let controller = OtpCodeViewController(viewModel: viewModel)
-        navigationController?.pushViewController(controller, animated: true)
+        viewModel.didTapNext()
 
     }
 
-    private func showNewPasswordScreen() {
-        let newPasswordVC = NewPasswordViewController()
-        navigationController?.pushViewController(newPasswordVC, animated: true)
-    }
 }

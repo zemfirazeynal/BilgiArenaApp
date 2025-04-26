@@ -15,45 +15,38 @@ enum OtpCodeFlowType {
 protocol OtpCodeViewModelProtocol {
     var otpCode: String { get set }
     var onNextStep: (() -> Void)? { get set }
-    func proceedIfValid()}
-
-//final class OtpCodeViewModel: OtpCodeViewModelProtocol {
-//    var otpCode: String = ""
-//    var onNextStep: (() -> Void)?
-//
-//     func proceedIfValid() {
-//         guard isValidOtpCode(otpCode) else {
-//             print("Invalid otp code")
-//             return
-//         }
-//         onNextStep?()
-//  }
-//
-//    private func isValidOtpCode(_ otpCode: String) -> Bool {
-//        return otpCode.contains("1111")
-//    }
-//}
-
+    func proceedIfValid()
+}
 
 final class OtpCodeViewModel: OtpCodeViewModelProtocol {
-    let flowType: OtpCodeFlowType
-    var otpCode: String = ""
-    var onNextStep: (() -> Void)?
-    
-    init(flowType: OtpCodeFlowType) {
-            self.flowType = flowType
-        }
+        let flowType: OtpCodeFlowType
+        var otpCode: String = ""
+        var onNextStep: (() -> Void)?
+        
+        private  var coordinator: AnyObject
+
+        
+        init(flowType: OtpCodeFlowType, coordinator: AnyObject) {
+                self.flowType = flowType
+            self.coordinator = coordinator
+
+            }
 
 
-    func proceedIfValid() {
-             guard isValidOtpCode(otpCode) else {
-                 print("Invalid otp code")
-                 return
-             }
-             onNextStep?()
-      }
-    
-        private func isValidOtpCode(_ otpCode: String) -> Bool {
-            return otpCode.count == 6
-        }
+        func proceedIfValid() {
+                 guard isValidOtpCode(otpCode) else {
+                     print("Invalid otp code")
+                     return
+                 }
+            switch flowType {
+                    case .signup:
+                        (coordinator as? SignupFlowCoordinatorProtocol)?.showPasswordStep()
+                    case .forgotPassword:
+                        (coordinator as? ResetPasswordCoordinatorProtocol)?.showNewPasswordScreen()
+                    }
+          }
+        
+            private func isValidOtpCode(_ otpCode: String) -> Bool {
+                return otpCode.count == 6
+            }
 }
