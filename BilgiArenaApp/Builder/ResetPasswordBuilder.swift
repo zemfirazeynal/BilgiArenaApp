@@ -20,9 +20,16 @@ struct ResetPasswordBuilder {
             return viewController
         }
 
-        static func buildNewPassword() -> UIViewController {
-            let viewController = NewPasswordViewController()
-            return viewController
+        static func buildNewPassword(coordinator: ResetPasswordCoordinatorProtocol) -> UIViewController {
+            let viewModel = NewPasswordViewModel(coordinator: coordinator)
+                let viewController = NewPasswordViewController(viewModel: viewModel)
+
+                // Important: success olduqda loginə qaytar
+                viewModel.onResetSuccess = {
+                    coordinator.goToLoginScreen()
+                }
+
+                return viewController
         }
 
         
