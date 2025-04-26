@@ -10,7 +10,7 @@ import UIKit
 
 struct OtpCodeBuilder {
     static func build(coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
-        let viewModel = OtpCodeViewModel()
+        let viewModel = OtpCodeViewModel(flowType: .signup)
             viewModel.onNextStep = {
                 coordinator.showPasswordStep()
             }
