@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol SignupFlowCoordinatorProtocol {
+protocol SignupFlowCoordinatorProtocol: AnyObject {
     func showEmailStep()
     func showPasswordStep()
     func showOtpCodeStep()

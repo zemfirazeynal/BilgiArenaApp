@@ -12,11 +12,11 @@ protocol OnboardingViewModelProtocol {
 
     func showLogin()
     func showSignup()
-
-
+    
 }
 
 final class OnboardingViewModel: OnboardingViewModelProtocol {
+    
     var onLoginTapped: (() -> Void)?
     var onCreateTapped: (() -> Void)?
 

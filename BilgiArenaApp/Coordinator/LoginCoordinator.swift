@@ -17,6 +17,7 @@ protocol LoginCoordinatorProtocol {
 final class LoginCoordinator: LoginCoordinatorProtocol {
     var navigationController: UINavigationController
     
+    
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -27,8 +28,8 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
     }
     
     func showResetPassword() {
-        let resetPasswordVC = ResetPasswordViewController()
-        navigationController.pushViewController(resetPasswordVC, animated: true)
+        let resetPasswordCoordinator = ResetPasswordCoordinator(navigationController: navigationController)
+            resetPasswordCoordinator.start()
     }
     
     func showHomeScreen() { //+

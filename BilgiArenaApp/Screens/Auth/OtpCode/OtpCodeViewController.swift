@@ -11,7 +11,6 @@ class OtpCodeViewController: UIViewController {
 
     private let navigationHeader = CustomNavigationHeaderView()
 
-    private let viewModel: OtpCodeViewModel
 
     // MARK: - UI Elements
     private let titleLabel: UILabel = {
@@ -66,14 +65,17 @@ class OtpCodeViewController: UIViewController {
     }()
 
     // MARK: - Init
-    init(viewModel: OtpCodeViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private var viewModel: OtpCodeViewModel
+        
+    init(viewModel: OtpCodeViewModel) {
+            self.viewModel = viewModel
+            super.init(nibName: nil, bundle: nil)
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -89,6 +91,7 @@ class OtpCodeViewController: UIViewController {
     
     private func configureForFlowType() {
         switch viewModel.flowType {
+            
         case .signup:
             progressView.isHidden = false
             progressLabel.isHidden = false
