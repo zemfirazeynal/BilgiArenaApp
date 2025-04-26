@@ -8,8 +8,8 @@
 import Foundation
 
 struct Category {
-    let name: String
-    let quizCount: Int
+    let subject: String
+    let quizCount: String
     let imageName: String
 }
 

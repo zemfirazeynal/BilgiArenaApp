@@ -28,6 +28,7 @@ final class ProfileCoordinator: Coordinator {
     }
 
      func showSettings() {
+         print("coordinator tapped")
          let controller = SettingsViewController()
          controller.hidesBottomBarWhenPushed = true
          navigationController.show(controller, sender: nil)

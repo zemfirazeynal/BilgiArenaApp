@@ -216,7 +216,7 @@ class NewPasswordViewController: UIViewController {
                 return
             }
             
-            print("✅ New password set: \(password)")
+            print("New password set: \(password)")
             // Burada backendə API göndəriləcək
             // navigationController?.popToRootViewController(animated: true)
         }
