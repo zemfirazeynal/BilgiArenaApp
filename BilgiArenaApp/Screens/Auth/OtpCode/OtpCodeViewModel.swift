@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum OtpFlowType {
+    case signup
+    case resetPassword
+}
+
 protocol OtpCodeViewModelProtocol {
     var otpCode: String { get set }
     var onNextStep: (() -> Void)? { get set }
@@ -16,6 +21,18 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
     var otpCode: String = ""
     var onNextStep: (() -> Void)?
     
+//    let email: String
+//        let flowType: OtpFlowType
+//
+//        init(email: String, flowType: OtpFlowType) {
+//            self.email = email
+//            self.flowType = flowType
+//        }
+//
+//        var shouldShowProgress: Bool {
+//            return flowType == .signup
+//        }
+//    
     
 
      func proceedIfValid() {

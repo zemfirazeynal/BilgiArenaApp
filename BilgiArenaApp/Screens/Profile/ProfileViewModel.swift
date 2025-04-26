@@ -19,6 +19,7 @@ final class ProfileViewModel: ProfileViewModelProtocol {
     }
 
     func didTapSettings() {
+        print("viewmodel tapped")
         coordinator.showSettings()
     }
 }

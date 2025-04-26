@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ResetPasswordViewController: UIViewController {
     
@@ -56,7 +57,7 @@ class ResetPasswordViewController: UIViewController {
             }
             
             setupLayout()
-            nextButton.addTarget(self, action: #selector(didTapContinue), for: .touchUpInside)
+            nextButton.addTarget(self, action: #selector(didTapNext), for: .touchUpInside)
         }
         
         // MARK: - Layout
@@ -90,37 +91,20 @@ class ResetPasswordViewController: UIViewController {
             ])
         }
         
-//        // MARK: - Actions
-//        @objc private func handleResetPassword() {
-//            let email = emailField.text ?? ""
-//   
-//        }
     
-    @objc private func didTapContinue() {
-//           guard let email = emailTextField.text, isValidEmail(email) else {
-//               showAlert(title: "Invalid Email", message: "Please enter a valid email.")
-//               return
-//           }
-//           showAlert(title: "Check your inbox", message: "We sent a reset link to \(email)")
-        
-
-
+    @objc private func didTapNext() {
             // API hələ hazır deyil amma biz NewPassword ekranına keçirik
-            let newPasswordVC = NewPasswordViewController()
-            navigationController?.pushViewController(newPasswordVC, animated: true)
-       }
-
-//       private func isValidEmail(_ email: String) -> Bool {
-//           let emailRegEx = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
-//           let predicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-//           return predicate.evaluate(with: email)
-//       }
+        let otpCodeViewModel = OtpCodeViewModel()
+        let controller = OtpCodeViewController(viewModel: otpCodeViewModel)
+        navigationController?.pushViewController(controller, animated: true)
+//        guard let email = emailTextField.text, !email.isEmpty else {
+//            Alert.showAlert(title: "Error", message: "Please enter your email address.")
+//            return
+//        }
 //
-//       private func showAlert(title: String, message: String) {
-//           let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//           alert.addAction(UIAlertAction(title: "OK", style: .default))
-//           present(alert, animated: true)
-//       }
-    
-    
+//        let viewModel = OtpCodeViewModel(email: email, flowType: .resetPassword)
+//        let controller = OtpCodeViewController(viewModel: viewModel)
+//        navigationController?.pushViewController(controller, animated: true)
+        
+       }
 }

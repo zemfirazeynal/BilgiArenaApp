@@ -26,5 +26,6 @@ struct SignupEmailBuilder {
             }
 
             return SignupEmailViewController(viewModel: viewModel)
+        
         }
 }
