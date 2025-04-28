@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     private let profileHeaderView = ProfileHeaderView()
     let navigationHeader = ProfileNavigationHeaderView(hideBackButton: true)
 
@@ -87,6 +87,11 @@ class ProfileViewController: UIViewController {
 
         configureUI()
     }
+    
+    override func viewDidAppear(_ animated: Bool) { //new
+        super.viewDidAppear(animated)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
 
     private func configureUI() {
         viewModel = .init(
@@ -140,6 +145,8 @@ class ProfileViewController: UIViewController {
         view.addSubview(infoBoxContainerView)
         view.addSubview(whiteContainerView)
 
+        navigationHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true // new
+
         // White container içində yalnız scrollView olacaq
         
         statsScrollView.addSubview(statsContentView)
@@ -174,8 +181,9 @@ class ProfileViewController: UIViewController {
 
         NSLayoutConstraint.activate([
 
-            navigationHeader.topAnchor.constraint(
-                equalTo: view.topAnchor, constant: 60),
+//            navigationHeader.topAnchor.constraint(
+//                equalTo: view.topAnchor, constant: 60),
+
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(
@@ -336,4 +344,6 @@ class ProfileViewController: UIViewController {
         printContent("controller tapped")
         viewModel?.didTapSettings()
     }
+    
+    
 }

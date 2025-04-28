@@ -38,9 +38,16 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorProtocol {
     }
     
     func showChooseCategoryScreen() {
+//        let viewModel = ChooseCategoryViewModel()
+//        let controller = ChooseCategoryViewController(viewModel: viewModel)
+//        controller.hidesBottomBarWhenPushed = true
+//        navigationController.show(controller, sender: nil)
+        
         let viewModel = ChooseCategoryViewModel()
-        let controller = ChooseCategoryViewController(viewModel: viewModel)
-        controller.hidesBottomBarWhenPushed = true
-        navigationController.show(controller, sender: nil)
+            let controller = ChooseCategoryViewController(viewModel: viewModel)
+            let navigation = UINavigationController(rootViewController: controller)
+            navigation.modalPresentationStyle = .fullScreen
+            navigationController.present(navigation, animated: true)
+
     }
 }

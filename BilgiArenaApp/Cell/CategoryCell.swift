@@ -10,82 +10,77 @@ import UIKit
 class CategoryCell: UICollectionViewCell {
     static let identifier = "CategoryCell"
     
-    private let containerView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 16
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.clear.cgColor
-        view.backgroundColor = UIColor(named: "primary")?.withAlphaComponent(0.1)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.tintColor = .label
+        imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.textColor = .white
         label.textAlignment = .center
-        label.textColor = .label
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
-        label.textColor = .secondaryLabel
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = .white
         label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setupView()
     }
     
-    private func setupUI() {
-        contentView.addSubview(containerView)
-        containerView.addSubview(iconImageView)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(subtitleLabel)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupView() {
+        layer.cornerRadius = 16
+//        layer.borderWidth = 1
+//        layer.borderColor = UIColor.white.withAlphaComponent(0.3).cgColor
+        clipsToBounds = true
+        
+        let stack = UIStackView(arrangedSubviews: [iconImageView, titleLabel, subtitleLabel])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.alignment = .center
+        
+        contentView.addSubview(stack)
+        stack.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            stack.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            iconImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-            iconImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            iconImageView.widthAnchor.constraint(equalToConstant: 30),
-            iconImageView.heightAnchor.constraint(equalToConstant: 30),
-            
-            titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            subtitleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
-            subtitleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
-            subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8)
+            iconImageView.widthAnchor.constraint(equalToConstant: 28),
+            iconImageView.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
     
-    func configure(with category: Category) {
-        iconImageView.image = UIImage(named: category.imageName)
+    func configure(with category: Category, isSelected: Bool) {
         titleLabel.text = category.subject
-//        containerView.backgroundColor = category.isSelected ? UIColor(named: "primary")?.withAlphaComponent(0.2) : .systemBackground
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        subtitleLabel.text = category.quizCount
+        iconImageView.image = UIImage(named: category.imageName)?.withRenderingMode(.alwaysTemplate)
+        
+        if isSelected {
+            backgroundColor = .selectedCategory
+            titleLabel.textColor = .white
+            subtitleLabel.textColor = .white
+            iconImageView.tintColor = .white
+        } else {
+            backgroundColor = .unselectedCategory
+            titleLabel.textColor = .app
+            subtitleLabel.textColor = .app
+            iconImageView.tintColor = .app
+        }
     }
 }
