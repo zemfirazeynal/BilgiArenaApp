@@ -9,10 +9,12 @@ import Foundation
 import UIKit
 
 protocol ChooseCategoryCoordinatorProtocol: AnyObject {
-    func showCategoryQuizList()
+    func showCategoryQuizList(for category: String)
 }
 
 final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
+   
+    
     private let navigationController: UINavigationController
 
     private var internalNavigationController: UINavigationController?
@@ -36,8 +38,9 @@ final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
 
     }
 
-    func showCategoryQuizList() {
-        let vc = SelectedCategoryQuizListViewController()
+    func showCategoryQuizList(for category: String) {
+        let viewModel = SelectedCategoryQuizListViewModel(categoryName: category)
+        let vc = SelectedCategoryQuizListViewController(viewModel: viewModel)
         internalNavigationController?.pushViewController(vc, animated: true)
 
     }

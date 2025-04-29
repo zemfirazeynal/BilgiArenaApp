@@ -33,13 +33,13 @@ class QuizTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let arrowImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = .gray
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+//    private let arrowImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "chevron.right")
+//        imageView.tintColor = .gray
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        return imageView
+//    }()
 
     private let containerView: UIView = {
         let view = UIView()
@@ -73,7 +73,7 @@ class QuizTableViewCell: UITableViewCell {
             iconImageView,
             titleLabel,
             subtitleLabel,
-            arrowImageView,
+//            arrowImageView,
         ].forEach { containerView.addSubview($0) }
     }
     private func configureConstraints() {
@@ -94,18 +94,18 @@ class QuizTableViewCell: UITableViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 36),
             iconImageView.heightAnchor.constraint(equalToConstant: 36),
 
-            arrowImageView.centerYAnchor.constraint(
-                equalTo: containerView.centerYAnchor),
-            arrowImageView.trailingAnchor.constraint(
-                equalTo: containerView.trailingAnchor, constant: -16),
-            arrowImageView.widthAnchor.constraint(equalToConstant: 12),
+//            arrowImageView.centerYAnchor.constraint(
+//                equalTo: containerView.centerYAnchor),
+//            arrowImageView.trailingAnchor.constraint(
+//                equalTo: containerView.trailingAnchor, constant: -16),
+//            arrowImageView.widthAnchor.constraint(equalToConstant: 12),
 
             titleLabel.topAnchor.constraint(
                 equalTo: containerView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(
                 equalTo: iconImageView.trailingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: arrowImageView.leadingAnchor, constant: -8),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16), // ✅ DÜZGÜN
+
 
             subtitleLabel.topAnchor.constraint(
                 equalTo: titleLabel.bottomAnchor, constant: 4),
@@ -113,8 +113,26 @@ class QuizTableViewCell: UITableViewCell {
                 equalTo: titleLabel.leadingAnchor),
             subtitleLabel.bottomAnchor.constraint(
                 equalTo: containerView.bottomAnchor, constant: -12),
-            subtitleLabel.trailingAnchor.constraint(
-                lessThanOrEqualTo: arrowImageView.leadingAnchor, constant: -8),
+            subtitleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16), // ✅ DÜZGÜN
+
         ])
+    }
+    
+    func configure(with quiz: Quiz, isSelected: Bool) {
+        titleLabel.text = quiz.title
+        subtitleLabel.text = "\(quiz.subject) · \(quiz.quizCount) Quizzes"
+        iconImageView.image = UIImage(systemName: quiz.iconName)?.withRenderingMode(.alwaysTemplate)
+        
+        if isSelected {
+            containerView.backgroundColor = .selectedQuiz   // Məsələn, bənövşəyi fon
+            titleLabel.textColor = .white
+            subtitleLabel.textColor = .white
+            iconImageView.tintColor = .white
+        } else {
+            containerView.backgroundColor = .white              // Default ağ fon
+            titleLabel.textColor = .app                         // App əsas rəngi
+            subtitleLabel.textColor = .darkGray
+            iconImageView.tintColor = .app
+        }
     }
 }
