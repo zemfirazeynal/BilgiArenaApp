@@ -12,6 +12,8 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     private let quizList: [Quiz] = Quiz.sampleData
 
+    private var selectedIndexPath: IndexPath?
+
 //    private let navigationHeader = SearchNavigationHeaderView(title: "Discover")
     
     private let navigationHeader: CustomNavigationHeaderView = {
@@ -245,10 +247,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 withIdentifier: "QuizCell", for: indexPath)
             as! QuizTableViewCell
         let quiz = viewModel.quiz(at: indexPath.row)
-        cell.configure(with: quiz)
+//        cell.configure(with: quiz)
+            let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
+            cell.configure(with: quiz, isSelected: isSelected)
         return cell
     }
 
+    
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
+    }
     func tableView(
         _ tableView: UITableView, heightForRowAt indexPath: IndexPath
     ) -> CGFloat {
