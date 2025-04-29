@@ -13,6 +13,9 @@ class HomeViewController: UIViewController{
     
     //MARK: UI Elements
     
+    private var selectedIndexPath: IndexPath?
+
+    
     private let headerView = CustomHeaderView()
     
     private let recentQuizView: UIImageView = {
@@ -358,11 +361,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let quiz = quizList[indexPath.row]
-        cell.configure(with: quiz)
-        cell.selectionStyle = .none
+        let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
+        cell.configure(with: quiz, isSelected: isSelected)
+        
         return cell
-    }
-    
+}
+
+func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    selectedIndexPath = indexPath
+    tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
+}
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
