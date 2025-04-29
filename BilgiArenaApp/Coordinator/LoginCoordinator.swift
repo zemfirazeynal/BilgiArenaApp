@@ -39,12 +39,6 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
     
     func showMainApp() {
         let tabBarController = MainTabBarController()
-//        
-//        // root-u dəyişirik ki, tabBar görünə bilsin
-//        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-//            sceneDelegate.window?.rootViewController = tabBarController
-//        }
-        
         navigationController.show(tabBarController, sender: nil)
     }
 }

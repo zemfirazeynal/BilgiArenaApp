@@ -19,11 +19,6 @@ class SearchViewController: UIViewController {
             return header
         }()
 
-    
-   
-    
-    
-
     // MARK: - UI Elements
     private let searchBar: UISearchBar = {
         let sb = UISearchBar()
