@@ -10,6 +10,8 @@ import UIKit
 final class SelectedCategoryQuizListViewController: UIViewController {
     
     private let viewModel: SelectedCategoryQuizListViewModel
+    private var selectedIndexPath: IndexPath?
+
     
     private let whiteContainerView: UIView = {
         let view = UIView()
@@ -110,11 +112,19 @@ final class SelectedCategoryQuizListViewController: UIViewController {
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
-               return UITableViewCell()
-           }
-           let quiz = viewModel.quizList[indexPath.row]
-           cell.configure(with: quiz)
-           return cell
+                   return UITableViewCell()
+               }
+
+               let quiz = viewModel.quizList[indexPath.row]
+               let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
+               cell.configure(with: quiz, isSelected: isSelected)
+               
+               return cell
+       }
+       
+       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+           selectedIndexPath = indexPath
+           tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
