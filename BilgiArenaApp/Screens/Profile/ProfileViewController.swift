@@ -205,7 +205,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
             infoBoxContainerView.heightAnchor.constraint(equalToConstant: 100),
 
             whiteContainerView.topAnchor.constraint(
-                equalTo: navigationHeader.bottomAnchor, constant: 100),
+                equalTo: navigationHeader.bottomAnchor, constant: 60),
             whiteContainerView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor, constant: 8),
             whiteContainerView.trailingAnchor.constraint(
