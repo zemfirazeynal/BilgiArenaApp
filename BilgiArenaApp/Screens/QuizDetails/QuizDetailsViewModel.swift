@@ -8,28 +8,25 @@
 import Foundation
 
 protocol QuizDetailsViewModelProtocol {
-    func didSelectQuiz(at index: Int) 
+//    func didSelectQuiz(at index: Int) 
 }
 
 final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
 
-    weak var coordinator: SelectedCategoryCoordinatorProtocol?
-    private(set) var quizList: [Quiz]
+    private let quiz: Quiz  // ✅ Burada bir ədəd quiz saxlayırsan
 
-    init(quizList: [Quiz]) {
-        self.quizList = quizList
-    }
+        init(quiz: Quiz) {
+            self.quiz = quiz
+        }
 
-    func numberOfItems() -> Int {
-        quizList.count
-    }
 
-    func quiz(at index: Int) -> Quiz{
-        quizList[index]
-    }
-
-    func didSelectQuiz(at index: Int) {
-        let selectedQuiz = quizList[index]
-        coordinator?.showQuizDetail(for: selectedQuiz)
-    }
+       var subjectText: String { quiz.subject.uppercased() }
+       var titleText: String { quiz.title }
+       var questionCountText: String { "\(quiz.quizCount) questions" }
+       var pointsText: String { "+100 points" } 
+       var descriptionText: String {
+           "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"
+       }
+    
+    
 }

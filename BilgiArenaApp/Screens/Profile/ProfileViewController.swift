@@ -132,12 +132,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     private func setupLayout() {
-        //        view.addSubview(navigationHeader)
-        //        view.addSubview(scrollView)
-        //        //        view.addSubview(statsSummaryImageView) //+
-        //
-        //        scrollView.addSubview(contentView)
-        //        scrollView.addSubview(profileHeaderView)
+
 
         // Sabit hissələr
         view.addSubview(navigationHeader)
@@ -161,28 +156,11 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         whiteContainerView.addSubview(profileHeaderView)
         whiteContainerView.addSubview(statsScrollView)
 
-
-        //        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        //        contentView.translatesAutoresizingMaskIntoConstraints = false
         profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
 
-        //        [whiteContainerView].forEach {
-        //            contentView.addSubview($0)
-        //        }
-
-        //        whiteContainerView.addSubview(infoBoxContainerView)
-        //        whiteContainerView.addSubview(statsSummaryView)
-        //
-        //        infoBoxContainerView.addSubview(infoBoxStackView)
-        //        infoBoxContainerView.addSubview(dividerView)
-        //
-        //        infoBoxStackView.addArrangedSubview(pointsView)
-        //        infoBoxStackView.addArrangedSubview(rankView)
 
         NSLayoutConstraint.activate([
 
-//            navigationHeader.topAnchor.constraint(
-//                equalTo: view.topAnchor, constant: 60),
 
             navigationHeader.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor),
@@ -261,83 +239,10 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
             statsSummaryView.bottomAnchor.constraint(
                 equalTo: statsContentView.bottomAnchor),
 
-            //            navigationHeader.topAnchor.constraint(
-            //                equalTo: view.topAnchor, constant: 60),
-            //            navigationHeader.leadingAnchor.constraint(
-            //                equalTo: view.leadingAnchor),
-            //            navigationHeader.trailingAnchor.constraint(
-            //                equalTo: view.trailingAnchor),
-            //            navigationHeader.heightAnchor.constraint(equalToConstant: 24),
-            //
-            //            scrollView.topAnchor.constraint(
-            //                equalTo: navigationHeader.bottomAnchor),
-            //            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            //            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            //            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            //
-            //            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            //            contentView.leadingAnchor.constraint(
-            //                equalTo: scrollView.leadingAnchor),
-            //            contentView.trailingAnchor.constraint(
-            //                equalTo: scrollView.trailingAnchor),
-            //            contentView.bottomAnchor.constraint(
-            //                equalTo: scrollView.bottomAnchor),
-            //            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),  // Y
-            //
-            //            profileHeaderView.topAnchor.constraint(
-            //                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            //            profileHeaderView.centerXAnchor.constraint(
-            //                equalTo: contentView.centerXAnchor),
-            //            profileHeaderView.heightAnchor.constraint(equalToConstant: 144),
-            //
-            //            // White container (alt hissə)
-            //            whiteContainerView.topAnchor.constraint(
-            //                equalTo: navigationHeader.bottomAnchor, constant: 100),
-            //            whiteContainerView.leadingAnchor.constraint(
-            //                equalTo: contentView.leadingAnchor, constant: 8),
-            //            whiteContainerView.trailingAnchor.constraint(
-            //                equalTo: contentView.trailingAnchor, constant: -8),
-            //            whiteContainerView.bottomAnchor.constraint(
-            //                equalTo: contentView.bottomAnchor),
-            //            whiteContainerView.heightAnchor.constraint(equalToConstant: 800),
-            //
-            //            infoBoxContainerView.topAnchor.constraint(
-            //                equalTo: profileHeaderView.bottomAnchor, constant: 20),
-            //            infoBoxContainerView.leadingAnchor.constraint(
-            //                equalTo: whiteContainerView.leadingAnchor, constant: 16),
-            //            infoBoxContainerView.trailingAnchor.constraint(
-            //                equalTo: whiteContainerView.trailingAnchor, constant: -16),
-            //            infoBoxContainerView.heightAnchor.constraint(equalToConstant: 100),
-            //
-            //            infoBoxStackView.topAnchor.constraint(
-            //                equalTo: infoBoxContainerView.topAnchor, constant: 12),
-            //            infoBoxStackView.bottomAnchor.constraint(
-            //                equalTo: infoBoxContainerView.bottomAnchor, constant: -12),
-            //            infoBoxStackView.leadingAnchor.constraint(
-            //                equalTo: infoBoxContainerView.leadingAnchor, constant: 12),
-            //            infoBoxStackView.trailingAnchor.constraint(
-            //                equalTo: infoBoxContainerView.trailingAnchor, constant: -12),
-            //            dividerView.centerXAnchor.constraint(
-            //                equalTo: infoBoxContainerView.centerXAnchor),
-            //            dividerView.topAnchor.constraint(
-            //                equalTo: infoBoxContainerView.topAnchor, constant: 16),
-            //            dividerView.bottomAnchor.constraint(
-            //                equalTo: infoBoxContainerView.bottomAnchor, constant: -16),
-            //            dividerView.widthAnchor.constraint(equalToConstant: 1),
-            //
-            //            statsSummaryView.topAnchor.constraint(
-            //                equalTo: infoBoxContainerView.bottomAnchor, constant: 16),
-            //            statsSummaryView.leadingAnchor.constraint(
-            //                equalTo: whiteContainerView.leadingAnchor, constant: 8),
-            //            statsSummaryView.trailingAnchor.constraint(
-            //                equalTo: whiteContainerView.trailingAnchor, constant: -8),
-            //            statsSummaryView.bottomAnchor.constraint(
-            //                equalTo: whiteContainerView.bottomAnchor, constant: -16),
+           
 
         ])
-        //        contentView.bottomAnchor.constraint(
-        //            equalTo: whiteContainerView.bottomAnchor, constant: 16
-        //        ).isActive = true
+       
     }
 
     @objc private func didTapSettings() {
