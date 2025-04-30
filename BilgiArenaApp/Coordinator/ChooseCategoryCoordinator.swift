@@ -9,13 +9,16 @@ import Foundation
 import UIKit
 
 protocol ChooseCategoryCoordinatorProtocol: AnyObject {
-    func showCategoryQuizList(for category: String)
+    func showCategoryQuizList(for category: Category)
 }
 
 final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
    
     
     private let navigationController: UINavigationController
+    
+ 
+    private var selectedCategoryCoordinator: SelectedCategoryCoordinator?
 
     private var internalNavigationController: UINavigationController?
 
@@ -38,10 +41,18 @@ final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
 
     }
 
-    func showCategoryQuizList(for category: String) {
-        let viewModel = SelectedCategoryQuizListViewModel(categoryName: category)
-        let vc = SelectedCategoryQuizListViewController(viewModel: viewModel)
-        internalNavigationController?.pushViewController(vc, animated: true)
-
+    func showCategoryQuizList(for category: Category) {
+//        let viewModel = SelectedCategoryViewModel(categoryName: category)
+//        let vc = SelectedCategoryViewController(viewModel: viewModel)
+//        navigationController.pushViewController(vc, animated: true)
+        
+ 
+        let selectedCoordinator = SelectedCategoryCoordinator(
+               navigationController: internalNavigationController!,
+               category: category
+           )
+           self.selectedCategoryCoordinator = selectedCoordinator
+           selectedCoordinator.start()
+       
     }
 }

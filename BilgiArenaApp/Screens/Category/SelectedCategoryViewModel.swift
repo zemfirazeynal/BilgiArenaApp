@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SelectedCategoryQuizListViewModelProtocol {
+protocol SelectedCategoryViewModelProtocol {
     var categoryName: String { get }
         var quizList: [Quiz] { get }
 
@@ -16,8 +16,10 @@ protocol SelectedCategoryQuizListViewModelProtocol {
 
 }
 //
-final class SelectedCategoryQuizListViewModel: SelectedCategoryQuizListViewModelProtocol {
+final class SelectedCategoryViewModel: SelectedCategoryViewModelProtocol {
  
+    weak var coordinator: SelectedCategoryCoordinatorProtocol?
+
     
     let categoryName: String
     private(set) var quizList: [Quiz] = []
@@ -38,4 +40,10 @@ final class SelectedCategoryQuizListViewModel: SelectedCategoryQuizListViewModel
         func quiz(at index: Int) -> Quiz {
             quizList[index]
         }
+    
+    func didSelectItem(at index: Int) {
+            let selectedQuiz = quizList[index]
+            coordinator?.showQuizDetail(for: selectedQuiz)
+        }
 }
+

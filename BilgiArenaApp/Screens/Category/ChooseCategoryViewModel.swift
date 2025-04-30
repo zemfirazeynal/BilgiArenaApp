@@ -55,9 +55,12 @@ final class ChooseCategoryViewModel: ChooseCategoryViewModelProtocol {
     }
 
     func didSelectItem(at index: Int) {
+    
         let selectedCategory = categories[index]
-
-        coordinator?.showCategoryQuizList(for: selectedCategory.subject)
+            
+           
+                coordinator?.showCategoryQuizList(for: selectedCategory)
+            }
     }
 
-}
+

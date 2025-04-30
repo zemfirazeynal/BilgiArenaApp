@@ -149,6 +149,7 @@ extension ChooseCategoryViewController: UICollectionViewDataSource,
     func collectionView(
         _ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath
     ) {
+
         selectedIndexPath = indexPath
         collectionView.reloadData()
 
