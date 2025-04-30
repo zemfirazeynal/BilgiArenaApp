@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class SelectedCategoryQuizListViewController: UIViewController {
+final class SelectedCategoryViewController: UIViewController {
     
-    private let viewModel: SelectedCategoryQuizListViewModel
+    private let viewModel: SelectedCategoryViewModel
     private var selectedIndexPath: IndexPath?
 
     
@@ -41,7 +41,7 @@ final class SelectedCategoryQuizListViewController: UIViewController {
            titleColor: .white
        )
 
-       init(viewModel: SelectedCategoryQuizListViewModel) {
+       init(viewModel: SelectedCategoryViewModel) {
            self.viewModel = viewModel
            super.init(nibName: nil, bundle: nil)
        }
@@ -105,7 +105,7 @@ final class SelectedCategoryQuizListViewController: UIViewController {
        }
    }
 
-   extension SelectedCategoryQuizListViewController: UITableViewDelegate, UITableViewDataSource {
+   extension SelectedCategoryViewController: UITableViewDelegate, UITableViewDataSource {
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
            return viewModel.quizList.count
        }
@@ -125,6 +125,8 @@ final class SelectedCategoryQuizListViewController: UIViewController {
        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
            selectedIndexPath = indexPath
            tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
+           viewModel.didSelectItem(at: indexPath.item)
+
        }
 
        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

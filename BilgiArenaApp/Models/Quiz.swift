@@ -24,3 +24,9 @@ struct Quiz {
         Quiz(id: UUID(), title: "Physics Quiz", category: "Science", quizCount: 15, iconName: "atom", subject: "Science"),
     ]
 }
+
+extension Quiz {
+    static func sampleData(for category: Category) -> [Quiz] {
+        return sampleData.filter { $0.category == category.subject }
+    }
+}
