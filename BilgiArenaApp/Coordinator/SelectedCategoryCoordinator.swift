@@ -36,7 +36,7 @@ final class SelectedCategoryCoordinator: SelectedCategoryCoordinatorProtocol {
 
         func showQuizDetail(for quiz: Quiz) {
 
-            let viewModel = QuizDetailsViewModel(quizList: [quiz])
+            let viewModel = QuizDetailsViewModel(quiz: quiz)
             let controller = QuizDetailsViewController(viewModel: viewModel)
             navigationController.pushViewController(controller, animated: true)
             
