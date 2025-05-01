@@ -16,6 +16,8 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     
     private let navigationController: UINavigationController
     private let quiz: Quiz
+    private var internalNavigationController: UINavigationController?
+
 
     init(navigationController: UINavigationController, quiz: Quiz) {
         self.navigationController = navigationController
@@ -27,7 +29,16 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
         viewModel.coordinator = self
         
         let controller = QuizDetailsViewController(viewModel: viewModel)
-        navigationController.pushViewController(controller, animated: true)
+
+//        navigationController.pushViewController(controller, animated: true)
+        
+        
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+
+        self.internalNavigationController = nav
+
+        navigationController.present(nav, animated: true)
     }
 
     // MARK: - Navigation
@@ -47,6 +58,8 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
             )
 
             let controller = QuizStartViewController(viewModel: viewModel)
-            navigationController.pushViewController(controller, animated: true)
+//            navigationController.pushViewController(controller, animated: true)
+        internalNavigationController?.pushViewController(controller, animated: true)
+
         }
 }

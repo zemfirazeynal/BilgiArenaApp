@@ -370,6 +370,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     selectedIndexPath = indexPath
     tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
+        viewModel?.didSelectItem(at: indexPath.row)
 }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
