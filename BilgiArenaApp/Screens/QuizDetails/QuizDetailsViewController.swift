@@ -286,6 +286,13 @@ class QuizDetailsViewController: UIViewController {
         navigationHeader.onBackTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
+        playButton.addTarget(self, action: #selector(didTapPlay), for: .touchUpInside)
+
     }
+
+           @objc private func didTapPlay() {
+               print("View Controller didTapPlay called")
+               viewModel.playButtonTapped()
+           }
 
 }

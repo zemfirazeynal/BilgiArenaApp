@@ -61,7 +61,7 @@ final class SelectedCategoryViewController: UIViewController {
 
        private func setupActions() {
            navigationHeader.onBackTap = { [weak self] in
-               self?.navigationController?.popViewController(animated: true)
+               self?.dismiss(animated: true, completion: nil)
            }
         }
        private func setupUI() {

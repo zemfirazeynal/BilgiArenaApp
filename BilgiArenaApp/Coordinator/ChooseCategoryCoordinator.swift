@@ -42,9 +42,7 @@ final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
     }
 
     func showCategoryQuizList(for category: Category) {
-//        let viewModel = SelectedCategoryViewModel(categoryName: category)
-//        let vc = SelectedCategoryViewController(viewModel: viewModel)
-//        navigationController.pushViewController(vc, animated: true)
+
         
  
         let selectedCoordinator = SelectedCategoryCoordinator(
