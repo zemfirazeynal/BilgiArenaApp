@@ -6,20 +6,29 @@
 //
 
 import Foundation
+import UIKit
 
 protocol QuizDetailsViewModelProtocol {
-//    func didSelectQuiz(at index: Int) 
+    //
+    var onPlayTapped: (() -> Void)? {get set}
+
+        func playButtonTapped()
 }
 
 final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
+    
+    var onPlayTapped: (() -> Void)?
+    
+    weak var coordinator: QuizDetailsCoordinatorProtocol?
 
-    private let quiz: Quiz  // ✅ Burada bir ədəd quiz saxlayırsan
+
+    private let quiz: Quiz  // Burada bir ədəd quiz saxlayırsan
 
         init(quiz: Quiz) {
             self.quiz = quiz
         }
 
-
+    
        var subjectText: String { quiz.subject.uppercased() }
        var titleText: String { quiz.title }
        var questionCountText: String { "\(quiz.quizCount) questions" }
@@ -27,6 +36,17 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
        var descriptionText: String {
            "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"
        }
+    
+    func playButtonTapped() {
+        print("✅ playButtonTapped called")
+           
+           if coordinator == nil {
+               print("🛑 Coordinator is nil!")
+           } else {
+               print("✅ Coordinator exists")
+           }
+        coordinator?.showQuizStartScreen()
+    }
     
     
 }
