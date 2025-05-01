@@ -19,9 +19,12 @@ protocol SearchViewModelProtocol {
 }
 
 final class SearchViewModel: SearchViewModelProtocol {
-    private let allQuizzes = Quiz.sampleData
+    private let quizList = Quiz.sampleData
     private(set) var filteredQuizzes: [Quiz] = Quiz.sampleData
 //    var searchMode: SearchMode = .title // default olaraq title
+    
+    weak var coordinator: SelectedCategoryCoordinatorProtocol?
+
 
 
     var onUpdate: (() -> Void)?
@@ -46,16 +49,21 @@ final class SearchViewModel: SearchViewModelProtocol {
 //    }
     func filterQuizzes(with text: String) {
         if text.isEmpty {
-               filteredQuizzes = allQuizzes
+               filteredQuizzes = quizList
            } else {
                let lowercasedText = text.lowercased()
-               filteredQuizzes = allQuizzes.filter {
+               filteredQuizzes = quizList.filter {
                    $0.title.lowercased().contains(lowercasedText) ||
                    $0.subject.lowercased().contains(lowercasedText)
                }
            }
            onUpdate?()
     }
+    
+    func didSelectItem(at index: Int) {
+            let selectedQuiz = quizList[index]
+            coordinator?.showQuizDetail(for: selectedQuiz)
+        }
    
 
 

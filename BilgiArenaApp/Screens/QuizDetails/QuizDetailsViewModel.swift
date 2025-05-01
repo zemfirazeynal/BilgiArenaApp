@@ -31,7 +31,7 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     
        var subjectText: String { quiz.subject.uppercased() }
        var titleText: String { quiz.title }
-       var questionCountText: String { "\(quiz.quizCount) questions" }
+       var questionCountText: String { "\(quiz.questionCount) questions" }
        var pointsText: String { "+100 points" } 
        var descriptionText: String {
            "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"

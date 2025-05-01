@@ -64,7 +64,7 @@ class QuizTableViewCell: UITableViewCell {
     func configure(with quiz: Quiz) {
         iconImageView.image = UIImage(systemName: quiz.iconName)
         titleLabel.text = quiz.title
-        subtitleLabel.text = "\(quiz.subject) • \(quiz.quizCount) Quizzes"
+        subtitleLabel.text = "\(quiz.subject) • \(quiz.questionCount) Questions"
     }
 
     private func addSubviews() {
@@ -120,7 +120,7 @@ class QuizTableViewCell: UITableViewCell {
     
     func configure(with quiz: Quiz, isSelected: Bool) {
         titleLabel.text = quiz.title
-        subtitleLabel.text = "\(quiz.subject) · \(quiz.quizCount) Quizzes"
+        subtitleLabel.text = "\(quiz.subject) · \(quiz.questionCount) Questions"
         iconImageView.image = UIImage(systemName: quiz.iconName)?.withRenderingMode(.alwaysTemplate)
         
         if isSelected {
