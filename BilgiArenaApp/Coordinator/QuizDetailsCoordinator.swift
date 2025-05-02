@@ -43,7 +43,7 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
             let viewModel = QuizStartViewModel(
                 question: firstQuestion,
                 index: 0,
-                total: quiz.quizCount
+                total: quiz.questionCount
             )
 
             let controller = QuizStartViewController(viewModel: viewModel)
