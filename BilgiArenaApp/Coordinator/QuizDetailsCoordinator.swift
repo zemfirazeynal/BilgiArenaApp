@@ -56,6 +56,8 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
                 index: 0,
                 total: quiz.questionCount
             )
+        
+        
 
             let controller = QuizStartViewController(viewModel: viewModel)
 //            navigationController.pushViewController(controller, animated: true)

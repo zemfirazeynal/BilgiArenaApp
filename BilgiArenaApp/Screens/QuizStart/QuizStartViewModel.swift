@@ -10,53 +10,60 @@ import UIKit
 
 protocol QuizStartViewModelProtocol {
     
-    var questionText: String { get }
-       var questionNumberText: String { get }
+    var questionNumberText: String { get }
+       var questionText: String { get }
        var options: [String] { get }
+       var selectedAnswerIndex: Int? { get }
+       var correctAnswerIndex: Int { get }
+       var isAnswerSubmitted: Bool { get }
 
        func selectOption(at index: Int)
        func isOptionSelected(_ index: Int) -> Bool
        func isOptionCorrect(_ index: Int) -> Bool
-
+       func submitAnswer()
     
 }
 
 final class QuizStartViewModel: QuizStartViewModelProtocol {
     
-    private let question: Question
-    private let questionIndex: Int
-    private let totalQuestions: Int
+    let questionNumberText: String
+        let questionText: String
+        let options: [String]
+        let correctAnswerIndex: Int
 
-    private var selectedIndex: Int?
-
-    var questionNumberText: String {
-        "QUESTION \(questionIndex + 1) OF \(totalQuestions)"
-    }
-
-    init(question: Question, index: Int, total: Int) {
-        self.question = question
-        self.questionIndex = index
-        self.totalQuestions = total
-    }
-
-        var questionText: String {
-            question.text
-        }
-
-        var options: [String] {
-            question.options
-        }
+        private(set) var selectedAnswerIndex: Int?
+        private(set) var isAnswerSubmitted: Bool = false
 
     
+    init(question: Question, index: Int, total: Int) {
+        self.questionNumberText = "QUESTION \(index + 1) OF \(total)"
+        self.questionText = question.text
+        self.options = question.options
+        self.correctAnswerIndex = question.correctIndex
+        
+    }
         func selectOption(at index: Int) {
-            selectedIndex = index
+            guard !isAnswerSubmitted else { return }
+            selectedAnswerIndex = index
         }
 
         func isOptionSelected(_ index: Int) -> Bool {
-            return selectedIndex == index
+            return selectedAnswerIndex == index
         }
 
         func isOptionCorrect(_ index: Int) -> Bool {
-            return question.correctIndex == index
+            return index == correctAnswerIndex
         }
+
+        func submitAnswer() {
+            isAnswerSubmitted = true
+        }
+    
 }
+
+
+    
+
+    
+
+       
