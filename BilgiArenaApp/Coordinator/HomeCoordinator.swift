@@ -10,6 +10,9 @@ import UIKit
 
 protocol HomeCoordinatorProtocol {
     func showChooseCategoryScreen()
+    
+    func showQuizDetail(for quiz: Quiz)
+
 }
 
 final class HomeCoordinator: Coordinator, HomeCoordinatorProtocol {
@@ -17,6 +20,8 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorProtocol {
     var navigationController: UINavigationController
 
     private var chooseCategoryCoordinator: ChooseCategoryCoordinator?
+    private var quizDetailsCoordinator: QuizDetailsCoordinator?
+
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -49,4 +54,10 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorProtocol {
         coordinator.start()
 
     }
+    
+    func showQuizDetail(for quiz: Quiz) {
+            let coordinator = QuizDetailsCoordinator(navigationController: navigationController, quiz: quiz)
+            quizDetailsCoordinator = coordinator
+            coordinator.start()
+        }
 }
