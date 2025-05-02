@@ -7,8 +7,5 @@
 
 
 struct QuizStatsModel {
-    let correct: String
-    let completion: String
-    let skipped: String
-    let incorrect: String
+    let items: [QuizStatItemModel]
 }

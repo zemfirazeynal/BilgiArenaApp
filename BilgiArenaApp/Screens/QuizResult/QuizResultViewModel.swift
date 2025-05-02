@@ -39,12 +39,12 @@ final class QuizResultViewModel: QuizResultViewModelProtocol {
 
     
     var statsModel: QuizStatsModel {
-        QuizStatsModel(
-            correct: correctAnswerText,
-            completion: completionText,
-            skipped: skippedAnswerText,
-            incorrect: incorrectAnswerText
-        )
+        QuizStatsModel(items: [
+            QuizStatItemModel(title: "CORRECT ANSWER", value: correctAnswerText),
+            QuizStatItemModel(title: "COMPLETION", value: completionText),
+            QuizStatItemModel(title: "SKIPPED", value: skippedAnswerText),
+            QuizStatItemModel(title: "INCORRECT ANSWER", value: incorrectAnswerText)
+        ])
     }
     
     var earnedPointsText: String {
