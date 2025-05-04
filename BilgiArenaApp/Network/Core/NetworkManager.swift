@@ -101,4 +101,33 @@ class NetworkManager {
         }
     }
     
+    // JSON cavab gözləməyən sadə success/fail request
+    func rawRequest(url: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (Bool, String?) -> Void) {
+        AF.request(url, method: method, headers: headers)
+            .validate()
+            .response { response in
+                switch response.result {
+                case .success:
+                    completion(true, nil)
+                case .failure(let error):
+                    completion(false, error.localizedDescription)
+                }
+            }
+    }
+
+    // String tipli cavab üçün (məs: JWT token)
+    func rawStringResponse(url: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (String?, String?) -> Void) {
+        AF.request(url, method: method, headers: headers)
+            .validate()
+            .responseString { response in
+                switch response.result {
+                case .success(let string):
+                    completion(string, nil)
+                case .failure(let error):
+                    completion(nil, error.localizedDescription)
+                }
+            }
+    }
+
+    
 }
