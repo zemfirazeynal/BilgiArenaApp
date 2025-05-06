@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 
 struct OtpCodeBuilder {
-    static func build(coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
+    static func build(email: String, coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
         let viewModel = OtpCodeViewModel(flowType: .signup, coordinator: coordinator)
-            let viewController = OtpCodeViewController(viewModel: viewModel)
-            return viewController
-        }
+        viewModel.email = email
+        let controller = OtpCodeViewController(viewModel: viewModel)
+        return controller
+    }
 }

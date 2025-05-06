@@ -13,6 +13,8 @@ final class SignupPasswordViewController: UIViewController {
     private let navigationHeader = CustomNavigationHeaderView()
 
     private let viewModel: SignupPasswordViewModel
+    private weak var coordinator: SignupFlowCoordinatorProtocol?
+
 
         // MARK: - UI Elements
         private let titleLabel: UILabel = {
@@ -35,15 +37,7 @@ final class SignupPasswordViewController: UIViewController {
     private let passwordTextField = AuthTextField(placeholder: "Your password", icon: "login_lock_icon", isSecure: true)
 
 
-//        private let emailTextField: UITextField = {
-//            let textField = UITextField()
-//            textField.placeholder = "Your email address"
-//            textField.borderStyle = .roundedRect
-//            textField.autocapitalizationType = .none
-//            textField.keyboardType = .emailAddress
-//            textField.translatesAutoresizingMaskIntoConstraints = false
-//            return textField
-//        }()
+
     private let ruleLabel: UILabel = {
         let label = UILabel()
         label.text = "Must be at least 8 characters."
@@ -95,8 +89,10 @@ final class SignupPasswordViewController: UIViewController {
         }()
 
         // MARK: - Init
-        init(viewModel: SignupPasswordViewModel) {
+        init(viewModel: SignupPasswordViewModel, coordinator: SignupFlowCoordinatorProtocol) {
             self.viewModel = viewModel
+            self.coordinator = coordinator
+
             super.init(nibName: nil, bundle: nil)
         }
 
@@ -113,6 +109,7 @@ final class SignupPasswordViewController: UIViewController {
             }
             setupLayout()
             setupActions()
+            bindViewModel()
         }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -180,6 +177,17 @@ final class SignupPasswordViewController: UIViewController {
                
             ])
         }
+    
+    private func bindViewModel() {
+        viewModel.onFinish = { [weak self] in
+            print("✅ Qeydiyyat tamamlandı")
+            self?.coordinator?.finishSignup()
+        }
+
+        viewModel.onError = { [weak self] errorMessage in
+            self?.showAlert(title: "Xəta", message: errorMessage)
+        }
+    }
 
         // MARK: - Action
         @objc private func didTapNext() {

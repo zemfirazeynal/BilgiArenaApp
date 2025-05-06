@@ -10,8 +10,8 @@ import UIKit
 
 protocol SignupFlowCoordinatorProtocol: AnyObject {
     func showEmailStep()
-    func showPasswordStep()
-    func showOtpCodeStep()
+    func showPasswordStep(token: String)
+    func showOtpCodeStep(email: String)
     func finishSignup()
 }
 
@@ -32,14 +32,14 @@ final class SignupFlowCoordinator: SignupFlowCoordinatorProtocol {
         navigationController.pushViewController(vc, animated: true)
     }
     
-    func showOtpCodeStep() {
-        let vc = OtpCodeBuilder.build(coordinator: self)
-        navigationController.pushViewController(vc, animated: true)
+    func showOtpCodeStep(email: String) {
+        let vc = OtpCodeBuilder.build(email: email, coordinator: self)
+            navigationController.pushViewController(vc, animated: true)
     }
 
-    func showPasswordStep() {
-        let vc = SignupPasswordBuilder.build(coordinator: self)
-        navigationController.pushViewController(vc, animated: true)
+    func showPasswordStep(token: String) {
+        let vc = SignupPasswordBuilder.build(coordinator: self, token: token)
+            navigationController.pushViewController(vc, animated: true)
     }
 
     func finishSignup() {

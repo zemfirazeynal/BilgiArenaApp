@@ -241,10 +241,12 @@ class NewPasswordViewController: UIViewController {
     }
         
         // MARK: - Alert
-        
-        private func showAlert(title: String, message: String) {
-            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .default))
-            present(alertVC, animated: true)
-        }
+//        
+//        private func showAlert(title: String, message: String) {
+//            let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//            alertVC.addAction(UIAlertAction(title: "OK", style: .default))
+//            present(alertVC, animated: true)
+//        }
 }
+
+

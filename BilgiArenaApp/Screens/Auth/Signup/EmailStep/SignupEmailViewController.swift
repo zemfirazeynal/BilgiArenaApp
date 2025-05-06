@@ -12,9 +12,9 @@ final class SignupEmailViewController: UIViewController {
 
     private let navigationHeader = CustomNavigationHeaderView()
     
-
-
     private let viewModel: SignupEmailViewModel
+    private weak var coordinator: SignupFlowCoordinatorProtocol?
+
 
         // MARK: - UI Elements
         private let titleLabel: UILabel = {
@@ -36,16 +36,6 @@ final class SignupEmailViewController: UIViewController {
       
        private let emailTextField = AuthTextField(placeholder: "Your email address", icon: "login_envelope_icon")
 
-
-//        private let emailTextField: UITextField = {
-//            let textField = UITextField()
-//            textField.placeholder = "Your email address"
-//            textField.borderStyle = .roundedRect
-//            textField.autocapitalizationType = .none
-//            textField.keyboardType = .emailAddress
-//            textField.translatesAutoresizingMaskIntoConstraints = false
-//            return textField
-//        }()
     
 
         private let nextButton: UIButton = {
@@ -62,7 +52,6 @@ final class SignupEmailViewController: UIViewController {
         private let progressLabel: UILabel = {
             let label = UILabel()
             label.text = "1 of 3"
-//            label.font = .systemFont(ofSize: 16)
             label.textColor = UIColor(named: "app_color")
             label.textAlignment = .right
             label.font = .boldSystemFont(ofSize: 16)
@@ -79,8 +68,10 @@ final class SignupEmailViewController: UIViewController {
         }()
 
         // MARK: - Init
-        init(viewModel: SignupEmailViewModel) {
+        init(viewModel: SignupEmailViewModel, coordinator: SignupFlowCoordinatorProtocol) {
             self.viewModel = viewModel
+            self.coordinator = coordinator
+
             super.init(nibName: nil, bundle: nil)
         }
 
@@ -142,11 +133,6 @@ final class SignupEmailViewController: UIViewController {
                 progressView.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
                 progressView.heightAnchor.constraint(equalToConstant: 4),
 
-//                resetPasswordButton.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 32),
-//                resetPasswordButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
-//                resetPasswordButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
-//                resetPasswordButton.heightAnchor.constraint(equalToConstant: 56)
-                
                 nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
                 nextButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
                 nextButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
@@ -156,7 +142,12 @@ final class SignupEmailViewController: UIViewController {
             ])
         }
 
-        // MARK: - Action
+       private func bindViewModel() {
+           viewModel.onNextStep = { [weak self] in
+                       self?.coordinator?.showOtpCodeStep(email: self?.viewModel.email ?? "")
+                   }
+        }
+
         @objc private func didTapNext() {
             viewModel.email = emailTextField.text ?? ""
             viewModel.proceedIfValid()

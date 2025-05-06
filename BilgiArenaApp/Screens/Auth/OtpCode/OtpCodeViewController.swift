@@ -48,7 +48,6 @@ class OtpCodeViewController: UIViewController {
     private let progressLabel: UILabel = {
         let label = UILabel()
         label.text = "2 of 3"
-        //            label.font = .systemFont(ofSize: 16)
         label.textColor = UIColor(named: "app_color")
         label.textAlignment = .right
         label.font = .boldSystemFont(ofSize: 16)
@@ -87,6 +86,7 @@ class OtpCodeViewController: UIViewController {
         setupLayout()
         setupActions()
         configureForFlowType()
+        bindViewModel()
     }
     
     private func configureForFlowType() {
@@ -176,6 +176,15 @@ class OtpCodeViewController: UIViewController {
         
     }
 
+    private func bindViewModel() {
+//        viewModel.onNextStep = { [weak self] in
+//                print(" OTP təsdiqləndi və növbəti mərhələyə keçilir")
+//            }
+
+            viewModel.onError = { [weak self] error in
+                self?.showAlert(title: "Xəta", message: error)
+            }
+    }
     
     // MARK: - Action
     @objc private func didTapNext() {
@@ -184,4 +193,12 @@ class OtpCodeViewController: UIViewController {
     }
 
 
+}
+
+extension UIViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(.init(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }

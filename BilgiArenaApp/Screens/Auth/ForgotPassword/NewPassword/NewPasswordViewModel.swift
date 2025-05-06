@@ -31,7 +31,7 @@ final class NewPasswordViewModel: NewPasswordViewModelProtocol {
             return
         }
 
-        print("✅ Password successfully reset: \(password)")
+        print("Password successfully reset: \(password)")
         
         // Burada success olanda Loginə qaytarırıq:
         onResetSuccess?()

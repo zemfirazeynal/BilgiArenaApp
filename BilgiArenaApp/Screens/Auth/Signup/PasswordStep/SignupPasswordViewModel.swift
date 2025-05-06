@@ -35,22 +35,60 @@ import Foundation
 
 protocol SignupPasswordViewModelProtocol {
     var password: String { get set }
-        var onFinish: (() -> Void)? { get set }
-        func proceedIfValid()}
+    var token: String { get }
+    var onFinish: (() -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
+    
+    func proceedIfValid()
+}
 
 final class SignupPasswordViewModel: SignupPasswordViewModelProtocol {
+    var password: String = ""
+    let token: String
     var onFinish: (() -> Void)?
-        var password: String = ""
+    var onError: ((String) -> Void)?
 
-        func proceedIfValid() {
-            guard password.count >= 6 else { return }
-            onFinish?()
+    private let manager: RegisterManagerUseCase
+
+    init(token: String, manager: RegisterManagerUseCase = RegisterManager()) {
+        self.token = token
+        self.manager = manager
+    }
+
+    func proceedIfValid() {
+        guard password.count >= 6 else {
+            onError?("Şifrə ən az 6 simvoldan ibarət olmalıdır.")
+            return
         }
 
-        func didEnterPassword(_ password: String) {
-            self.password = password
-            proceedIfValid()
+        manager.setPassword(password: password, token: token) { [weak self] success, error in
+            if success {
+                self?.onFinish?()
+            } else {
+                self?.onError?(error ?? "Şifrə təyin edilərkən xəta baş verdi.")
+            }
         }
     }
+}
+
+
+//    var password: String { get set }
+//        var onFinish: (() -> Void)? { get set }
+//        func proceedIfValid()}
+//
+//final class SignupPasswordViewModel: SignupPasswordViewModelProtocol {
+//    var onFinish: (() -> Void)?
+//        var password: String = ""
+//
+//        func proceedIfValid() {
+//            guard password.count >= 6 else { return }
+//            onFinish?()
+//        }
+//
+//        func didEnterPassword(_ password: String) {
+//            self.password = password
+//            proceedIfValid()
+//        }
+//    }
 
 
