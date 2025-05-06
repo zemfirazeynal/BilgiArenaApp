@@ -13,40 +13,103 @@ enum OtpCodeFlowType {
 }
 
 protocol OtpCodeViewModelProtocol {
+    
     var otpCode: String { get set }
+    var email: String { get set }
     var onNextStep: (() -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
+    
     func proceedIfValid()
 }
 
 final class OtpCodeViewModel: OtpCodeViewModelProtocol {
-        let flowType: OtpCodeFlowType
-        var otpCode: String = ""
-        var onNextStep: (() -> Void)?
-        
-        private  var coordinator: AnyObject
+    let flowType: OtpCodeFlowType
+    var otpCode: String = ""
+    var email: String = ""
+    var onNextStep: (() -> Void)?
+    var onError: ((String) -> Void)?
 
-        
-        init(flowType: OtpCodeFlowType, coordinator: AnyObject) {
-                self.flowType = flowType
-            self.coordinator = coordinator
+    private var coordinator: AnyObject
+    private let registerManager: RegisterManagerUseCase
 
-            }
+    private var jwtToken: String?
 
+    init(flowType: OtpCodeFlowType,
+         coordinator: AnyObject,
+         registerManager: RegisterManagerUseCase = RegisterManager()
+    ) {
+        self.flowType = flowType
+        self.coordinator = coordinator
+        self.registerManager = registerManager
+    }
 
-        func proceedIfValid() {
-                 guard isValidOtpCode(otpCode) else {
-                     print("Invalid otp code")
-                     return
-                 }
-            switch flowType {
-                    case .signup:
-                        (coordinator as? SignupFlowCoordinatorProtocol)?.showPasswordStep()
-                    case .forgotPassword:
-                        (coordinator as? ResetPasswordCoordinatorProtocol)?.showNewPasswordScreen()
+    func proceedIfValid() {
+        guard isValidOtpCode(otpCode) else {
+            onError?("OTP kod düzgün deyil")
+            return
+        }
+
+        registerManager.verifyOtp(email: email, otp: otpCode) { [weak self] token, error in
+            
+            
+                    guard let self else { return }
+                    if let token = token,!token.isEmpty {
+                        self.jwtToken = token
+                        switch self.flowType {
+                        case .signup:
+                            (self.coordinator as? SignupFlowCoordinatorProtocol)?.showPasswordStep(token: token)
+                        case .forgotPassword:
+                            (self.coordinator as? ResetPasswordCoordinatorProtocol)?.showNewPasswordScreen()
+                        }
+                    } else {
+                        self.onError?(error ?? "OTP kodu təsdiqlənmədi.")
                     }
-          }
+                }
         
-            private func isValidOtpCode(_ otpCode: String) -> Bool {
-                return otpCode.count == 6
-            }
+    }
+
+    private func isValidOtpCode(_ otpCode: String) -> Bool {
+        return otpCode.count == 6
+    }
 }
+//    var otpCode: String { get set }
+//    var onNextStep: (() -> Void)? { get set }
+//    func proceedIfValid()
+//    
+//
+//}
+//
+//final class OtpCodeViewModel: OtpCodeViewModelProtocol {
+//        let flowType: OtpCodeFlowType
+//        var otpCode: String = ""
+//        var onNextStep: (() -> Void)?
+//        
+//       var email: String = ""
+//
+//        private  var coordinator: AnyObject
+//
+//        
+//        init(flowType: OtpCodeFlowType, coordinator: AnyObject) {
+//                self.flowType = flowType
+//            self.coordinator = coordinator
+//
+//            }
+//
+//
+//        func proceedIfValid() {
+//                 guard isValidOtpCode(otpCode) else {
+//                     print("Invalid otp code")
+//                     return
+//                 }
+//            switch flowType {
+//                    case .signup:
+//                        (coordinator as? SignupFlowCoordinatorProtocol)?.showPasswordStep()
+//                    case .forgotPassword:
+//                        (coordinator as? ResetPasswordCoordinatorProtocol)?.showNewPasswordScreen()
+//                    }
+//          }
+//        
+//            private func isValidOtpCode(_ otpCode: String) -> Bool {
+//                return otpCode.count == 6
+//            }
+//}

@@ -20,12 +20,12 @@ import UIKit
 //}
 
 struct SignupPasswordBuilder {
-    static func build(coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
-        let viewModel = SignupPasswordViewModel()
+    static func build(coordinator: SignupFlowCoordinatorProtocol, token: String) -> UIViewController {
+        let viewModel = SignupPasswordViewModel(token: token)
             viewModel.onFinish = {
                 coordinator.finishSignup()
             }
 
-            return SignupPasswordViewController(viewModel: viewModel)
+        return SignupPasswordViewController(viewModel: viewModel, coordinator: coordinator)
         }
 }

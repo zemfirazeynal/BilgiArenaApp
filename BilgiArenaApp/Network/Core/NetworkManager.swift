@@ -18,9 +18,13 @@ class NetworkManager {
         params: Parameters? = nil,
         encodingType: EncodingType = .url,
         header: [String: String]? = nil,
+        isFullURL: Bool = false, //new
         completion: @escaping (T?, String?) -> Void
     ) {
-        let url = NetworkHelper.shared.configureURL(endpoint: endpoint)
+//        let url = NetworkHelper.shared.configureURL(endpoint: endpoint)
+        
+        let url = isFullURL ? endpoint : NetworkHelper.shared.configureURL(endpoint: endpoint)
+
     
         var headers: HTTPHeaders?
         

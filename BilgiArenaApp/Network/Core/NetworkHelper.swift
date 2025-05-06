@@ -16,7 +16,7 @@ enum EncodingType {
 class NetworkHelper {
     static let shared = NetworkHelper()
     
-    let baseURL = "http://192.168.100.86:8099"
+    let baseURL = "http://localhost:8099"
 
     func configureURL(endpoint: String) -> String {
         return baseURL + "/" + endpoint

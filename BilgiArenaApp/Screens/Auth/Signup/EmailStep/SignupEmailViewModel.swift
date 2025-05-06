@@ -7,23 +7,46 @@
 
 import Foundation
 
-
 protocol SignUpEmailViewModelProtocol {
     var email: String { get set }
     var onNextStep: (() -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
+
     func proceedIfValid()
 }
 
 final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
     var email: String = ""
     var onNextStep: (() -> Void)?
+    var onError: ((String) -> Void)?
+
+    private let manager: RegisterManagerUseCase
+
+
+    init(manager: RegisterManagerUseCase = RegisterManager()) {
+        self.manager = manager
+    }
 
     func proceedIfValid() {
+        
         guard isValidEmail(email) else {
-            print("Invalid email")
-            return
-        }
-        onNextStep?()
+                onError?("Email düzgün deyil")
+                return
+            }
+
+            // Dərhal növbəti mərhələyə keçir
+            onNextStep?()
+
+            // OTP göndərməni fon rejimində başlat
+            manager.sendOtp(email: email) { [weak self] success, error in
+                guard let self = self else { return }
+
+                if !success {
+                    DispatchQueue.main.async {
+                        self.onError?(error ?? "OTP göndərilmədi") // OTP ekranında göstərə bilərsən
+                    }
+                }
+            }
     }
 
     private func isValidEmail(_ email: String) -> Bool {

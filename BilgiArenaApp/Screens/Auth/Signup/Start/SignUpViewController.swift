@@ -108,10 +108,7 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        //                view.backgroundColor = UIColor.systemGray6
-        //        navigationHeader.onBackTap = { [weak self] in
-        //                    self?.navigationController?.popViewController(animated: true)
-        //                }
+        
         setupLayout()
     }
     
