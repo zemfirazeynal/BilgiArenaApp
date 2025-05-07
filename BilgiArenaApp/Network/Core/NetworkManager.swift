@@ -9,6 +9,8 @@ import Foundation
 import Alamofire
 import UIKit
 
+
+
 class NetworkManager {
     
     func request<T: Codable>(
@@ -45,8 +47,12 @@ class NetworkManager {
 
                 switch response.result {
                 case .success(let data):
+                    print("✅ SUCCESS: \(data)")
+
                     completion(data, nil)
                 case .failure(let error):
+                    print("❌ ERROR: \(error.localizedDescription)")
+                                print("❌ STATUS CODE: \(statusCode)")
                     if statusCode == 401 {
                         completion(nil, "Unauthorized – Sistemdən çıxmısınız")
                     } else if statusCode == 500 {

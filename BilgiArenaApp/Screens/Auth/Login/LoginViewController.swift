@@ -29,15 +29,7 @@ class LoginViewController: UIViewController {
     required init?(coder: NSCoder) {  //+
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Login"
-//        label.font = .boldSystemFont(ofSize: 24)
-//        label.textAlignment = .center
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+
     
     private let googleButton = LoginSocialButton(title: "Login with Google", imageName: "google_icon")
     
@@ -113,7 +105,7 @@ class LoginViewController: UIViewController {
     }
     
     private func setupLayout() {
-        [navigationHeader, /*titleLabel,*/ googleButton, orLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton, forgotPasswordButton, termsLabel].forEach {
+        [navigationHeader, googleButton, orLabel, emailLabel, emailField, passwordLabel, passwordField, loginButton, forgotPasswordButton, termsLabel].forEach {
             view.addSubview($0)
         }
         
@@ -122,10 +114,7 @@ class LoginViewController: UIViewController {
             navigationHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             navigationHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             navigationHeader.heightAnchor.constraint(equalToConstant: 48),
-            
-//            titleLabel.centerYAnchor.constraint(equalTo: navigationHeader.centerYAnchor),
-//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
+
             googleButton.topAnchor.constraint(equalTo: navigationHeader.bottomAnchor, constant: 48),
             googleButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
             googleButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
@@ -170,7 +159,8 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func didTapLogin() {
-        print("ViewController: Login button tapped")
+        viewModel.email = emailField.text ?? ""
+        viewModel.password = passwordField.text ?? ""
         viewModel.loginTapped()
     }
 }
