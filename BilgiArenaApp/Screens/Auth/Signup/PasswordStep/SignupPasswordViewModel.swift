@@ -54,13 +54,12 @@ final class SignupPasswordViewModel: SignupPasswordViewModelProtocol {
                         message: "An error occurred while setting the password."
                     )
                 )
-
             }
         }
     }
 
     private func isValidPassword(_ password: String) -> Bool {
         return password.trimmingCharacters(in: .whitespacesAndNewlines).count
-            == 8
+            >= 8
     }
 }
