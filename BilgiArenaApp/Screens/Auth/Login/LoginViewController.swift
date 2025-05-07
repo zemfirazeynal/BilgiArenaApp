@@ -87,6 +87,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         setupLayout()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +153,25 @@ class LoginViewController: UIViewController {
             termsLabel.leadingAnchor.constraint(equalTo: loginButton.leadingAnchor),
             termsLabel.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor)
         ])
+    }
+    
+    private func bindViewModel() {
+        viewModel.onStateChange = { [weak self] state in
+            DispatchQueue.main.async {
+                switch state {
+                case .idle:
+                    break
+                case .loading:
+                    break
+                case .success(_):
+                    break
+                case .error(let message):
+                    self?.present(Alert.showAlert(title: "Error", message: message), animated: true)   
+                    break
+                
+                }
+            }
+        }
     }
     
     @objc private func handleForgotPassword() {
