@@ -43,7 +43,8 @@ final class SignupFlowCoordinator: SignupFlowCoordinatorProtocol {
     }
 
     func finishSignup() {
-        navigationController.popToRootViewController(animated: true)
+        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
+            loginCoordinator.start()
     }
 }
 
