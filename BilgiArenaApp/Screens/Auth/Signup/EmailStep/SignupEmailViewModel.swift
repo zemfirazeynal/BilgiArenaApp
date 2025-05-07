@@ -39,7 +39,7 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
 
             if !success {
                 DispatchQueue.main.async {
-                    self.onError?(error ?? "OTP göndərilmədi")  // OTP ekranında göstərə bilərsən
+                    self.onError?(error ?? "OTP göndərilmədi")  
                 }
             }
         }
