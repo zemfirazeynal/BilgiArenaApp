@@ -7,25 +7,17 @@
 
 import UIKit
 
-//struct SignupPasswordBuilder {
-//    static func build(coordinator: SignupFlowCoordinatorProtocol) -> UIViewController {
-//        let viewModel = SignupPasswordViewModel()
-//        viewModel.onFinish = {
-//            coordinator.finishSignup()
-//        }
-//
-//        let viewController = SignupPasswordViewController(viewModel: viewModel)
-//        return viewController
-//    }
-//}
-
 struct SignupPasswordBuilder {
-    static func build(coordinator: SignupFlowCoordinatorProtocol, token: String) -> UIViewController {
+    static func build(coordinator: SignupFlowCoordinatorProtocol, token: String)
+        -> UIViewController
+    {
         let viewModel = SignupPasswordViewModel(token: token)
-            viewModel.onFinish = {
-                coordinator.finishSignup()
-            }
-
-        return SignupPasswordViewController(viewModel: viewModel, coordinator: coordinator)
+        viewModel.onFinish = {
+            coordinator.finishSignup()
         }
+        return SignupPasswordViewController(
+            viewModel: viewModel,
+            coordinator: coordinator
+        )
+    }
 }

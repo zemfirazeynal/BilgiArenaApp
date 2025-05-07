@@ -9,6 +9,8 @@ import Foundation
 import Alamofire
 import UIKit
 
+
+
 class NetworkManager {
     
     func request<T: Codable>(
@@ -45,6 +47,7 @@ class NetworkManager {
 
                 switch response.result {
                 case .success(let data):
+
                     completion(data, nil)
                 case .failure(let error):
                     if statusCode == 401 {

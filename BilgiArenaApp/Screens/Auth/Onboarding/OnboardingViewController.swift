@@ -19,7 +19,8 @@ class OnboardingViewController: UIViewController {
     var onCreateTapped: (() -> Void)?
 
     private let illustrationImageView = UIImageView(
-        image: UIImage(named: "login_illustration"))
+        image: UIImage(named: "login_illustration")
+    )
 
     private let whiteCardView: UIView = {
         let view = UIView()
@@ -53,18 +54,8 @@ class OnboardingViewController: UIViewController {
 
     private let loginButton = PrimaryButton(title: "Login")
     private let createAccountButton = SecondaryButton(
-        title: "Create an account")
-
-    //    private var coordinator: OnboardingCoordinator
-    //
-    //        init(coordinator: OnboardingCoordinator) {
-    //            self.coordinator = coordinator
-    //            super.init(nibName: nil, bundle: nil)
-    //        }
-    //
-    //        required init?(coder: NSCoder) {
-    //            fatalError("init(coder:) has not been implemented")
-    //        }
+        title: "Create an account"
+    )
 
     private let viewModel: OnboardingViewModelProtocol
 
@@ -79,21 +70,31 @@ class OnboardingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "app_background_color")
 
-        setupBackground()
-        setupLayout()
-
-        loginButton.addTarget(
-            self, action: #selector(handleLogin), for: .touchUpInside)
-        createAccountButton.addTarget(
-            self, action: #selector(handleCreateAccount), for: .touchUpInside)
+        configureBackground()
+        configureLayout()
+        configureActions()
         updateButtonStates()
     }
     
-    private func setupBackground() {
+    private func configureActions() {
+        loginButton.addTarget(
+            self,
+            action: #selector(handleLogin),
+            for: .touchUpInside
+        )
+        
+        createAccountButton.addTarget(
+            self,
+            action: #selector(handleCreateAccount),
+            for: .touchUpInside
+        )
+    }
+
+    private func configureBackground() {
         let backgroundImageView = UIImageView(
-            image: UIImage(named: "login_signup_background_view"))
+            image: UIImage(named: "login_signup_background_view")
+        )
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundImageView)
@@ -102,15 +103,18 @@ class OnboardingViewController: UIViewController {
         NSLayoutConstraint.activate([
             backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImageView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor),
+                equalTo: view.bottomAnchor
+            ),
             backgroundImageView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor
+            ),
             backgroundImageView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+                equalTo: view.trailingAnchor
+            ),
         ])
     }
 
-    private func setupLayout() {
+    private func configureLayout() {
         [illustrationImageView, whiteCardView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -122,49 +126,81 @@ class OnboardingViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             illustrationImageView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: 100
+            ),
             illustrationImageView.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor),
+                equalTo: view.centerXAnchor
+            ),
             illustrationImageView.heightAnchor.constraint(equalToConstant: 272),
             illustrationImageView.widthAnchor.constraint(equalToConstant: 344),
 
             whiteCardView.topAnchor.constraint(
-                equalTo: illustrationImageView.bottomAnchor, constant: 24),
+                equalTo: illustrationImageView.bottomAnchor,
+                constant: 24
+            ),
             whiteCardView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 24),
+                equalTo: view.leadingAnchor,
+                constant: 24
+            ),
             whiteCardView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -24),
+                equalTo: view.trailingAnchor,
+                constant: -24
+            ),
             whiteCardView.heightAnchor.constraint(equalToConstant: 344),
 
             titleLabel.centerXAnchor.constraint(
-                equalTo: whiteCardView.centerXAnchor),
+                equalTo: whiteCardView.centerXAnchor
+            ),
             titleLabel.bottomAnchor.constraint(
-                equalTo: whiteCardView.topAnchor, constant: 48),
+                equalTo: whiteCardView.topAnchor,
+                constant: 48
+            ),
             subtitleLabel.topAnchor.constraint(
-                equalTo: whiteCardView.topAnchor, constant: 32),
+                equalTo: whiteCardView.topAnchor,
+                constant: 32
+            ),
             subtitleLabel.leadingAnchor.constraint(
-                equalTo: whiteCardView.leadingAnchor, constant: 24),
+                equalTo: whiteCardView.leadingAnchor,
+                constant: 24
+            ),
             subtitleLabel.trailingAnchor.constraint(
-                equalTo: whiteCardView.trailingAnchor, constant: -24),
+                equalTo: whiteCardView.trailingAnchor,
+                constant: -24
+            ),
 
             loginButton.topAnchor.constraint(
-                equalTo: subtitleLabel.bottomAnchor, constant: 24),
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: 24
+            ),
             loginButton.leadingAnchor.constraint(
-                equalTo: whiteCardView.leadingAnchor, constant: 24),
+                equalTo: whiteCardView.leadingAnchor,
+                constant: 24
+            ),
             loginButton.trailingAnchor.constraint(
-                equalTo: whiteCardView.trailingAnchor, constant: -24),
+                equalTo: whiteCardView.trailingAnchor,
+                constant: -24
+            ),
             loginButton.heightAnchor.constraint(equalToConstant: 48),
 
             createAccountButton.topAnchor.constraint(
-                equalTo: loginButton.bottomAnchor, constant: 16),
+                equalTo: loginButton.bottomAnchor,
+                constant: 16
+            ),
             createAccountButton.leadingAnchor.constraint(
-                equalTo: whiteCardView.leadingAnchor, constant: 24),
+                equalTo: whiteCardView.leadingAnchor,
+                constant: 24
+            ),
             createAccountButton.trailingAnchor.constraint(
-                equalTo: whiteCardView.trailingAnchor, constant: -24),
+                equalTo: whiteCardView.trailingAnchor,
+                constant: -24
+            ),
             createAccountButton.heightAnchor.constraint(equalToConstant: 48),
 
             createAccountButton.bottomAnchor.constraint(
-                equalTo: whiteCardView.bottomAnchor, constant: -48),
+                equalTo: whiteCardView.bottomAnchor,
+                constant: -48
+            ),
         ])
     }
 
@@ -179,7 +215,7 @@ class OnboardingViewController: UIViewController {
         updateButtonStates()
         viewModel.showSignup()
     }
-    
+
     private func updateButtonStates() {
         switch selectedAction {
         case .login:

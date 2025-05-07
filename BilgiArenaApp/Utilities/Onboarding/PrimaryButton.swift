@@ -8,6 +8,11 @@
 import UIKit
 
 class PrimaryButton: UIButton {
+    override var isHighlighted: Bool {
+            didSet {
+                alpha = isHighlighted ? 0.6 : 1.0
+            }
+        }
 
         init(title: String) {
             super.init(frame: .zero)

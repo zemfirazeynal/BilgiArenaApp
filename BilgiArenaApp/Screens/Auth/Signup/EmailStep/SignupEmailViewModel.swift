@@ -22,31 +22,27 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
 
     private let manager: RegisterManagerUseCase
 
-
     init(manager: RegisterManagerUseCase = RegisterManager()) {
         self.manager = manager
     }
 
     func proceedIfValid() {
-        
         guard isValidEmail(email) else {
-                onError?("Email düzgün deyil")
-                return
-            }
+            onError?("Email düzgün deyil")
+            return
+        }
 
-            // Dərhal növbəti mərhələyə keçir
-            onNextStep?()
+        onNextStep?()
 
-            // OTP göndərməni fon rejimində başlat
-            manager.sendOtp(email: email) { [weak self] success, error in
-                guard let self = self else { return }
+        manager.sendOtp(email: email) { [weak self] success, error in
+            guard let self = self else { return }
 
-                if !success {
-                    DispatchQueue.main.async {
-                        self.onError?(error ?? "OTP göndərilmədi") // OTP ekranında göstərə bilərsən
-                    }
+            if !success {
+                DispatchQueue.main.async {
+                    self.onError?(error ?? "OTP göndərilmədi")  // OTP ekranında göstərə bilərsən
                 }
             }
+        }
     }
 
     private func isValidEmail(_ email: String) -> Bool {
