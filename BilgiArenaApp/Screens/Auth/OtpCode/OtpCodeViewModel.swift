@@ -31,6 +31,9 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
 
     private var coordinator: AnyObject
     private let registerManager: RegisterManagerUseCase
+    
+    var onStateChange: ((ViewState) -> Void)?
+
 
     private var jwtToken: String?
 
@@ -44,17 +47,17 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
     }
 
     func proceedIfValid() {
-        guard isValidOtpCode(otpCode) else {
-            onError?("OTP kod düzgün deyil")
-            return
-        }
+               guard isValidOtpCode(otpCode) else {
+                    onStateChange?(.error(message: "OTP code must be 6 digits long."))
+                    return
+                }
 
-        registerManager.verifyOtp(email: email, otp: otpCode) { [weak self] token, error in
-            
-            
+                onStateChange?(.loading)
+
+                registerManager.verifyOtp(email: email, otp: otpCode) { [weak self] token, error in
                     guard let self else { return }
-                    if let token = token,!token.isEmpty {
-                        self.jwtToken = token
+
+                    if let token = token, !token.isEmpty {
                         switch self.flowType {
                         case .signup:
                             (self.coordinator as? SignupFlowCoordinatorProtocol)?.showPasswordStep(token: token)
@@ -62,14 +65,14 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
                             (self.coordinator as? ResetPasswordCoordinatorProtocol)?.showNewPasswordScreen()
                         }
                     } else {
-                        self.onError?(error ?? "OTP kodu təsdiqlənmədi.")
+                        onStateChange?(.error(message: "OTP Code is wrong. Please try again."))
                     }
                 }
         
     }
 
     private func isValidOtpCode(_ otpCode: String) -> Bool {
-        return otpCode.count == 6
+        return otpCode.trimmingCharacters(in: .whitespacesAndNewlines).count == 6
     }
 }
 //    var otpCode: String { get set }

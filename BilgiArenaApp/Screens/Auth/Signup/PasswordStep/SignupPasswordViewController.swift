@@ -179,15 +179,21 @@ final class SignupPasswordViewController: UIViewController {
         }
     
     private func bindViewModel() {
-        viewModel.onFinish = { [weak self] in
-            print("✅ Qeydiyyat tamamlandı")
-            self?.coordinator?.finishSignup()
+            viewModel.onStateChange = { [weak self] state in
+                DispatchQueue.main.async {
+                    switch state {
+                    case .idle:
+                        break
+                    case .loading:
+                        break
+                    case .success:
+                        break
+                    case .error(let message):
+                        self?.present(Alert.showAlert(title: "Error", message: message), animated: true)                    }
+                }
+            }
         }
-
-        viewModel.onError = { [weak self] errorMessage in
-            self?.showAlert(title: "Xəta", message: errorMessage)
-        }
-    }
+    
 
         // MARK: - Action
         @objc private func didTapNext() {

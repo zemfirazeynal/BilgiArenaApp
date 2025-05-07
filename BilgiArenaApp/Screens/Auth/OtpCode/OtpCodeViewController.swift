@@ -177,13 +177,20 @@ class OtpCodeViewController: UIViewController {
     }
 
     private func bindViewModel() {
-//        viewModel.onNextStep = { [weak self] in
-//                print(" OTP təsdiqləndi və növbəti mərhələyə keçilir")
-//            }
-
-            viewModel.onError = { [weak self] error in
-                self?.showAlert(title: "Xəta", message: error)
-            }
+        viewModel.onStateChange = { [weak self] state in
+                    DispatchQueue.main.async {
+                        switch state {
+                        case .idle:
+                            break
+                        case .loading:
+                            break
+                        case .success(_):
+                             break
+                        case .error(let message):
+                            self?.present(Alert.showAlert(title: "Error", message: message), animated: true)
+                        }
+                    }
+                }
     }
     
     // MARK: - Action

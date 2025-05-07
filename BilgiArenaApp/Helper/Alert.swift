@@ -11,7 +11,7 @@ import UIKit
 class Alert {
     static func showAlert(title: String, message: String?) -> UIAlertController {
         let alertController = UIAlertController(title: title,
-                                                message: message ?? "",
+                                                message: message,
                                                 preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: "Ok", style: .cancel)
