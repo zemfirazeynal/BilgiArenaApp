@@ -12,6 +12,8 @@ protocol SignUpEmailViewModelProtocol {
     var onNextStep: (() -> Void)? { get set }
     var onError: ((String) -> Void)? { get set }
 
+    var onStateChange: ((ViewState) -> Void)? { get set }
+
     func proceedIfValid()
 }
 
@@ -19,6 +21,9 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
     var email: String = ""
     var onNextStep: (() -> Void)?
     var onError: ((String) -> Void)?
+    
+    var onStateChange: ((ViewState) -> Void)?
+
 
     private let manager: RegisterManagerUseCase
 
@@ -26,24 +31,24 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
         self.manager = manager
     }
 
+    
     func proceedIfValid() {
-        guard isValidEmail(email) else {
-            onError?("Email düzgün deyil")
-            return
-        }
+            guard isValidEmail(email) else {
+                onStateChange?(.error(message: "Please enter a valid email address."))
+                return
+            }
 
         onNextStep?()
 
         manager.sendOtp(email: email) { [weak self] success, error in
-            guard let self = self else { return }
-
-            if !success {
-                DispatchQueue.main.async {
-                    self.onError?(error ?? "OTP göndərilmədi")  
+                if !success {
+                    DispatchQueue.main.async {
+                        self?.onStateChange?(.error(message: error ?? "Failed to send OTP"))
+                    }
                 }
             }
         }
-    }
+
 
     private func isValidEmail(_ email: String) -> Bool {
         return email.contains("@") && email.contains(".")

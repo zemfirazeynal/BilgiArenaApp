@@ -106,19 +106,44 @@ class NewPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(named: "app_background_color") ?? .white
-
+        configureViewAppearance()
+        configureNavigationHeader()
+        configureLayout()
+        configureActions()
+        bindViewModel()
+    }
+    
+    private func configureViewAppearance() {
+        view.backgroundColor = UIColor(named: "app_background_color")
+    }
+    
+    private func configureNavigationHeader(){
         navigationHeader.onBackTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
-        setupLayout()
-        setupActions()
-        bindViewModel()
+    }
+    
+    private func configureActions() {
+        resetButton.addTarget(
+            self,
+            action: #selector(didTapReset),
+            for: .touchUpInside
+        )
+        passwordField.addTarget(
+            self,
+            action: #selector(textFieldsDidChange),
+            for: .editingChanged
+        )
+        confirmPasswordField.addTarget(
+            self,
+            action: #selector(textFieldsDidChange),
+            for: .editingChanged
+        )
     }
 
     // MARK: - Layout
 
-    private func setupLayout() {
+    private func configureLayout() {
         [
             navigationHeader, titleLabel, descriptionLabel, passwordLabel,
             passwordField, ruleLabel, checkmarkImageView, confirmPasswordLabel,
@@ -229,26 +254,9 @@ class NewPasswordViewController: UIViewController {
         ])
     }
 
-    private func setupActions() {
-        resetButton.addTarget(
-            self,
-            action: #selector(didTapReset),
-            for: .touchUpInside
-        )
-        passwordField.addTarget(
-            self,
-            action: #selector(textFieldsDidChange),
-            for: .editingChanged
-        )
-        confirmPasswordField.addTarget(
-            self,
-            action: #selector(textFieldsDidChange),
-            for: .editingChanged
-        )
-    }
+    
 
     // MARK: - Logic
-
     private func bindViewModel() {
         viewModel.onStateChange = { [weak self] state in
             DispatchQueue.main.async {
@@ -283,10 +291,8 @@ class NewPasswordViewController: UIViewController {
         let passwordText = passwordField.text ?? ""
         let confirmText = confirmPasswordField.text ?? ""
 
-        // Tick görünməsi üçün
         checkmarkImageView.isHidden = passwordText.count < 8
 
-        // Confirm field border rəngi dəyişsin
         if !confirmText.isEmpty && passwordText == confirmText {
             confirmPasswordField.layer.borderColor =
                 UIColor(named: "app_color")?.cgColor

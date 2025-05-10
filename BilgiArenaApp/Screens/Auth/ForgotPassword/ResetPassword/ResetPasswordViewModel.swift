@@ -9,53 +9,56 @@ import Foundation
 
 protocol ResetPasswordViewModelProtocol: AnyObject {
     var email: String { get set }
-        var onNextStep: ((String) -> Void)? { get set }
-        var onError: ((String) -> Void)? { get set }
+    var onNextStep: ((String) -> Void)? { get set }
+    var onStateChange: ((ViewState) -> Void)? { get set }
 
-        func proceedIfValid()
-    }
+    func proceedIfValid()
+}
 
 final class ResetPasswordViewModel: ResetPasswordViewModelProtocol {
     var email: String = ""
     var onNextStep: ((String) -> Void)?
-    var onError: ((String) -> Void)?
-    
+    var onStateChange: ((ViewState) -> Void)?
+
     private let manager: ForgotPasswordManagerUseCase
     private weak var coordinator: ResetPasswordCoordinatorProtocol?
-    
-    
-    init(coordinator: ResetPasswordCoordinatorProtocol,manager: ForgotPasswordManagerUseCase = ForgotPasswordManager()) {
+
+    init(
+        coordinator: ResetPasswordCoordinatorProtocol,
+        manager: ForgotPasswordManagerUseCase = ForgotPasswordManager()
+    ) {
         self.coordinator = coordinator
         self.manager = manager
     }
-    
+
     func proceedIfValid() {
         let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         guard !trimmedEmail.isEmpty else {
-            onError?("Email boş ola bilməz")
+            onStateChange?(.error(message: "Email cannot be empty"))
             return
         }
-        
-        guard isValidEmail(trimmedEmail) else {
-            onError?("Email düzgün formatda deyil")
+
+        guard isValidEmail(email) else {
+            onStateChange?(.error(message: "Invalid email format"))
             return
         }
-        
-        onNextStep?(trimmedEmail)
-        
-        
+
+        self.onNextStep?(trimmedEmail)
+
         manager.sendOtp(email: trimmedEmail) { [weak self] success, error in
-            guard let self = self else { return }
-            
-            if !success {
-                DispatchQueue.main.async {
-                    self.onError?(error ?? "OTP göndərilərkən xəta baş verdi")
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+
+                if !success {
+                    self.onStateChange?(
+                        .error(message: error ?? "Failed to send OTP")
+                    )
                 }
             }
         }
-        
     }
+
     private func isValidEmail(_ email: String) -> Bool {
         return email.contains("@") && email.contains(".")
     }

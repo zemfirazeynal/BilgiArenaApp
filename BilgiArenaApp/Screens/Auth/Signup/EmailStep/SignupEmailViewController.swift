@@ -90,6 +90,7 @@ final class SignupEmailViewController: UIViewController {
         
         configureLayout()
         configureActions()
+        bindViewModel()
     }
     
     private func configureViewAppearance() {
@@ -196,11 +197,25 @@ final class SignupEmailViewController: UIViewController {
     }
 
     private func bindViewModel() {
-        viewModel.onNextStep = { [weak self] in
-            self?.coordinator?.showOtpCodeStep(
-                email: self?.viewModel.email ?? ""
-            )
-        }
+        
+        viewModel.onStateChange = { [weak self] state in
+               DispatchQueue.main.async {
+                   switch state {
+                   case .idle:
+                       break
+                   case .loading:
+                       break
+                   case .success:
+                       
+                       break
+                   case .error(let message):
+                       self?.present(
+                           Alert.showAlert(title: "Error", message: message),
+                           animated: true
+                       )
+                   }
+               }
+           }
     }
 
     @objc private func didTapNext() {

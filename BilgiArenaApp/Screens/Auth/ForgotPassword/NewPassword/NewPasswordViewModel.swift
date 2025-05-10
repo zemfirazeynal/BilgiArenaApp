@@ -12,7 +12,6 @@ protocol NewPasswordViewModelProtocol {
     var token: String { get }
 
     func resetPassword(password: String, confirmPassword: String)
-    var onError: ((String) -> Void)? { get set }
 
     var onStateChange: ((ViewState) -> Void)? { get set }
 
