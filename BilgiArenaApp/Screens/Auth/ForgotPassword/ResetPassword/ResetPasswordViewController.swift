@@ -48,34 +48,52 @@ class ResetPasswordViewController: UIViewController {
         return button
     }()
 
-    
+    private var coordinator: ResetPasswordCoordinatorProtocol?
     private let viewModel: ResetPasswordViewModelProtocol
 
-        init(viewModel: ResetPasswordViewModelProtocol) {
-            self.viewModel = viewModel
-            super.init(nibName: nil, bundle: nil)
-        }
+    init(
+        viewModel: ResetPasswordViewModelProtocol,
+        coordinator: ResetPasswordCoordinatorProtocol
+    ) {
+        self.viewModel = viewModel
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
 
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "app_background_color") ?? .white
+        configureViewAppearance()
+        configureLayout()
+        configureNavigationHeader()
+        configureActions()
+        bindViewModel()
 
+    }
+    private func configureViewAppearance() {
+        view.backgroundColor = UIColor(named: "app_background_color")
+    }
+
+    private func configureNavigationHeader() {
         navigationHeader.onBackTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
+    }
 
-        setupLayout()
+    private func configureActions() {
         nextButton.addTarget(
-            self, action: #selector(didTapNext), for: .touchUpInside)
+            self,
+            action: #selector(didTapNext),
+            for: .touchUpInside
+        )
     }
 
     // MARK: - Layout
-    private func setupLayout() {
+    private func configureLayout() {
         [
             navigationHeader, titleLabel, subtitleLabel, emailTextField,
             nextButton,
@@ -85,47 +103,89 @@ class ResetPasswordViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             navigationHeader.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor),
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
             navigationHeader.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor
+            ),
             navigationHeader.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
+                equalTo: view.trailingAnchor
+            ),
             navigationHeader.heightAnchor.constraint(equalToConstant: 48),
 
             titleLabel.centerYAnchor.constraint(
-                equalTo: navigationHeader.centerYAnchor),
+                equalTo: navigationHeader.centerYAnchor
+            ),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             subtitleLabel.topAnchor.constraint(
-                equalTo: titleLabel.bottomAnchor, constant: 40),
+                equalTo: titleLabel.bottomAnchor,
+                constant: 40
+            ),
             subtitleLabel.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 24),
+                equalTo: view.leadingAnchor,
+                constant: 24
+            ),
             subtitleLabel.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -24),
+                equalTo: view.trailingAnchor,
+                constant: -24
+            ),
 
             emailTextField.topAnchor.constraint(
-                equalTo: subtitleLabel.bottomAnchor, constant: 24),
+                equalTo: subtitleLabel.bottomAnchor,
+                constant: 24
+            ),
             emailTextField.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 24),
+                equalTo: view.leadingAnchor,
+                constant: 24
+            ),
             emailTextField.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -24),
+                equalTo: view.trailingAnchor,
+                constant: -24
+            ),
             emailTextField.heightAnchor.constraint(equalToConstant: 56),
 
-            nextButton.topAnchor.constraint(
-                equalTo: emailTextField.bottomAnchor, constant: 24),
+            nextButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16
+            ),
             nextButton.leadingAnchor.constraint(
-                equalTo: emailTextField.leadingAnchor),
+                equalTo: emailTextField.leadingAnchor
+            ),
             nextButton.trailingAnchor.constraint(
-                equalTo: emailTextField.trailingAnchor),
+                equalTo: emailTextField.trailingAnchor
+            ),
             nextButton.heightAnchor.constraint(equalToConstant: 56),
         ])
     }
 
+    private func bindViewModel() {
+        viewModel.onNextStep = { [weak self] email in
+            self?.coordinator?.showOtpCodeScreen(email: email)
+        }
+
+        viewModel.onStateChange = { [weak self] state in
+            DispatchQueue.main.async {
+                switch state {
+                case .idle:
+                    break
+                case .loading:
+                    break
+                case .success:
+                    break
+                case .error(let message):
+                    self?.present(
+                        Alert.showAlert(title: "Error", message: message),
+                        animated: true
+                    )
+                }
+            }
+        }
+    }
+
     @objc private func didTapNext() {
-        // API hələ hazır deyil amma biz NewPassword ekranına keçirik
-
-        viewModel.didTapNext()
-
+        viewModel.email = emailTextField.text ?? ""
+        viewModel.proceedIfValid()
     }
 
 }
