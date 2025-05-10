@@ -9,14 +9,16 @@ import Foundation
 import UIKit
 
 protocol ResetPasswordCoordinatorProtocol: AnyObject {
-    func showOtpCodeScreen()
+    func showOtpCodeScreen(email: String)
 
-    func showNewPasswordScreen()
+    func showNewPasswordScreen(token: String)
 
     func goToLoginScreen()
 }
 
 final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
+  
+    
    
     
 
@@ -31,15 +33,14 @@ final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
             navigationController.pushViewController(vc, animated: true)
         }
 
-        func showOtpCodeScreen() {
-            print("showOtpCodeScreen() called")
+        func showOtpCodeScreen(email: String) {
 
-            let vc = ResetPasswordBuilder.buildOtpCode(coordinator: self)
+            let vc = ResetPasswordBuilder.buildOtpCode(coordinator: self, email: email)
             navigationController.pushViewController(vc, animated: true)
         }
     
-    func showNewPasswordScreen() {
-        let vc = ResetPasswordBuilder.buildNewPassword(coordinator: self)
+    func showNewPasswordScreen(token: String) {
+        let vc = ResetPasswordBuilder.buildNewPassword(coordinator: self, token:  token)
         navigationController.pushViewController(vc, animated: true)
     }
 

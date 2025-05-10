@@ -51,6 +51,8 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
             onStateChange?(.error(message: "OTP code must be 6 digits long."))
             return
         }
+        print("📨 Verifying OTP: \(otpCode) for email: \(email)")
+
 
         onStateChange?(.loading)
 
@@ -65,7 +67,7 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
                         .showPasswordStep(token: token)
                 case .forgotPassword:
                     (self.coordinator as? ResetPasswordCoordinatorProtocol)?
-                        .showNewPasswordScreen()
+                        .showNewPasswordScreen(token: token)
                 }
             } else {
                 onStateChange?(

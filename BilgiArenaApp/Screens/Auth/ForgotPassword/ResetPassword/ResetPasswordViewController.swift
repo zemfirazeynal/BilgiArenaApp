@@ -48,11 +48,12 @@ class ResetPasswordViewController: UIViewController {
         return button
     }()
 
-    
+    private var coordinator: ResetPasswordCoordinatorProtocol?
     private let viewModel: ResetPasswordViewModelProtocol
 
-        init(viewModel: ResetPasswordViewModelProtocol) {
+        init(viewModel: ResetPasswordViewModelProtocol, coordinator: ResetPasswordCoordinatorProtocol) {
             self.viewModel = viewModel
+            self.coordinator = coordinator
             super.init(nibName: nil, bundle: nil)
         }
 
@@ -72,6 +73,10 @@ class ResetPasswordViewController: UIViewController {
         setupLayout()
         nextButton.addTarget(
             self, action: #selector(didTapNext), for: .touchUpInside)
+        print("👀 Coordinator nil-di? \(coordinator == nil)")
+
+        bindViewModel()
+
     }
 
     // MARK: - Layout
@@ -120,12 +125,21 @@ class ResetPasswordViewController: UIViewController {
             nextButton.heightAnchor.constraint(equalToConstant: 56),
         ])
     }
+    
+    private func bindViewModel() {
+        viewModel.onNextStep = { [weak self] email in
+
+                guard let coordinator = self?.coordinator else {
+                    return
+                }
+
+                coordinator.showOtpCodeScreen(email: email)
+            }
+    }
 
     @objc private func didTapNext() {
-        // API hələ hazır deyil amma biz NewPassword ekranına keçirik
-
-        viewModel.didTapNext()
-
+        viewModel.email = emailTextField.text ?? ""
+        viewModel.proceedIfValid()
     }
 
 }
