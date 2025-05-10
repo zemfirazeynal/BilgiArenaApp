@@ -50,7 +50,13 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
         }
 
 
+//    private func isValidEmail(_ email: String) -> Bool {
+//        return email.contains("@") && email.contains(".")
+//    }
+    
     private func isValidEmail(_ email: String) -> Bool {
-        return email.contains("@") && email.contains(".")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPredicate.evaluate(with: email)
     }
 }

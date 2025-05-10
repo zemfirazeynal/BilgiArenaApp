@@ -16,6 +16,7 @@ protocol LoginViewModelProtocol {
 
     func forgotPasswordTapped()
     func loginTapped()
+
 }
 
 final class LoginViewModel: LoginViewModelProtocol {
@@ -77,9 +78,20 @@ final class LoginViewModel: LoginViewModelProtocol {
         if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return "Email must not be empty. Please try again."
         }
+        
+        if !isValidEmail(email) {
+                return "Please enter a valid email address."
+            }
+        
         if password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return "Password must not be empty. Please try again."
         }
         return nil
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPredicate.evaluate(with: email)
     }
 }
