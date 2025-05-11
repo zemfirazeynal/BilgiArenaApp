@@ -13,5 +13,4 @@ struct CategoryResponse: Codable {
         let count: Int
         let description: String?
         let photo: String
-      
 }
