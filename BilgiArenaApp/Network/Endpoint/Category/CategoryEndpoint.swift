@@ -10,7 +10,7 @@ import Foundation
 enum CategoryEndpoint {
     case fetchAll
 
-    var url: String {
+    var path: String {
         switch self {
         case .fetchAll:
             return "category"        }

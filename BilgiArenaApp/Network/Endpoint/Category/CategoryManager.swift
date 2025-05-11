@@ -26,8 +26,10 @@ final class CategoryManager: CategoryManagerUseCase {
                 "Authorization": "Bearer \(token)"
             ]
             
-            let path = CategoryEndpoint.fetchAll.url
-            let params: [String: Any] = [:]
+            let path = CategoryEndpoint.fetchAll.path
+        
+
+             let _: [String: Any] = [:]
 
             // 3. NetworkManager closure-based method çağırılır
             manager.request(

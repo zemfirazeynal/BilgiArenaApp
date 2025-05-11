@@ -25,7 +25,7 @@ class NetworkManager {
     ) {
 //        let url = NetworkHelper.shared.configureURL(endpoint: endpoint)
         
-        let url = isFullURL ? endpoint : NetworkHelper.shared.configureURL(endpoint: endpoint)
+        let path = isFullURL ? endpoint : NetworkHelper.shared.configureURL(endpoint: endpoint)
 
     
         var headers: HTTPHeaders?
@@ -35,7 +35,7 @@ class NetworkManager {
         }
         
         AF.request(
-            url,
+            path,
             method: method,
             parameters: params,
             encoding: encodingType == .url ? URLEncoding.default : JSONEncoding.default,
@@ -71,7 +71,7 @@ class NetworkManager {
         header: [String: String]? = nil
     ) async throws -> T {
         
-        let url = NetworkHelper.shared.configureURL(endpoint: endpoint)
+        let path = NetworkHelper.shared.configureURL(endpoint: endpoint)
 
         var headers: HTTPHeaders?
         if let paramHeader = header {
@@ -80,7 +80,7 @@ class NetworkManager {
 
         return try await withCheckedThrowingContinuation { continuation in
             AF.request(
-                url,
+                path,
                 method: method,
                 parameters: params,
                 encoding: encodingType == .url ? URLEncoding.default : JSONEncoding.default,
@@ -90,11 +90,7 @@ class NetworkManager {
         
             .responseDecodable(of: model.self) { response in
                 let statusCode = response.response?.statusCode ?? 0
-                
-                if let rawData = response.data {
-                      print("🔵 RAW JSON:")
-                      print(String(data: rawData, encoding: .utf8) ?? "Data cannot be printed")
-                  }
+           
 
                 if (200..<300).contains(statusCode) {
                     switch response.result {
@@ -115,8 +111,8 @@ class NetworkManager {
     }
     
     // JSON cavab gözləməyən sadə success/fail request
-    func rawRequest(url: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (Bool, String?) -> Void) {
-        AF.request(url, method: method, headers: headers)
+    func rawRequest(path: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (Bool, String?) -> Void) {
+        AF.request(path, method: method, headers: headers)
             .validate()
             .response { response in
                 switch response.result {
@@ -129,8 +125,8 @@ class NetworkManager {
     }
 
     // String tipli cavab üçün (məs: JWT token)
-    func rawStringResponse(url: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (String?, String?) -> Void) {
-        AF.request(url, method: method, headers: headers)
+    func rawStringResponse(path: String, method: HTTPMethod, headers: HTTPHeaders? = nil, completion: @escaping (String?, String?) -> Void) {
+        AF.request(path, method: method, headers: headers)
             .validate()
             .responseString { response in
                 switch response.result {

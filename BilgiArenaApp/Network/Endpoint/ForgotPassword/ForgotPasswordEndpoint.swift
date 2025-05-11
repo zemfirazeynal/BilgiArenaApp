@@ -12,7 +12,7 @@ enum ForgotPasswordEndpoint {
     case verifyOtp(email: String, otp: String)
     case resetPassword(password: String)
 
-        var url: String {
+        var path: String {
             switch self {
             case .sendOtp(let email):
                 return NetworkHelper.shared.configureURL(endpoint: "forgotPassword?email=\(email)")

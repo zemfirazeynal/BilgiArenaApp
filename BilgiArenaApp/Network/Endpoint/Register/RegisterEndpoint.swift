@@ -12,7 +12,7 @@ enum RegisterEndpoint {
     case verifyOtp(email: String, otp: String)
     case setPassword(password: String)
 
-    var url: String {
+    var path: String {
         switch self {
         case .sendOtp(let email):
             return NetworkHelper.shared.configureURL(endpoint: "register/with-email?email=\(email)")
