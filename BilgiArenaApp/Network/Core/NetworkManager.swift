@@ -87,8 +87,14 @@ class NetworkManager {
                 headers: headers
             )
             .validate()
+        
             .responseDecodable(of: model.self) { response in
                 let statusCode = response.response?.statusCode ?? 0
+                
+                if let rawData = response.data {
+                      print("🔵 RAW JSON:")
+                      print(String(data: rawData, encoding: .utf8) ?? "Data cannot be printed")
+                  }
 
                 if (200..<300).contains(statusCode) {
                     switch response.result {

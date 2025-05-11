@@ -63,6 +63,7 @@ final class ChooseCategoryViewController: UIViewController {
 
         setupLayout()
         setupActions()
+        bindViewModel()
 
     }
 
@@ -106,6 +107,21 @@ final class ChooseCategoryViewController: UIViewController {
             collectionView.bottomAnchor.constraint(
                 equalTo: whiteContainerView.bottomAnchor, constant: -16),
         ])
+    }
+    
+    private func bindViewModel() {
+        viewModel.onCategoriesLoaded = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        viewModel.onError = { [weak self] message in
+                DispatchQueue.main.async {
+                    self?.present(Alert.showAlert(title: "Xəta", message: message), animated: true)
+                }
+            }
+        
+        viewModel.fetchCategories()
     }
 
     private func setupActions() {

@@ -52,5 +52,113 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DDBAF23E-F4C9-4483-BB08-2DC6339BB3D8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "fetchCategories(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DDBAF23E-F4C9-4483-BB08-2DC6339BB3D8 - 1f369fa9a73603c4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BilgiArenaApp.CategoryManager.fetchCategories(completion: (Swift.Result&lt;BilgiArenaApp.CategoryResponseModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BilgiArenaApp.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+               <Location
+                  uuid = "DDBAF23E-F4C9-4483-BB08-2DC6339BB3D8 - b18b241eb5f8886e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;BilgiArenaApp.CategoryResponseModel&gt;, Swift.Optional&lt;Swift.String&gt;) -&gt; () in BilgiArenaApp.CategoryManager.fetchCategories(completion: (Swift.Result&lt;BilgiArenaApp.CategoryResponseModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BilgiArenaApp.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "39499DFA-38C6-47C6-8031-B8F03D6CFCAF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "fetchCategories(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7F6C52B8-35DA-49E2-BDF0-1749C44BABA0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "fetchCategories(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7F6C52B8-35DA-49E2-BDF0-1749C44BABA0 - 1f369fa9a73602fa"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BilgiArenaApp.CategoryManager.fetchCategories(completion: (Swift.Result&lt;BilgiArenaApp.CategoryResponseModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BilgiArenaApp.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "35"
+                  endingLineNumber = "35">
+               </Location>
+               <Location
+                  uuid = "7F6C52B8-35DA-49E2-BDF0-1749C44BABA0 - 1f369fa9a736031b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BilgiArenaApp.CategoryManager.fetchCategories(completion: (Swift.Result&lt;BilgiArenaApp.CategoryResponseModel, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BilgiArenaApp.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Network/Endpoint/Category/CategoryManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "36"
+                  endingLineNumber = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
