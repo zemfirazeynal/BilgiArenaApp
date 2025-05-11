@@ -59,7 +59,7 @@ final class LoginViewModel: LoginViewModelProtocol {
                 guard let self else { return }
 
                 if let jwt = response?.jwt {
-                    KeychainService.shared.save(key: "jwt_token", value: jwt)
+                    KeychainService.shared.save(key: "accessToken", value: jwt)
                     self.coordinator?.showMainApp()
                 } else {
                     self.onStateChange?(

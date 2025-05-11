@@ -19,19 +19,19 @@ final class ForgotPasswordManager: ForgotPasswordManagerUseCase {
 
     // 1. Send OTP
     func sendOtp(email: String, completion: @escaping (Bool, String?) -> Void) {
-        let url = ForgotPasswordEndpoint.sendOtp(email: email).url
+        let path = ForgotPasswordEndpoint.sendOtp(email: email).path
 
-        manager.rawRequest(url: url, method: .get) { success, error in
+        manager.rawRequest(path: path, method: .get) { success, error in
             completion(success, error)
         }
     }
 
     // 2. Verify OTP and get JWT
     func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void) {
-        let url = ForgotPasswordEndpoint.verifyOtp(email: email, otp: otp).url
+        let path = ForgotPasswordEndpoint.verifyOtp(email: email, otp: otp).path
 
         manager.request(
-            endpoint: url,
+            endpoint: path,
             model: VerifyOtpResponse.self,
             method: .post,
             params: nil,
@@ -50,10 +50,10 @@ final class ForgotPasswordManager: ForgotPasswordManagerUseCase {
 
     // 3. Reset Password
     func resetPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void) {
-        let url = ForgotPasswordEndpoint.resetPassword(password: password).url
+        let path = ForgotPasswordEndpoint.resetPassword(password: password).path
         let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
 
-        manager.rawRequest(url: url, method: .post, headers: headers) { success, error in
+        manager.rawRequest(path: path, method: .post, headers: headers) { success, error in
             completion(success, error)
         }
     }

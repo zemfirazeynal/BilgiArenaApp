@@ -18,9 +18,9 @@ final class RegisterManager: RegisterManagerUseCase {
     let manager = NetworkManager()
 
     func sendOtp(email: String, completion: @escaping (Bool, String?) -> Void) {
-        let url = RegisterEndpoint.sendOtp(email: email).url
+        let path = RegisterEndpoint.sendOtp(email: email).path
 
-        manager.rawRequest(url: url, method: .post) { success, error in
+        manager.rawRequest(path: path, method: .post) { success, error in
             completion(success, error)
         }
     }
@@ -51,10 +51,10 @@ final class RegisterManager: RegisterManagerUseCase {
 //    }
 
     func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void) {
-        let url = RegisterEndpoint.verifyOtp(email: email, otp: otp).url
+        let path = RegisterEndpoint.verifyOtp(email: email, otp: otp).path
 
         manager.request(
-            endpoint: url,
+            endpoint: path,
             model: VerifyOtpResponse.self,
             method: .post,
             params: nil,
@@ -72,10 +72,10 @@ final class RegisterManager: RegisterManagerUseCase {
     }
     
     func setPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void) {
-        let url = RegisterEndpoint.setPassword(password: password).url
+        let path = RegisterEndpoint.setPassword(password: password).path
         let headers : HTTPHeaders = ["Authorization": "Bearer \(token)"]
 
-        manager.rawRequest(url: url, method: .post, headers: headers) { success, error in
+        manager.rawRequest(path: path, method: .post, headers: headers) { success, error in
             completion(success, error)
         }
     }
