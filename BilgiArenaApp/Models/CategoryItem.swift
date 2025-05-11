@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoryResponse: Codable {
+struct CategoryItem: Codable {
         let id: Int
         let name: String
         let count: Int

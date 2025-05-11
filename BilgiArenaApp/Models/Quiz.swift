@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct Quiz {
     let title: String
     let category: String
@@ -25,10 +24,18 @@ struct Quiz {
 }
 
 extension Quiz {
-    static func sampleData(for category: Category) -> [Quiz] {
-        return sampleData.filter { $0.category == category.subject }
+    init(from response: QuizItem) {
+        self.title = response.name
+                self.category = response.category.name
+                self.questionCount = response.count
+                self.iconName = response.photo
+                self.subject = response.category.name
     }
-    
-    
-    
 }
+
+
+//extension Quiz {
+//    static func sampleData(for category: Category) -> [Quiz] {
+//        return sampleData.filter { $0.category == category.subject }
+//    }
+//}

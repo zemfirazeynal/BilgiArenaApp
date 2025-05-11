@@ -57,6 +57,8 @@ final class SelectedCategoryViewController: UIViewController {
            tableView.dataSource = self
            setupUI()
            setupActions()
+           bindViewModel() // ⬅️ Bunu əlavə et
+               viewModel.fetchQuizzes() // ⬅️ Və buradan API çağır
        }
 
        private func setupActions() {
@@ -103,22 +105,48 @@ final class SelectedCategoryViewController: UIViewController {
                 tableView.bottomAnchor.constraint(equalTo: whiteContainerView.bottomAnchor)
            ])
        }
+    
+    private func bindViewModel() {
+        viewModel.onQuizzesLoaded = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+
+        viewModel.onError = { [weak self] message in
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Xəta", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self?.present(alert, animated: true)
+            }
+        }
+    }
    }
 
    extension SelectedCategoryViewController: UITableViewDelegate, UITableViewDataSource {
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-           return viewModel.quizList.count
+//           return viewModel.quizList.count
+           return viewModel.numberOfQuizList()
+
        }
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//           guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
+//                   return UITableViewCell()
+//               }
+//
+//               let quiz = viewModel.quizList[indexPath.row]
+//               let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
+//               cell.configure(with: quiz, isSelected: isSelected)
+//               
+//               return cell
+           
            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
                    return UITableViewCell()
                }
-
-               let quiz = viewModel.quizList[indexPath.row]
-               let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
+               let quiz = viewModel.quiz(at: indexPath.row)
+               let isSelected = (indexPath == selectedIndexPath)
                cell.configure(with: quiz, isSelected: isSelected)
-               
                return cell
        }
        
