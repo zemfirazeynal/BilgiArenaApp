@@ -28,7 +28,8 @@ final class SelectedCategoryCoordinator: SelectedCategoryCoordinatorProtocol {
 
     func start() {
         let viewModel = SelectedCategoryViewModel(
-            categoryName: category.subject)
+            categoryName: category.subject,
+                categoryId: category.id )
         viewModel.coordinator = self
 
         let controller = SelectedCategoryViewController(viewModel: viewModel)
