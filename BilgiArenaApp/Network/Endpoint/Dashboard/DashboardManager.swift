@@ -9,13 +9,13 @@ import Foundation
 import Alamofire
 
 protocol DashboardManagerUseCase {
-    func fetchDashboard(completion: @escaping (Result<DashboardResponse, Error>) -> Void)
+    func fetchDashboard(completion: @escaping (Result<DashboardResponseModel, Error>) -> Void)
 }
 
 final class DashboardManager: DashboardManagerUseCase {
     private let manager = NetworkManager()
     
-    func fetchDashboard(completion: @escaping (Result<DashboardResponse, Error>) -> Void) {
+    func fetchDashboard(completion: @escaping (Result<DashboardResponseModel, Error>) -> Void) {
         // 1. Token al
         let token = KeychainService.shared.read(key: "accessToken") ?? ""
         
@@ -31,7 +31,7 @@ final class DashboardManager: DashboardManagerUseCase {
         // 4. Request at
         manager.request(
             endpoint: path,
-            model: DashboardResponse.self,
+            model: DashboardResponseModel.self,
             method: .get,
             params: nil,
             encodingType: .url,

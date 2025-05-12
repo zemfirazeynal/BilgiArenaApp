@@ -42,7 +42,7 @@ protocol HomeViewModelProtocol {
 
     var quizList: [Quiz] { get }
     var user: User? { get }
-    var recentQuiz: RecentQuiz? { get }
+    var recentQuiz: RecentQuizModel? { get }
 
     func fetchDashboard()
     func didTapDiscoverCategories()
@@ -55,7 +55,7 @@ final class HomeViewModel: HomeViewModelProtocol {
 
     private(set) var quizList: [Quiz] = []
     private(set) var user: User?
-    private(set) var recentQuiz: RecentQuiz?
+    private(set) var recentQuiz: RecentQuizModel?
 
     private let coordinator: HomeCoordinator
     private let dashboardManager: DashboardManagerUseCase
@@ -77,7 +77,7 @@ final class HomeViewModel: HomeViewModelProtocol {
             switch result {
             case .success(let response):
                 self.user = response.data.user
-                    self.recentQuiz = RecentQuiz(from: response.data.quiz)
+                    self.recentQuiz = RecentQuizModel(from: response.data.quiz)
                     self.quizList = response.data.quizzes.map { Quiz(from: $0) }
                     self.onStateChange?(.success(message: ""))
 

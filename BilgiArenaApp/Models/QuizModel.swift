@@ -24,7 +24,7 @@ struct Quiz {
 }
 
 extension Quiz {
-    init(from response: QuizItemResponseModel) {
+    init(from response: QuizItemResponseData) {
         self.title = response.name
                 self.category = response.category.name
                 self.questionCount = response.count
