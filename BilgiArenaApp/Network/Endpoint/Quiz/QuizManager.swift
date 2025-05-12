@@ -10,14 +10,14 @@ import Foundation
 import Alamofire
 
 protocol QuizManagerUseCase {
-    func fetchQuizzes(by categoryId: Int, completion: @escaping (Result<[QuizItem], Error>) -> Void)
+    func fetchQuizzes(by categoryId: Int, completion: @escaping (Result<[QuizItemResponseModel], Error>) -> Void)
 
 }
 
 final class QuizManager: QuizManagerUseCase {
     private let manager = NetworkManager()
     
-    func fetchQuizzes(by categoryId: Int, completion: @escaping (Result<[QuizItem], Error>) -> Void) {
+    func fetchQuizzes(by categoryId: Int, completion: @escaping (Result<[QuizItemResponseModel], Error>) -> Void) {
         let endpoint = QuizEndpoint.fetchByCategory(categoryId).path
         let headers: [String: String] = [
             "Authorization": "Bearer \(KeychainService.shared.read(key: "accessToken") ?? "")"

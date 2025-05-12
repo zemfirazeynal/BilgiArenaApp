@@ -10,5 +10,5 @@ import Foundation
 struct QuizResponseModel: Codable {
     let code: Int
     let message: String
-    let data: [QuizItem]
+    let data: [QuizItemResponseModel]
 }

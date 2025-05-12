@@ -9,5 +9,5 @@
 struct CategoryResponseModel: Codable {
     let code: Int
     let message: String
-    let data: [CategoryItem]
+    let data: [CategoryItemResponseModel]
 }

@@ -15,7 +15,7 @@ struct Category {
 }
 
 extension Category {
-    init(from response: CategoryItem) {
+    init(from response: CategoryItemResponseModel) {
         self.subject = response.name
         self.quizCount = "\(response.count) Quizzes"
         self.imageName = response.photo

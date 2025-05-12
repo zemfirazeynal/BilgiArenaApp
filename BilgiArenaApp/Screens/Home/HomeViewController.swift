@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController{
     
-    private let quizList: [Quiz] = Quiz.sampleData
+//    private let quizList: [Quiz] = Quiz.sampleData
     
     //MARK: UI Elements
     
@@ -35,7 +35,7 @@ class HomeViewController: UIViewController{
         return label
     }()
     
-    private let musicIconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "recent_quiz_headphones")
@@ -174,6 +174,8 @@ class HomeViewController: UIViewController{
     
     
     var viewModel: HomeViewModel?
+    
+    
 //
 //    init(viewModel: HomeViewModel) {
 //        self.viewModel = viewModel
@@ -189,6 +191,8 @@ class HomeViewController: UIViewController{
         
         configureUI()
         discoverCategoriesButton.addTarget(self, action: #selector(discoverCategoriesTapped), for: .touchUpInside)
+        
+        bindViewModel()
     }
     
     override func viewDidLayoutSubviews() {
@@ -213,7 +217,7 @@ class HomeViewController: UIViewController{
         
         [   headerView,
             recentQuizView,
-            musicIconImageView,
+            iconImageView,
             featuredView,
             newQuizzesContainer,
             //            floatingAddButton
@@ -221,7 +225,7 @@ class HomeViewController: UIViewController{
         
         
         [recentQuizLabel,
-         musicIconImageView,
+         iconImageView,
          recentQuizNameLabel,
          percentageCircleView,
         ].forEach { recentQuizView.addSubview($0) }
@@ -257,7 +261,7 @@ class HomeViewController: UIViewController{
         headerView.translatesAutoresizingMaskIntoConstraints = false
         recentQuizView.translatesAutoresizingMaskIntoConstraints = false
         recentQuizLabel.translatesAutoresizingMaskIntoConstraints = false
-        musicIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
         recentQuizNameLabel.translatesAutoresizingMaskIntoConstraints = false
         recentQuizPercentageLabel.translatesAutoresizingMaskIntoConstraints = false
         featuredView.translatesAutoresizingMaskIntoConstraints = false
@@ -283,13 +287,13 @@ class HomeViewController: UIViewController{
             recentQuizLabel.topAnchor.constraint(equalTo: recentQuizView.topAnchor, constant: 16),
             recentQuizLabel.leadingAnchor.constraint(equalTo: recentQuizView.leadingAnchor, constant: 24),
             
-            musicIconImageView.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
-            musicIconImageView.leadingAnchor.constraint(equalTo: recentQuizView.leadingAnchor, constant: 24),
-            musicIconImageView.widthAnchor.constraint(equalToConstant: 24),
-            musicIconImageView.heightAnchor.constraint(equalToConstant: 24),
+            iconImageView.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
+            iconImageView.leadingAnchor.constraint(equalTo: recentQuizView.leadingAnchor, constant: 24),
+            iconImageView.widthAnchor.constraint(equalToConstant: 24),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24),
             
             recentQuizNameLabel.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
-            recentQuizNameLabel.leadingAnchor.constraint(equalTo: musicIconImageView.leadingAnchor, constant: 28),
+            recentQuizNameLabel.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: 28),
             
             percentageCircleView.widthAnchor.constraint(equalToConstant: 48),
             percentageCircleView.heightAnchor.constraint(equalToConstant: 48),
@@ -346,6 +350,42 @@ class HomeViewController: UIViewController{
         
     }
     
+    private func bindViewModel() {
+        viewModel?.onStateChange = { [weak self] state in
+            DispatchQueue.main.async {
+                switch state {
+                case .idle:
+                    break
+                case .loading:
+                    break
+                case .success:
+                    if let user = self?.viewModel?.user {
+                        self?.headerView.configure(
+                            name: user.username,
+                            avatarImage: UIImage(named: user.picture)
+                        )
+                    }
+
+                    if let recent = self?.viewModel?.recentQuiz {
+                        self?.recentQuizNameLabel.text = recent.title
+                        self?.iconImageView.image = UIImage(named: recent.iconName)
+                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
+                    }
+
+                    self?.quizTableView.reloadData()
+
+                case .error(let message):
+                    self?.present(
+                        Alert.showAlert(title: "Xəta", message: message),
+                        animated: true
+                    )
+                }
+            }
+        }
+
+        viewModel?.fetchDashboard()
+    }
+    
     @objc private func discoverCategoriesTapped() {
         viewModel?.didTapDiscoverCategories()
     }
@@ -353,18 +393,18 @@ class HomeViewController: UIViewController{
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quizList.count
+        return viewModel?.quizList.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
-            return UITableViewCell()
-        }
-        let quiz = quizList[indexPath.row]
-        let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
-        cell.configure(with: quiz, isSelected: isSelected)
-        
-        return cell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell,
+                  let quiz = viewModel?.quizList[indexPath.row] else {
+                return UITableViewCell()
+            }
+
+            let isSelected = (indexPath == selectedIndexPath)
+            cell.configure(with: quiz, isSelected: isSelected)
+            return cell
 }
 
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
