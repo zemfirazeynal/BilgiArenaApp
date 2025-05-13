@@ -17,16 +17,6 @@ class StatisticsViewController: UIViewController {
         return header
     }()
 
-//    private let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Leaderboard"
-//        label.font = .systemFont(ofSize: 24)
-//        label.textAlignment = .center
-//        label.textColor = .white
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-
     private let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -85,10 +75,6 @@ class StatisticsViewController: UIViewController {
             navigationHeader.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor),
 
-//            // Title
-//            titleLabel.centerYAnchor.constraint(
-//                equalTo: navigationHeader.centerYAnchor),
-//            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
             // Container View
             containerView.topAnchor.constraint(

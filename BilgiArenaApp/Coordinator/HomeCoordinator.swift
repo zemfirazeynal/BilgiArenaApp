@@ -27,15 +27,6 @@ final class HomeCoordinator: Coordinator, HomeCoordinatorProtocol {
         self.navigationController = navigationController
     }
 
-    //    func start() -> UIViewController {
-    //        let viewModel = HomeViewModel()
-    //        viewModel.onDiscoverTapped = { [weak self] in
-    //            self?.showChooseCategoryScreen()
-    //        }
-    //
-    //        let homeVC = HomeViewController(viewModel: viewModel)
-    //        return homeVC
-    //    }
 
     func start() {
         let controller = HomeViewController()
