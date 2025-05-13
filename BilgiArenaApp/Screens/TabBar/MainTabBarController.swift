@@ -42,35 +42,23 @@ class MainTabBarController: UITabBarController {
     }
     
     private func configureViewControllers() {
-//        let homeVC = createTabNavController(
-//            rootVC: HomeViewController(viewModel: .init(coordinator: HomeCoordinator(navigationController: UINavigationController()))),
-//            imageName: "tab_home",
-//            tag: 0
-//        )
         
         let homeController = HomeViewController()
         homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
         let homeNav = UINavigationController(rootViewController: homeController)
         homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
 
-        let searchVC = createTabNavController(
-            rootVC: SearchViewController(viewModel: SearchViewModel()),
-            imageName: "tab_search",
-            tag: 1
-        )
-
-        let statisticsVC = createTabNavController(
-            rootVC: StatisticsViewController(),
-            imageName: "tab_statistics",
-            tag: 2
-        )
-
         
-//        let profileVC = createTabNavController(
-//            rootVC: ProfileViewController(viewModel: ProfileViewModel(coordinator: <#ProfileCoordinator#>)),
-//            imageName: "tab_profile",
-//            tag: 3
-//        )
+        let searchController = SearchViewController()
+        searchController.tabBarItem = UITabBarItem.customImageItem(named: "tab_search") ?? UITabBarItem()
+        let searchNav = UINavigationController(rootViewController: searchController)
+        searchController.viewModel = .init(coordinator: .init(navigationController: searchNav))
+        
+        
+        let statisticsVC = StatisticsViewController()
+          statisticsVC.tabBarItem = UITabBarItem.customImageItem(named: "tab_statistics") ?? UITabBarItem()
+        _ = UINavigationController(rootViewController: statisticsVC)
+
         
         let profileController = ProfileViewController()
         profileController.tabBarItem = UITabBarItem.customImageItem(named: "tab_profile") ?? UITabBarItem()
@@ -78,7 +66,7 @@ class MainTabBarController: UITabBarController {
         profileController.viewModel = .init(coordinator: .init(navigationController: profileNav))
         
         
-        viewControllers = [homeNav, searchVC, statisticsVC, profileNav]
+        viewControllers = [homeNav, searchNav, statisticsVC, profileNav]
     }
     
     private func configureTabBarAppearance() {
