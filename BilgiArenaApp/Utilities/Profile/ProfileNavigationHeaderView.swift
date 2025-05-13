@@ -70,13 +70,8 @@ class ProfileNavigationHeaderView: UIView {
                settingsButton.heightAnchor.constraint(equalToConstant: 32)
            ])
            
-//           settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
        }
        
-       
-//    @objc private func settingsTapped() {
-//           onSettingsTap?()
-//       }
     
     func setSettingsTarget(target: Any?, action: Selector) {
             settingsButton.addTarget(target, action: action, for: .touchUpInside)

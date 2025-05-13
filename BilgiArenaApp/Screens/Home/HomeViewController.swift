@@ -204,7 +204,7 @@ class HomeViewController: UIViewController{
     }
     private func configureUI() {
         
-        viewModel = .init(coordinator: .init(navigationController: navigationController ?? UINavigationController()))
+//        viewModel = .init(coordinator: .init(navigationController: navigationController ?? UINavigationController()))
         view.backgroundColor = UIColor(named: "app_color")
         
         addSubviews()

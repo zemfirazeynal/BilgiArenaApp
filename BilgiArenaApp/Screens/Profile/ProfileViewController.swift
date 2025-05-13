@@ -105,23 +105,16 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 
 
     private func configureUI() {
-        viewModel = .init(
-            coordinator: .init(
-                navigationController: navigationController
-                    ?? UINavigationController()))
-
         setupBackground()
         setupLayout()
         setupActions()
     }
     private func setupActions() {
-        //            navigationHeader.onSettingsTap = { [weak self] in
-        //                self?.viewModel?.didTapSettings()
-        //            }
-
         navigationHeader.translatesAutoresizingMaskIntoConstraints = false
         navigationHeader.setSettingsTarget(
-            target: self, action: #selector(didTapSettings))
+                target: self,
+                action: #selector(didTapSettings)
+            )
     }
 
     private func setupBackground() {
@@ -262,7 +255,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @objc private func didTapSettings() {
-        printContent("controller tapped")
         viewModel?.didTapSettings()
     }
     
