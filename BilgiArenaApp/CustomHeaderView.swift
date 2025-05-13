@@ -28,7 +28,7 @@ class CustomHeaderView: UIView {
 
         private let nameLabel: UILabel = {
             let label = UILabel()
-            label.text = "Madelyn Dias"
+//            label.text = "Madelyn Dias"
             label.font = UIFont.boldSystemFont(ofSize: 20)
             label.textColor = .white
             label.translatesAutoresizingMaskIntoConstraints = false

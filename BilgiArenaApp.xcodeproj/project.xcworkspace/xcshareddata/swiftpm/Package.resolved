@@ -1,9 +1,5 @@
 {
-<<<<<<< Updated upstream
-  "originHash" : "2b6a510d1ba0554bb1c56c59f54684984e4ad0257d41d917ee1879751bd2186f",
-=======
   "originHash" : "c37daf6ab40a31a9d4e0581fde27c91457e067f8cf5fa1723a8bb910131a6018",
->>>>>>> Stashed changes
   "pins" : [
     {
       "identity" : "alamofire",
