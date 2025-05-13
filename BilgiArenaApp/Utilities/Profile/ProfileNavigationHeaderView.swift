@@ -9,16 +9,16 @@ import UIKit
 
 class ProfileNavigationHeaderView: UIView {
 
-       var onBackTap: (() -> Void)?
+//       var onBackTap: (() -> Void)?
        var onSettingsTap: (() -> Void)?
        
-       private let backButton: UIButton = {
-           let button = UIButton(type: .system)
-           button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
-           button.tintColor = .white
-           button.translatesAutoresizingMaskIntoConstraints = false
-           return button
-       }()
+//       private let backButton: UIButton = {
+//           let button = UIButton(type: .system)
+//           button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+//           button.tintColor = .white
+//           button.translatesAutoresizingMaskIntoConstraints = false
+//           return button
+//       }()
        
        private let settingsButton: UIButton = {
            let button = UIButton(type: .system)
@@ -29,14 +29,14 @@ class ProfileNavigationHeaderView: UIView {
        }()
    
     
-    init(hideBackButton: Bool = false) {
-        super.init(frame: .zero)
-        setupView()
-
-        if hideBackButton {
-            backButton.isHidden = true
-        }
-    }
+//    init(hideBackButton: Bool = false) {
+//        super.init(frame: .zero)
+//        setupView()
+//
+//        if hideBackButton {
+//            backButton.isHidden = true
+//        }
+//    }
     
     
        
@@ -51,15 +51,19 @@ class ProfileNavigationHeaderView: UIView {
        }
        
        private func setupView() {
-           addSubview(backButton)
+//           addSubview(backButton)
+           translatesAutoresizingMaskIntoConstraints = false
            addSubview(settingsButton)
            
            NSLayoutConstraint.activate([
-               backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-               backButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-               backButton.widthAnchor.constraint(equalToConstant: 32),
-               backButton.heightAnchor.constraint(equalToConstant: 32),
+//               backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+//               backButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+//               backButton.widthAnchor.constraint(equalToConstant: 32),
+//               backButton.heightAnchor.constraint(equalToConstant: 32),
                
+               heightAnchor.constraint(equalToConstant: 48),
+
+            
                settingsButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
                settingsButton.centerYAnchor.constraint(equalTo: centerYAnchor),
                settingsButton.widthAnchor.constraint(equalToConstant: 32),
@@ -79,3 +83,8 @@ class ProfileNavigationHeaderView: UIView {
         }
 
 }
+
+
+
+
+

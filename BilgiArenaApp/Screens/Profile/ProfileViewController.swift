@@ -9,7 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     private let profileHeaderView = ProfileHeaderView()
-    let navigationHeader = ProfileNavigationHeaderView(hideBackButton: true)
+    let navigationHeader = ProfileNavigationHeaderView(/*hideBackButton: true*/)
 
     //    private let scrollView = UIScrollView()
     //    private let contentView = UIView()
@@ -88,10 +88,21 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         configureUI()
     }
     
-    override func viewDidAppear(_ animated: Bool) { //new
-        super.viewDidAppear(animated)
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+//    override func viewDidAppear(_ animated: Bool) { //new
+//        super.viewDidAppear(animated)
+//        navigationController?.interactivePopGestureRecognizer?.delegate = self
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
+ 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
 
     private func configureUI() {
         viewModel = .init(
@@ -140,7 +151,8 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(infoBoxContainerView)
         view.addSubview(whiteContainerView)
 
-        navigationHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true // new
+//        navigationHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true // new
+        
 
         // White container içində yalnız scrollView olacaq
         
@@ -161,15 +173,19 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 
         NSLayoutConstraint.activate([
 
-
+            navigationHeader.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
             navigationHeader.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
+                equalTo: view.leadingAnchor
+            ),
             navigationHeader.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-            navigationHeader.heightAnchor.constraint(equalToConstant: 24),
+                equalTo: view.trailingAnchor
+            ),
+            navigationHeader.heightAnchor.constraint(equalToConstant: 48),
 
             profileHeaderView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+                equalTo: navigationHeader.topAnchor, constant: 60),
             profileHeaderView.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor),
             profileHeaderView.heightAnchor.constraint(equalToConstant: 144),
@@ -183,7 +199,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
             infoBoxContainerView.heightAnchor.constraint(equalToConstant: 100),
 
             whiteContainerView.topAnchor.constraint(
-                equalTo: navigationHeader.bottomAnchor, constant: 60),
+                equalTo: navigationHeader.bottomAnchor, constant: 80),
             whiteContainerView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor, constant: 8),
             whiteContainerView.trailingAnchor.constraint(
