@@ -13,8 +13,6 @@ class SearchViewController: UIViewController {
     private let quizList: [Quiz] = Quiz.sampleData
 
     private var selectedIndexPath: IndexPath?
-
-//    private let navigationHeader = SearchNavigationHeaderView(title: "Discover")
     
     private let navigationHeader: CustomNavigationHeaderView = {
             let header = CustomNavigationHeaderView(title: "Discover", showsBackButton: false, titleColor: .white)
@@ -69,15 +67,6 @@ class SearchViewController: UIViewController {
         return label
     }()
 
-    private let seeAllButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("See all", for: .normal)
-        button.setTitleColor(
-            UIColor(red: 0.42, green: 0.36, blue: 1.0, alpha: 1.0), for: .normal
-        )
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        return button
-    }()
 
     private let quizHeaderStack: UIStackView = {
         let stack = UIStackView()
@@ -158,10 +147,9 @@ class SearchViewController: UIViewController {
         view.bringSubviewToFront(navigationHeader)
 
         quizHeaderStack.addArrangedSubview(quizLabel)
-        quizHeaderStack.addArrangedSubview(seeAllButton)
 
         containerView.addSubview(quizHeaderStack)
-        containerView.addSubview(quizTableView)  // 💥 BUNU Ə
+        containerView.addSubview(quizTableView)
     }
 
     private func setupConstraints() {
@@ -199,10 +187,6 @@ class SearchViewController: UIViewController {
             quizLabel.leadingAnchor.constraint(
                 equalTo: containerView.leadingAnchor, constant: 16),
 
-            seeAllButton.centerYAnchor.constraint(
-                equalTo: quizLabel.centerYAnchor),
-            seeAllButton.trailingAnchor.constraint(
-                equalTo: containerView.trailingAnchor, constant: -16),
 
             quizTableView.topAnchor.constraint(
                 equalTo: quizHeaderStack.bottomAnchor, constant: 12),

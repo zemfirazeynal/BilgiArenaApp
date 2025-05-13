@@ -42,11 +42,6 @@ class MainTabBarController: UITabBarController {
     }
     
     private func configureViewControllers() {
-//        let homeVC = createTabNavController(
-//            rootVC: HomeViewController(viewModel: .init(coordinator: HomeCoordinator(navigationController: UINavigationController()))),
-//            imageName: "tab_home",
-//            tag: 0
-//        )
         
         let homeController = HomeViewController()
         homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
@@ -65,12 +60,6 @@ class MainTabBarController: UITabBarController {
             tag: 2
         )
 
-        
-//        let profileVC = createTabNavController(
-//            rootVC: ProfileViewController(viewModel: ProfileViewModel(coordinator: <#ProfileCoordinator#>)),
-//            imageName: "tab_profile",
-//            tag: 3
-//        )
         
         let profileController = ProfileViewController()
         profileController.tabBarItem = UITabBarItem.customImageItem(named: "tab_profile") ?? UITabBarItem()
