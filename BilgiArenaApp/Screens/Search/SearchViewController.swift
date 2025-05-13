@@ -89,19 +89,19 @@ class SearchViewController: UIViewController {
         return tableView
     }()
 
-    private var viewModel: SearchViewModelProtocol
+     var viewModel: SearchViewModel?
 
-    init(viewModel: SearchViewModelProtocol) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init(viewModel: SearchViewModelProtocol) {
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
     private func bindViewModel() {
-        viewModel.onUpdate = { [weak self] in
+        viewModel?.onUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.quizTableView.reloadData()
             }
@@ -221,7 +221,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
         -> Int
     {
-        return viewModel.numberOfQuizzes()
+        return viewModel?.numberOfQuizzes() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
@@ -230,10 +230,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.dequeueReusableCell(
                 withIdentifier: "QuizCell", for: indexPath)
             as! QuizTableViewCell
-        let quiz = viewModel.quiz(at: indexPath.row)
-//        cell.configure(with: quiz)
-            let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
-            cell.configure(with: quiz, isSelected: isSelected)
+            if let quiz = viewModel?.quiz(at: indexPath.row) {
+                let isSelected = (indexPath == selectedIndexPath)
+                cell.configure(with: quiz, isSelected: isSelected)
+            }
         return cell
     }
 
@@ -242,7 +242,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
-        tableView.reloadData() // Hər şeyi yeniləyir ki, seçilən cell görünüşü dəyişsin
+            tableView.reloadData()
+        viewModel?.didSelectItem(at: indexPath.row) 
+
     }
     func tableView(
         _ tableView: UITableView, heightForRowAt indexPath: IndexPath
@@ -254,6 +256,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.filterQuizzes(with: searchText)
+        viewModel?.filterQuizzes(with: searchText)
     }
 }

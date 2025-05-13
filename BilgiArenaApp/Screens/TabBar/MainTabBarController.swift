@@ -48,11 +48,17 @@ class MainTabBarController: UITabBarController {
         let homeNav = UINavigationController(rootViewController: homeController)
         homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
 
-        let searchVC = createTabNavController(
-            rootVC: SearchViewController(viewModel: SearchViewModel()),
-            imageName: "tab_search",
-            tag: 1
-        )
+//        let searchVC = createTabNavController(
+//            rootVC: SearchViewController(viewModel: SearchViewModel()),
+//            imageName: "tab_search",
+//            tag: 1
+//        )
+        
+        let searchController = SearchViewController()
+        searchController.tabBarItem = UITabBarItem.customImageItem(named: "tab_search") ?? UITabBarItem()
+        let searchNav = UINavigationController(rootViewController: searchController)
+        searchController.viewModel = .init(coordinator: .init(navigationController: searchNav))
+        
 
         let statisticsVC = createTabNavController(
             rootVC: StatisticsViewController(),
@@ -67,7 +73,7 @@ class MainTabBarController: UITabBarController {
         profileController.viewModel = .init(coordinator: .init(navigationController: profileNav))
         
         
-        viewControllers = [homeNav, searchVC, statisticsVC, profileNav]
+        viewControllers = [homeNav, searchNav, statisticsVC, profileNav]
     }
     
     private func configureTabBarAppearance() {
