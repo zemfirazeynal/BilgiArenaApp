@@ -26,9 +26,31 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .appBackground
         setupNavigationHeader()
+        setupActions()
         setupTableView()
         setupLogoutButton()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+    }
+ 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        
+
+    }
+    
+    private func setupActions() {
+        navigationHeader.onBackTap = { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
     
     private func setupNavigationHeader() {
         view.addSubview(navigationHeader)
@@ -70,6 +92,10 @@ class SettingsViewController: UIViewController {
             logoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
+    }
+    
+    @objc private func didTapBack() {
+        dismiss(animated: true, completion: nil)
     }
 
     @objc private func didTapLogout() {

@@ -30,8 +30,9 @@ final class ProfileCoordinator: Coordinator {
      func showSettings() {
          print("coordinator tapped")
          let controller = SettingsViewController()
-         controller.hidesBottomBarWhenPushed = true
-         navigationController.show(controller, sender: nil)
+         let nav = UINavigationController(rootViewController: controller)
+         nav.modalPresentationStyle = .fullScreen
+         navigationController.present(nav, animated: true)
     }
 }
 

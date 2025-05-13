@@ -49,7 +49,6 @@ class MainTabBarController: UITabBarController {
 //        )
         
         let homeController = HomeViewController()
-//        homeController.tabBarItem = .init(title: nil, image: UIImage(named: "tab_home"), selectedImage: nil)
         homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
         let homeNav = UINavigationController(rootViewController: homeController)
         homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
@@ -78,11 +77,6 @@ class MainTabBarController: UITabBarController {
         let profileNav = UINavigationController(rootViewController: profileController)
         profileController.viewModel = .init(coordinator: .init(navigationController: profileNav))
         
-        
-        /*
-         let homeCoordinator = HomeCoordinator(navigationController: homeNav)
-         homeCoordinator.start()
-         */
         
         viewControllers = [homeNav, searchVC, statisticsVC, profileNav]
     }
