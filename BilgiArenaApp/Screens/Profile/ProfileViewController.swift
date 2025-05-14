@@ -8,11 +8,10 @@
 import UIKit
 
 class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
+    
     private let profileHeaderView = ProfileHeaderView()
     let navigationHeader = ProfileNavigationHeaderView(/*hideBackButton: true*/)
 
-    //    private let scrollView = UIScrollView()
-    //    private let contentView = UIView()
 
     private let whiteContainerView: UIView = {
         let view = UIView()
@@ -144,11 +143,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         view.addSubview(infoBoxContainerView)
         view.addSubview(whiteContainerView)
 
-//        navigationHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true // new
-        
-
         // White container içində yalnız scrollView olacaq
-        
         statsScrollView.addSubview(statsContentView)
         statsContentView.addSubview(statsSummaryView)
 
