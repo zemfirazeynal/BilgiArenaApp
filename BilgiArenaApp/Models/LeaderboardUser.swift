@@ -27,3 +27,15 @@ struct LeaderboardUser {
         LeaderboardUser(id: 10, rank: 10, name: "Zain Vaccaro", points: 200, avatarImageName: "sample_image")
     ]
 }
+
+extension LeaderboardUser {
+    static func from(response: LeaderboardResponseData, page: Int, size: Int, index: Int) -> LeaderboardUser {
+        LeaderboardUser(
+            id: response.userId,
+            rank: page * size + index + 1,
+            name: response.name,
+            points: response.totalPoints,
+            avatarImageName: "sample_image"
+        )
+    }
+}

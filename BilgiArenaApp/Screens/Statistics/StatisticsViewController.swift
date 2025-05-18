@@ -55,6 +55,9 @@ class StatisticsViewController: UIViewController {
 //        }
 
         setupLayout()
+
+        bindViewModel()
+
     }
 
     private func setupLayout() {
@@ -98,6 +101,26 @@ class StatisticsViewController: UIViewController {
         ])
     }
 
+    private func bindViewModel() {
+        viewModel.onStateChanged = { [weak self] state in
+            switch state {
+            case .loading:
+                break
+            case .loaded:
+                self?.tableView.reloadData()
+            case .empty:
+                break
+            case .error(let msg):
+                self?.present(
+                    Alert.showAlert(title: "Error", message: msg),
+                    animated: true)
+            case .idle:
+                break
+            }
+        }
+
+        viewModel.loadInitialLeaderboard()
+    }
 }
 
 extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
