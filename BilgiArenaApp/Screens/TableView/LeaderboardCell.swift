@@ -123,12 +123,11 @@ final class LeaderboardCell: UITableViewCell {
         ])
     }
 
-    // MARK: - Configure
+    
     func configure(with user: LeaderboardUser) {
         rankLabel.text = "\(user.rank)"
         nameLabel.text = user.name
         pointsLabel.text = "\(user.points) points"
         avatarImageView.image = UIImage(named: user.avatarImageName)
-
     }
 }
