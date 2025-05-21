@@ -69,6 +69,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
 
     var viewModel: ProfileViewModel?
 
@@ -85,6 +86,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
 
         configureUI()
+        bindViewModel()
     }
     
 //    override func viewDidAppear(_ animated: Bool) { //new
@@ -95,7 +97,11 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        viewModel?.fetchUserInfo() // hər dəfə yenilə
+
     }
+    
  
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -247,6 +253,36 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
 
         ])
        
+    }
+    private func bindViewModel() {
+        viewModel?.onStateChange = { [weak self] state in
+            DispatchQueue.main.async {
+                switch state {
+                case .idle:
+                    break
+
+                case .loading:
+                    // Gələcəkdə loading göstərə bilərsən
+                    break
+
+                case .success(let userInfo):
+                    self?.profileHeaderView.configure(username: userInfo.userResp.username
+                                                      /*imageName: userInfo.userResp.picture*/)
+                    self?.pointsView.update(value: "\(userInfo.totalPoint)")
+                    self?.rankView.update(value: "#\(userInfo.rank)")
+                    self?.statsSummaryView.update(with: userInfo.userQuizCOUNT) 
+
+
+                case .error(let message):
+                    self?.present(
+                        Alert.showAlert(title: "Xəta", message: message),
+                        animated: true
+                    )
+                }
+            }
+        }
+
+        viewModel?.fetchUserInfo()
     }
 
     @objc private func didTapSettings() {

@@ -16,15 +16,13 @@ final class ProfileHeaderView: UIView {
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 40
-//            imageView.layer.borderWidth = 3
-//            imageView.layer.borderColor = UIColor.white.cgColor
             return imageView
         }()
 
-        private let nameLabel: UILabel = {
+        private let usernameLabel: UILabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = "Madelyn Dias"
+            label.text = "madelyn_dias"
             label.font = UIFont.boldSystemFont(ofSize: 24)
             label.textColor = .black
             label.textAlignment = .center
@@ -46,7 +44,7 @@ final class ProfileHeaderView: UIView {
             clipsToBounds = false
 
             addSubview(avatarImageView)
-            addSubview(nameLabel)
+            addSubview(usernameLabel)
 
             NSLayoutConstraint.activate([
                 avatarImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -54,13 +52,13 @@ final class ProfileHeaderView: UIView {
                 avatarImageView.widthAnchor.constraint(equalToConstant: 96),
                 avatarImageView.heightAnchor.constraint(equalToConstant: 96),
 
-                nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
-                nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-                nameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+                usernameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+                usernameLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+                usernameLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
         }
 
-        func configure(name: String) {
-            nameLabel.text = name
+    func configure(username: String) {
+            usernameLabel.text = username
         }
 }
