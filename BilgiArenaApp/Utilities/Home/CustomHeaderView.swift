@@ -26,9 +26,9 @@ class CustomHeaderView: UIView {
             return label
         }()
 
-        private let nameLabel: UILabel = {
+        private let usernameLabel: UILabel = {
             let label = UILabel()
-//            label.text = "Madelyn Dias"
+            label.text = "madelyn_dias"
             label.font = UIFont.boldSystemFont(ofSize: 20)
             label.textColor = .white
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +75,7 @@ class CustomHeaderView: UIView {
             sunStack.axis = .horizontal
             sunStack.spacing = 6
 
-            let leftStack = UIStackView(arrangedSubviews: [sunStack, nameLabel])
+            let leftStack = UIStackView(arrangedSubviews: [sunStack, usernameLabel])
             leftStack.axis = .vertical
             leftStack.spacing = 4
 
@@ -104,7 +104,7 @@ class CustomHeaderView: UIView {
         }
 
         func configure(name: String, avatarImage: UIImage?) {
-            nameLabel.text = name
+            usernameLabel.text = name
             avatarImageView.image = avatarImage
         }
 }
