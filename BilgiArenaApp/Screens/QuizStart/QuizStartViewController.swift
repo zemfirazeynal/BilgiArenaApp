@@ -189,9 +189,6 @@ class QuizStartViewController: UIViewController {
 
         @objc private func nextTapped() {
             viewModel.submitAnswer()
-            // TODO: Coordinator vasitəsilə növbəti suala keçid ediləcək
-            let vm = QuizResultViewModel(earnedPoints: 1, correctCount: 7, skippedCount: 2, incorrectCount: 1, completionRate: 80)
-            let resultVC = QuizResultViewController(viewModel: vm)
-            navigationController?.pushViewController(resultVC, animated: true)
+
         }
 }

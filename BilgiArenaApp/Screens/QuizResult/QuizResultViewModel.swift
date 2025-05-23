@@ -29,14 +29,14 @@ final class QuizResultViewModel: QuizResultViewModelProtocol {
     private let incorrectCount: Int
     private let completionRate: Int // in percentage
 
-    init(earnedPoints: Int, correctCount: Int, skippedCount: Int, incorrectCount: Int, completionRate: Int) {
-        self.earnedPoints = earnedPoints
-        self.correctCount = correctCount
-        self.skippedCount = skippedCount
-        self.incorrectCount = incorrectCount
-        self.completionRate = completionRate
-    }
 
+    init(model: QuizResultModel) {
+            self.earnedPoints = model.earnedPoints
+            self.correctCount = model.correctCount
+            self.skippedCount = model.skippedCount
+            self.incorrectCount = model.incorrectCount
+            self.completionRate = model.completionRate
+        }
     
     var statsModel: QuizStatsModel {
         QuizStatsModel(items: [
@@ -77,6 +77,7 @@ final class QuizResultViewModel: QuizResultViewModelProtocol {
     }
 
     func doneTapped() {
+
         onDoneTapped?()
     }
 }

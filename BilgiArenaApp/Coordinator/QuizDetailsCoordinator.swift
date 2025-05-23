@@ -13,11 +13,11 @@ protocol QuizDetailsCoordinatorProtocol: AnyObject {
 }
 
 final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
-    
+
     private let navigationController: UINavigationController
     private let quiz: Quiz
     private var internalNavigationController: UINavigationController?
-
+    private var quizStartCoordinator: QuizStartCoordinator?  //
 
     init(navigationController: UINavigationController, quiz: Quiz) {
         self.navigationController = navigationController
@@ -27,12 +27,9 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     func start() {
         let viewModel = QuizDetailsViewModel(quiz: quiz)
         viewModel.coordinator = self
-        
+
         let controller = QuizDetailsViewController(viewModel: viewModel)
 
-//        navigationController.pushViewController(controller, animated: true)
-        
-        
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
 
@@ -43,25 +40,12 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
 
     // MARK: - Navigation
     func showQuizStartScreen() {
-        
-        print("Coordinator showQuizStartScreen called")
-        print(" navigationController:", navigationController)
 
-
-        let firstQuestion = Question.sample()
-
-
-            let viewModel = QuizStartViewModel(
-                question: firstQuestion,
-                index: 0,
-                total: quiz.questionCount
-            )
-        
-        
-
-            let controller = QuizStartViewController(viewModel: viewModel)
-//            navigationController.pushViewController(controller, animated: true)
-        internalNavigationController?.pushViewController(controller, animated: true)
-
-        }
+        let startCoordinator = QuizStartCoordinator(
+            navigationController: internalNavigationController!,
+            quiz: quiz
+        )
+        self.quizStartCoordinator = startCoordinator  // referansı saxla
+        startCoordinator.start()
+    }
 }

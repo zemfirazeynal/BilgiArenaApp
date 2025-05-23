@@ -44,25 +44,7 @@ class QuizResultViewController: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-//    private let trophyContainerView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = .clear
-//        view.layer.cornerRadius = 20
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-//
-//    private let trophyImageView: UIImageView = {
-//        let imageView = UIImageView(
-//            image: UIImage(named: "quizresult_trophy_view"))
-//        imageView.contentMode = .scaleAspectFit
-//        imageView.layer.cornerRadius = 16
-//        imageView.clipsToBounds = true
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.isUserInteractionEnabled = true
-//
-//        return imageView
-//    }()
+
 
     private let pointsLabel: UILabel = {
         let label = UILabel()
@@ -106,6 +88,8 @@ class QuizResultViewController: UIViewController {
         setupLayout()
 
         bindViewModel()
+        print("🧩 VC-də ViewModel ID:", ObjectIdentifier(viewModel))
+
 
     }
 
@@ -119,11 +103,6 @@ class QuizResultViewController: UIViewController {
         view.addSubview(summaryView)
         view.addSubview(doneButton)
 
-//        trophyContainerView.addSubview(trophyImageView)
-//        trophyContainerView.addSubview(pointsLabel)
-//        trophyContainerView.addSubview(checkAnswerButton)
-//        trophyContainerView.bringSubviewToFront(checkAnswerButton)
-        
         illustrationContainerView.addSubview(illustrationImageView)
         illustrationContainerView.addSubview(pointsLabel)
         illustrationContainerView.addSubview(checkAnswerButton)
@@ -140,24 +119,6 @@ class QuizResultViewController: UIViewController {
                 equalTo: view.trailingAnchor),
             navigationHeader.heightAnchor.constraint(equalToConstant: 48),
 
-//            trophyContainerView.topAnchor.constraint(
-//                equalTo: navigationHeader.bottomAnchor, constant: 8),
-//            trophyContainerView.leadingAnchor.constraint(
-//                equalTo: view.leadingAnchor, constant: 12),
-//            trophyContainerView.trailingAnchor.constraint(
-//                equalTo: view.trailingAnchor, constant: -12),
-//            trophyContainerView.bottomAnchor.constraint(
-//                equalTo: checkAnswerButton.bottomAnchor, constant: 20),
-//
-//            trophyImageView.topAnchor.constraint(
-//                equalTo: trophyContainerView.topAnchor, constant: 8),
-//            //                trophyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            trophyImageView.leadingAnchor.constraint(
-//                equalTo: trophyContainerView.leadingAnchor),
-//            trophyImageView.trailingAnchor.constraint(
-//                equalTo: trophyContainerView.trailingAnchor),
-//            //                trophyImageView.widthAnchor.constraint(equalToConstant: 328),
-//            trophyImageView.heightAnchor.constraint(equalToConstant: 318),
             
             illustrationContainerView.topAnchor.constraint(equalTo: navigationHeader.bottomAnchor, constant: 16),
                 illustrationContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
@@ -218,6 +179,8 @@ class QuizResultViewController: UIViewController {
     }
 
     @objc private func doneTapped() {
+        print("✅ Done button tapped in VC")
+
         viewModel.doneTapped()
     }
 
