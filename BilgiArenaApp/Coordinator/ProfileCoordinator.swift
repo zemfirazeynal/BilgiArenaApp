@@ -14,6 +14,7 @@ protocol ProfileCoordinatorProtocol: AnyObject {
 
 final class ProfileCoordinator: Coordinator, ProfileCoordinatorProtocol {
     var navigationController: UINavigationController
+    var onboardingCoordinator: OnboardingCoordinator? //  əlavə et
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -34,10 +35,22 @@ final class ProfileCoordinator: Coordinator, ProfileCoordinatorProtocol {
     }
 
     func showSettings() {
+        //        print("coordinator tapped")
+        //        let controller = SettingsViewController()
+        //        let nav = UINavigationController(rootViewController: controller)
+        //        nav.modalPresentationStyle = .fullScreen
+        //        navigationController.present(nav, animated: true)
+
         print("coordinator tapped")
-        let controller = SettingsViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        navigationController.present(nav, animated: true)
+
+        let settingsNav = UINavigationController()
+        let settingsCoordinator = SettingsCoordinator(
+            navigationController: settingsNav
+            
+        )
+        settingsCoordinator.start()
+
+        settingsNav.modalPresentationStyle = .fullScreen
+        navigationController.present(settingsNav, animated: true)
     }
 }
