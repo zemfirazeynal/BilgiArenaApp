@@ -21,7 +21,12 @@ class SettingsViewController: UIViewController {
     ]
 
     private let notificationSwitch = UISwitch()
+    
+    var viewModel: SettingsViewModel?
+    
+    
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .appBackground
@@ -48,6 +53,8 @@ class SettingsViewController: UIViewController {
         navigationHeader.onBackTap = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }
+        
+
     }
     
     
@@ -100,6 +107,8 @@ class SettingsViewController: UIViewController {
 
     @objc private func didTapLogout() {
         print(" Logout tapped")
+        viewModel?.logout()
+
     }
 }
 

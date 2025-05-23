@@ -45,7 +45,7 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     func showQuizStartScreen() {
         
         print("Coordinator showQuizStartScreen called")
-        print("✅ navigationController:", navigationController)
+        print(" navigationController:", navigationController)
 
 
         let firstQuestion = Question.sample()
