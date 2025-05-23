@@ -33,6 +33,8 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
 
         private(set) var selectedAnswerIndex: Int?
         private(set) var isAnswerSubmitted: Bool = false
+    
+       var onQuizFinished: ((QuizResultModel) -> Void)?
 
     
     init(question: Question, index: Int, total: Int) {
@@ -55,8 +57,20 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
             return index == correctAnswerIndex
         }
 
-        func submitAnswer() {
-            isAnswerSubmitted = true
+    func submitAnswer() {
+
+
+            let result = QuizResultModel(
+                earnedPoints: 1,
+                correctCount: 1,
+                skippedCount: 0,
+                incorrectCount: 0,
+                completionRate: 100
+            )
+    
+
+            
+            onQuizFinished?(result)
         }
     
 }
