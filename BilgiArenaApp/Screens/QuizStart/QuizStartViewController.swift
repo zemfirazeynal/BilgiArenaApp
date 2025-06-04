@@ -14,7 +14,7 @@ class QuizStartViewController: UIViewController {
     private let viewModel: QuizStartViewModel
 
         // MARK: - UI Components
-        private let navigationHeader = CustomNavigationHeaderView(title: "Questions", showsBackButton: false, titleColor: .white)
+        private let navigationHeader = CustomNavigationHeaderView(title: "Questions", showsBackButton: true, titleColor: .white)
 
         private let whiteContentView: UIView = {
             let view = UIView()
@@ -67,6 +67,7 @@ class QuizStartViewController: UIViewController {
             super.viewDidLoad()
             view.backgroundColor = .app
             setupLayout()
+            setupActions()
             configureContent()
         }
 
@@ -110,8 +111,15 @@ class QuizStartViewController: UIViewController {
                 nextButton.heightAnchor.constraint(equalToConstant: 56)
             ])
 
-            nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
         }
+    
+    private func setupActions() {
+        navigationHeader.onBackTap = { [weak self] in
+                        self?.navigationController?.popViewController(animated: true)
+        }
+        
+        nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
+    }
 
         // MARK: - Helpers
         private func addOptionButtons(below anchor: NSLayoutYAxisAnchor) -> NSLayoutYAxisAnchor {

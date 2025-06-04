@@ -106,7 +106,11 @@ class SearchViewController: UIViewController {
                 self?.quizTableView.reloadData()
             }
         }
+        viewModel?.loadAllQuizzes()
+
     }
+    
+   
 
     //    // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -123,6 +127,7 @@ class SearchViewController: UIViewController {
         bindViewModel()
         
     }
+    
 
     // MARK: - Setup Methods
     private func configureView() {
@@ -218,26 +223,45 @@ class SearchViewController: UIViewController {
 
 // MARK: - UITableViewDelegate & UITableViewDataSource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
-        -> Int
-    {
-        return viewModel?.numberOfQuizzes() ?? 0
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
-        -> UITableViewCell {
-        let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: "QuizCell", for: indexPath)
-            as! QuizTableViewCell
-            if let quiz = viewModel?.quiz(at: indexPath.row) {
-                let isSelected = (indexPath == selectedIndexPath)
-                cell.configure(with: quiz, isSelected: isSelected)
-            }
-        return cell
-    }
-
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
+//        -> Int
+//    {
+//        return viewModel?.numberOfQuizzes() ?? 0
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
+//        -> UITableViewCell {
+//        let cell =
+//            tableView.dequeueReusableCell(
+//                withIdentifier: "QuizCell", for: indexPath)
+//            as! QuizTableViewCell
+//            if let quiz = viewModel?.quiz(at: indexPath.row) {
+//                let isSelected = (indexPath == selectedIndexPath)
+//                cell.configure(with: quiz, isSelected: isSelected)
+//            }
+//        return cell
+//    }
+//
+//    
+//   
+//
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return viewModel?.numberOfQuizzes() ?? 0
+        }
+
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell,
+                let quiz = viewModel?.quiz(at: indexPath.row)
+            else {
+                return UITableViewCell()
+            }
+
+            let isSelected = indexPath == selectedIndexPath
+            cell.configure(with: quiz, isSelected: isSelected)
+            return cell
+        }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -256,6 +280,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel?.filterQuizzes(with: searchText)
-    }
+           viewModel?.filterQuizzes(with: searchText)
+       }
 }

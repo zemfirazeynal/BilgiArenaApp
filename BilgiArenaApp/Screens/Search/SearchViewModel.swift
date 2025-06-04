@@ -10,7 +10,8 @@ import Foundation
 protocol SearchViewModelProtocol {
     var filteredQuizzes: [Quiz] { get }
     func filterQuizzes(with text: String)
-    
+    func loadAllQuizzes()  // new
+
     func numberOfQuizzes() -> Int
     func quiz(at index: Int) -> Quiz
 
@@ -19,21 +20,60 @@ protocol SearchViewModelProtocol {
 }
 
 final class SearchViewModel: SearchViewModelProtocol {
-    private let quizList = Quiz.sampleData
-    private(set) var filteredQuizzes: [Quiz] = Quiz.sampleData
-    
-    
-    private var coordinator: SearchCoordinator
+
+    private var allQuizzes: [Quiz] = []
+    private(set) var filteredQuizzes: [Quiz] = []
+
+    private let coordinator: SearchCoordinator
+    private let searchManager: SearchManagerUseCase
 
     init(
         coordinator: SearchCoordinator,
-     
+        searchManager: SearchManagerUseCase = SearchManager()
     ) {
         self.coordinator = coordinator
+        self.searchManager = searchManager
     }
 
     var onUpdate: (() -> Void)?
-    
+
+    func loadAllQuizzes() {
+        searchManager.allQuizzes(page: 0, size: 20) { [weak self] result in
+                switch result {
+                case .success(let data):
+                    print("Backend-dən \(data.count) quiz gəldi")
+
+                    let quizzes = data.map { Quiz(fromSearch: $0) }
+                    self?.allQuizzes = quizzes
+                    self?.filteredQuizzes = quizzes
+                    self?.onUpdate?()
+
+                case .failure(let error):
+                    print("Quizlər yüklənmədi: \(error.localizedDescription)")
+
+                    self?.allQuizzes = []
+                    self?.filteredQuizzes = []
+                    self?.onUpdate?()
+                }
+            }
+    }
+
+    func filterQuizzes(with text: String) {
+        guard !text.isEmpty else {
+            filteredQuizzes = allQuizzes
+            onUpdate?()
+            return
+        }
+
+        let lowercased = text.lowercased()
+        filteredQuizzes = allQuizzes.filter {
+            $0.title.lowercased().contains(lowercased)
+                || $0.subject.lowercased().contains(lowercased)
+        }
+
+        onUpdate?()
+    }
+
     func numberOfQuizzes() -> Int {
         return filteredQuizzes.count
     }
@@ -42,21 +82,10 @@ final class SearchViewModel: SearchViewModelProtocol {
         return filteredQuizzes[index]
     }
 
-    func filterQuizzes(with text: String) {
-        if text.isEmpty {
-               filteredQuizzes = quizList
-           } else {
-               let lowercasedText = text.lowercased()
-               filteredQuizzes = quizList.filter {
-                   $0.title.lowercased().contains(lowercasedText) ||
-                   $0.subject.lowercased().contains(lowercasedText)
-               }
-           }
-           onUpdate?()
-    }
-    
     func didSelectItem(at index: Int) {
-            let selectedQuiz = quizList[index]
-            coordinator.showQuizDetail(for: selectedQuiz)
-        }
+        let quiz = filteredQuizzes[index]
+        coordinator.showQuizDetail(for: quiz)
+    }
+
+
 }

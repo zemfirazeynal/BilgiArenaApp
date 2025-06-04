@@ -28,8 +28,19 @@ extension Quiz {
         self.title = response.name
                 self.category = response.category.name
                 self.questionCount = response.count
-                self.iconName = response.photo
+                self.iconName = "questionmark.circle"
                 self.subject = response.category.name
+    }
+}
+
+// Search üçün initializer
+extension Quiz {
+    init(fromSearch response: PublicQuizItemresponseData) {
+        self.title = response.name
+        self.category = response.category
+        self.questionCount = response.count
+        self.iconName = "questionmark.circle"
+        self.subject = response.category
     }
 }
 
