@@ -25,7 +25,7 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     }
 
     func start() {
-        let viewModel = QuizDetailsViewModel(quiz: quiz)
+        let viewModel = QuizDetailsViewModel(quizId: quiz.id)
         viewModel.coordinator = self
 
         let controller = QuizDetailsViewController(viewModel: viewModel)

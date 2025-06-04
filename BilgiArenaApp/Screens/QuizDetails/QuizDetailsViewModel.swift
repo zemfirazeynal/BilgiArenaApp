@@ -10,43 +10,104 @@ import UIKit
 
 protocol QuizDetailsViewModelProtocol {
     //
-    var onPlayTapped: (() -> Void)? {get set}
+    var onPlayTapped: (() -> Void)? { get set }
 
-        func playButtonTapped()
+    var onQuizDetailsFetched: (() -> Void)? { get set }
+
+    var subjectText: String { get }
+    var titleText: String { get }
+    var questionCountText: String { get }
+    var pointsText: String { get }
+    var descriptionText: String { get }
+
+    func fetchQuizDetails()
+
+    func playButtonTapped()
 }
 
 final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
-    
+
     var onPlayTapped: (() -> Void)?
-    
+    var onQuizDetailsFetched: (() -> Void)?
+
     weak var coordinator: QuizDetailsCoordinatorProtocol?
 
+    private let quizId: Int
+    private let manager: QuizDetailsManagerUseCase
 
-    private let quiz: Quiz  // Burada bir ədəd quiz saxlayırsan
+    private var details: QuizDetailsResponseData?
 
-        init(quiz: Quiz) {
-            self.quiz = quiz
+    init(quizId: Int, manager: QuizDetailsManagerUseCase = QuizDetailsManager())
+    {
+        self.quizId = quizId
+        self.manager = manager
+    }
+
+    func fetchQuizDetails() {
+        manager.fetchQuizDetails(quizId: quizId) { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.details = data
+                self?.onQuizDetailsFetched?()
+            case .failure(let error):
+                print(
+                    "❌ Quiz detalları yüklənmədi: \(error.localizedDescription)"
+                )
+            }
         }
+    }
 
-    
-       var subjectText: String { quiz.subject.uppercased() }
-       var titleText: String { quiz.title }
-       var questionCountText: String { "\(quiz.questionCount) questions" }
-       var pointsText: String { "+100 points" } 
-       var descriptionText: String {
-           "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"
-       }
-    
+    var subjectText: String {
+        details?.category.uppercased() ?? "SUBJECT"
+    }
+
+    var titleText: String {
+        details?.name ?? "Quiz Title"
+    }
+
+    var questionCountText: String {
+        "\(details?.count ?? 0) questions"
+    }
+
+    var pointsText: String {
+        "+\(details?.point ?? 0) points"
+    }
+
+    var descriptionText: String {
+        details?.description ?? "No description available"
+    }
+
     func playButtonTapped() {
-        print("✅ playButtonTapped called")
-           
-           if coordinator == nil {
-               print("🛑 Coordinator is nil!")
-           } else {
-               print("✅ Coordinator exists")
-           }
         coordinator?.showQuizStartScreen()
     }
-    
-    
+
+    //    var onPlayTapped: (() -> Void)?
+    //
+    //    weak var coordinator: QuizDetailsCoordinatorProtocol?
+    //
+    //    private let quiz: Quiz  // Burada bir ədəd quiz saxlayırsan
+    //
+    //    init(quiz: Quiz) {
+    //        self.quiz = quiz
+    //    }
+    //
+    //    var subjectText: String { quiz.subject.uppercased() }
+    //    var titleText: String { quiz.title }
+    //    var questionCountText: String { "\(quiz.questionCount) questions" }
+    //    var pointsText: String { "+100 points" }
+    //    var descriptionText: String {
+    //        "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"
+    //    }
+    //
+    //    func playButtonTapped() {
+    //        print("✅ playButtonTapped called")
+    //
+    //        if coordinator == nil {
+    //            print("🛑 Coordinator is nil!")
+    //        } else {
+    //            print("✅ Coordinator exists")
+    //        }
+    //        coordinator?.showQuizStartScreen()
+    //    }
+
 }
