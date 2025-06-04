@@ -66,11 +66,11 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     }
 
     var questionCountText: String {
-        "\(details?.count ?? 0) questions"
+        "\(details?.count ?? 0)"
     }
 
     var pointsText: String {
-        "+\(details?.point ?? 0) points"
+        "+\(details?.point ?? 0)"
     }
 
     var descriptionText: String {
