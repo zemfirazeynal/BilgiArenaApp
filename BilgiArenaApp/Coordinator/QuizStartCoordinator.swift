@@ -9,6 +9,8 @@ import UIKit
 
 protocol QuizStartCoordinatorProtocol: AnyObject {
     func showQuizResult(with result: QuizResultModel)
+    func goBack() //
+
 }
 
 final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
@@ -64,5 +66,9 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
         )
         self.resultCoordinator = resultCoordinator
         resultCoordinator.start(with: result)
+    }
+    
+    func goBack() {
+        navigationController.popViewController(animated: true)
     }
 }

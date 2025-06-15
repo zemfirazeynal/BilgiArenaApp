@@ -28,6 +28,8 @@ protocol QuizStartViewModelProtocol {
         var selectedAnswerIndex: Int? { get }
         var correctAnswerIndex: Int { get }
         var isAnswerSubmitted: Bool { get }
+        var isLastQuestion: Bool { get }
+
 
         var onUpdate: (() -> Void)? { get set }
         var onQuizFinished: ((QuizResultModel) -> Void)? { get set }
@@ -49,8 +51,12 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         var onUpdate: (() -> Void)?
         var onQuizFinished: ((QuizResultModel) -> Void)?
 
-        private(set) var selectedAnswerIndex: Int?
-        private(set) var isAnswerSubmitted: Bool = false
+//        private(set) var selectedAnswerIndex: Int?
+        private var selectedAnswers: [Int?] // n
+
+//        private(set) var isAnswerSubmitted: Bool = false
+         private var submittedAnswers: [Bool] // n
+
 
         private var correctCount = 0
         private var incorrectCount = 0
@@ -59,9 +65,24 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         init(questions: [QuestionResponseModel], currentIndex: Int) {
             self.questions = questions
             self.currentIndex = currentIndex
+            self.selectedAnswers = Array(repeating: nil, count: questions.count) //n
+            self.submittedAnswers = Array(repeating: false, count: questions.count) // n
+
         }
 
         // MARK: - UI Binding Properties
+
+    var isLastQuestion: Bool {
+        return currentIndex == questions.count - 1
+    }
+    
+    var selectedAnswerIndex: Int? {
+        return selectedAnswers[currentIndex]
+    }
+    
+    var isAnswerSubmitted: Bool {
+        return submittedAnswers[currentIndex]
+    }
 
         var questionNumberText: String {
             "QUESTION \(currentIndex + 1) OF \(questions.count)"
@@ -82,8 +103,11 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         // MARK: - Logic
 
         func selectOption(at index: Int) {
-            guard !isAnswerSubmitted else { return }
-            selectedAnswerIndex = index
+//            guard !isAnswerSubmitted else { return }
+//            selectedAnswerIndex = index
+            
+            selectedAnswers[currentIndex] = index
+                onUpdate?()
         }
 
         func isOptionSelected(_ index: Int) -> Bool {
@@ -95,7 +119,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         func submitAnswer() {
-            isAnswerSubmitted = true
+            submittedAnswers[currentIndex] = true
 
             if let selected = selectedAnswerIndex {
                 if selected == correctAnswerIndex {
@@ -111,31 +135,51 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         func nextQuestion() {
-            selectedAnswerIndex = nil
-            isAnswerSubmitted = false
-
             if currentIndex + 1 < questions.count {
-                currentIndex += 1
+                    currentIndex += 1
+                    onUpdate?()
+                } else {
+                    finishQuiz()
+                }
+        }
+    
+    func previousQuestion() {
+        if currentIndex > 0 {
+                currentIndex -= 1
                 onUpdate?()
             } else {
-                finishQuiz()
+                coordinator?.goBack() // coordinator varsa istifadə et
             }
-        }
+    }
 
         private func finishQuiz() {
-            let total = questions.count
-            let earnedPoints = correctCount * 10 // ✨ istəyə uyğun dəyiş
-            let completionRate = Int(Double(correctCount) / Double(total) * 100)
+            
+            for (index, selected) in selectedAnswers.enumerated() {
+                    let correct = correctAnswerIndex // əgər hər sualda fərqli olacaqsa, buranı dəyiş
+                    if let selected = selected {
+                        if selected == correct {
+                            correctCount += 1
+                        } else {
+                            incorrectCount += 1
+                        }
+                    } else {
+                        skippedCount += 1
+                    }
+                }
 
-            let result = QuizResultModel(
-                earnedPoints: earnedPoints,
-                correctCount: correctCount,
-                skippedCount: skippedCount,
-                incorrectCount: incorrectCount,
-                completionRate: completionRate
-            )
+                let total = questions.count
+                let earnedPoints = correctCount * 10
+                let completionRate = Int(Double(correctCount) / Double(total) * 100)
 
-            onQuizFinished?(result)
+                let result = QuizResultModel(
+                    earnedPoints: earnedPoints,
+                    correctCount: correctCount,
+                    skippedCount: skippedCount,
+                    incorrectCount: incorrectCount,
+                    completionRate: completionRate
+                )
+
+                onQuizFinished?(result)
         }
     
     
