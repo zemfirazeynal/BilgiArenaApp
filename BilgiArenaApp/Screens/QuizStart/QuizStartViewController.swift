@@ -159,6 +159,7 @@ class QuizStartViewController: UIViewController {
             questionNumberLabel.text = viewModel.questionNumberText
             setQuestionText(viewModel.questionText)
             updateOptionStyles()
+            
         }
 
         private func setQuestionText(_ text: String) {
@@ -188,6 +189,7 @@ class QuizStartViewController: UIViewController {
                 }
             }
         }
+    
 
         // MARK: - Actions
         @objc private func optionTapped(_ sender: UIButton) {
@@ -197,6 +199,6 @@ class QuizStartViewController: UIViewController {
 
         @objc private func nextTapped() {
             viewModel.submitAnswer()
-
+            
         }
 }

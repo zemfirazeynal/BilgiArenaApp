@@ -19,6 +19,9 @@ protocol QuizDetailsViewModelProtocol {
     var questionCountText: String { get }
     var pointsText: String { get }
     var descriptionText: String { get }
+    
+    var questions: [QuestionResponseModel] { get }
+
 
     func fetchQuizDetails()
 
@@ -68,7 +71,8 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     var questionCountText: String {
         "\(details?.count ?? 0)"
     }
-
+    
+ 
     var pointsText: String {
         "+\(details?.point ?? 0)"
     }
@@ -76,6 +80,9 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     var descriptionText: String {
         details?.description ?? "No description available"
     }
+    
+    var questions: [QuestionResponseModel] { details?.question ?? [] }
+
 
     func playButtonTapped() {
         coordinator?.showQuizStartScreen()

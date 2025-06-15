@@ -9,6 +9,11 @@ import Foundation
 struct QuestionResponseModel: Codable {
     let id: Int
     let text: String
-    let options: [String]
-    let correctAnswer: String
+    let point: Int
+    let option: [QuestionOptionResponseModel]
+}
+
+struct QuestionOptionResponseModel: Codable {
+    let id: Int
+    let option: String
 }
