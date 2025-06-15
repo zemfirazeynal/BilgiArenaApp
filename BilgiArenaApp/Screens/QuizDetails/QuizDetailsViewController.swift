@@ -52,9 +52,9 @@ class QuizDetailsViewController: UIViewController {
     private let subjectLabel = UILabel()
     private let titleLabel = UILabel()
     
-    private let questionsView = QuizInfoBoxView(
+    private var questionsView = QuizInfoBoxView(
         iconName: "quizdetails_question_icon", value: "15", title: "questions")
-    private let pointsView = QuizInfoBoxView(
+    private var pointsView = QuizInfoBoxView(
         iconName: "quizdetails_points_icon", value: "+100", title: "points")
     
     private let dividerView: UIView = {
@@ -95,6 +95,7 @@ class QuizDetailsViewController: UIViewController {
         setupLayout()
         setupContent()
         setupActions()
+        bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -280,7 +281,36 @@ class QuizDetailsViewController: UIViewController {
 
     }
 
+    private func bindViewModel() {
+        viewModel.onQuizDetailsFetched = { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateUIWithFetchedData()
+            }
+        }
+        viewModel.fetchQuizDetails()
+
+    }
     
+    private func updateUIWithFetchedData() {
+        subjectLabel.text = viewModel.subjectText
+            titleLabel.text = viewModel.titleText
+
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 6
+
+            let attributedDescription = NSAttributedString(
+                string: viewModel.descriptionText,
+                attributes: [
+                    .paragraphStyle: paragraphStyle,
+                    .font: UIFont.systemFont(ofSize: 16),
+                    .foregroundColor: UIColor.darkGray
+                ]
+            )
+
+            descriptionLabel.attributedText = attributedDescription
+            questionsView.update(value:viewModel.questionCountText)
+            pointsView.update(value: viewModel.pointsText)
+    }
 
     private func setupActions() {
         navigationHeader.onBackTap = { [weak self] in

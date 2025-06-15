@@ -68,6 +68,7 @@ class QuizStartViewController: UIViewController {
             view.backgroundColor = .app
             setupLayout()
             setupActions()
+            bindViewModel()
             configureContent()
         }
 
@@ -114,9 +115,12 @@ class QuizStartViewController: UIViewController {
         }
     
     private func setupActions() {
+//        navigationHeader.onBackTap = { [weak self] in
+//                        self?.navigationController?.popViewController(animated: true)
+//        }
         navigationHeader.onBackTap = { [weak self] in
-                        self?.navigationController?.popViewController(animated: true)
-        }
+                self?.viewModel.previousQuestion()
+            }
         
         nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
     }
@@ -158,7 +162,23 @@ class QuizStartViewController: UIViewController {
         private func configureContent() {
             questionNumberLabel.text = viewModel.questionNumberText
             setQuestionText(viewModel.questionText)
-            updateOptionStyles()
+            
+            // Köhnə cavab düymələrini sil
+                for button in optionButtons {
+                    button.removeFromSuperview()
+                }
+                optionButtons.removeAll()
+
+                // Yeni cavab düymələrini əlavə et
+                _ = addOptionButtons(below: questionLabel.bottomAnchor)
+                
+                updateOptionStyles()
+            
+        
+            nextButton.setTitle(viewModel.isLastQuestion ? "Finish" : "Next", for: .normal)
+
+//            let buttonTitle = viewModel.isAnswerSubmitted
+//            nextButton.setTitle(buttonTitle, for: .normal)
         }
 
         private func setQuestionText(_ text: String) {
@@ -188,6 +208,14 @@ class QuizStartViewController: UIViewController {
                 }
             }
         }
+    
+    private func bindViewModel() {
+        viewModel.onUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.configureContent()
+            }
+        }
+    }
 
         // MARK: - Actions
         @objc private func optionTapped(_ sender: UIButton) {
@@ -196,7 +224,8 @@ class QuizStartViewController: UIViewController {
         }
 
         @objc private func nextTapped() {
-            viewModel.submitAnswer()
+//            viewModel.submitAnswer()
+            viewModel.nextQuestion()
 
         }
 }
