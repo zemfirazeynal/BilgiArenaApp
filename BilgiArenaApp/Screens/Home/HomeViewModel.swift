@@ -69,22 +69,46 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     func fetchDashboard() {
+//        onStateChange?(.loading)
+//
+//        dashboardManager.fetchDashboard { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let response):
+//                self.user = response.data.user
+//                    self.recentQuiz = RecentQuizModel(from: response.data.quiz)
+//                    self.quizList = response.data.quizzes.map { Quiz(from: $0) }
+//                    self.onStateChange?(.success(message: ""))
+//
+//            case .failure(let error):
+//                self.onStateChange?(.error(message: error.localizedDescription))
+//            }
+//        }
+        
+        
         onStateChange?(.loading)
 
-        dashboardManager.fetchDashboard { [weak self] result in
-            guard let self = self else { return }
+            dashboardManager.fetchDashboard { [weak self] result in
+                guard let self = self else { return }
 
-            switch result {
-            case .success(let response):
-                self.user = response.data.user
-                    self.recentQuiz = RecentQuizModel(from: response.data.quiz)
+                switch result {
+                case .success(let response):
+                    self.user = response.data.user
+                    
+                    self.recentQuiz = RecentQuizModel(
+                        title: response.data.quizName,
+                        completion: response.data.completion
+                    )
+                    
                     self.quizList = response.data.quizzes.map { Quiz(from: $0) }
+
                     self.onStateChange?(.success(message: ""))
 
-            case .failure(let error):
-                self.onStateChange?(.error(message: error.localizedDescription))
+                case .failure(let error):
+                    self.onStateChange?(.error(message: error.localizedDescription))
+                }
             }
-        }
     }
 
     func didTapDiscoverCategories() {

@@ -93,7 +93,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         var options: [String] {
-            questions[currentIndex].option.map { $0.option }
+            questions[currentIndex].questionOptions.map { $0.option }
         }
 
         var correctAnswerIndex: Int {
