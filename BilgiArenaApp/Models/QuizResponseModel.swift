@@ -15,6 +15,16 @@ struct QuizResponseModel: Codable {
 
 // MARK: - QuizItem
 struct QuizItemResponseData: Codable {
+//    let id: Int
+//    let name: String
+//    let count: Int
+//    let description: String?
+//    let photo: String
+//    let point: Int?
+//    let createDate: String
+//    let updateDate: String
+//    let category: CategoryItemResponseData
+    
     let id: Int
     let name: String
     let count: Int
@@ -24,8 +34,9 @@ struct QuizItemResponseData: Codable {
     let createDate: String
     let updateDate: String
     let category: CategoryItemResponseData
+    let question: [QuestionResponseModel]?
 
     enum CodingKeys: String, CodingKey {
-            case id, name, count, description, photo, point, createDate, updateDate, category
+            case id, name, count, description, photo, point, createDate, updateDate, category, question
         }
 }

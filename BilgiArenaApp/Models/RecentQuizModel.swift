@@ -11,14 +11,23 @@ struct RecentQuizModel {
     let title: String
     let iconName: String
     let completion: Int?
-    let category: String
+//    let category: String
 }
 
+//extension RecentQuizModel {
+//    init(from item: QuizItemResponseData) {
+//        self.title = item.name
+//        self.iconName = item.photo
+//        self.completion = item.point
+//        self.category = item.category.name
+//    }
+//}
+
 extension RecentQuizModel {
-    init(from item: QuizItemResponseData) {
-        self.title = item.name
-        self.iconName = item.photo
-        self.completion = item.point
-        self.category = item.category.name
+    init(title: String, completion: Int) {
+        self.title = title
+        self.iconName = "default_icon.png"
+        self.completion = completion
+//        self.category = ""
     }
 }
