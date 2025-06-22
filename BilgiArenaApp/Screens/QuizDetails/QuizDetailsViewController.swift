@@ -323,7 +323,7 @@ class QuizDetailsViewController: UIViewController {
 
            @objc private func didTapPlay() {
                print("View Controller didTapPlay called")
-               viewModel.playButtonTapped()
+               viewModel.playQuiz()
            }
 
 }

@@ -61,6 +61,49 @@ class NetworkManager {
             }
     }
     
+    func requestWithoutResponse(
+        endpoint: String,
+        method: HTTPMethod = .post,
+        params: Parameters? = nil,
+        encodingType: EncodingType = .url,
+        header: [String: String]? = nil,
+        isFullURL: Bool = false,
+        completion: @escaping (Bool, String?) -> Void
+    ) {
+        let path = isFullURL ? endpoint : NetworkHelper.shared.configureURL(endpoint: endpoint)
+
+        var headers: HTTPHeaders?
+        if let paramHeader = header {
+            headers = HTTPHeaders(paramHeader)
+        }
+
+        AF.request(
+            path,
+            method: method,
+            parameters: params,
+            encoding: encodingType == .url ? URLEncoding.default : JSONEncoding.default,
+            headers: headers
+        )
+        .validate(statusCode: 200..<300)
+        .response { response in
+            let statusCode = response.response?.statusCode ?? 0
+
+            switch response.result {
+            case .success:
+                completion(true, nil)
+            case .failure(let error):
+                if statusCode == 401 {
+                    completion(false, "Unauthorized – Sistemdən çıxmısınız")
+                } else if statusCode == 500 {
+                    completion(false, "Server xətası")
+                } else {
+                    completion(false, error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    
     
     func request<T: Codable>(
         endpoint: String,
