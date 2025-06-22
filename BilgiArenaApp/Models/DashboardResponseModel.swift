@@ -13,9 +13,6 @@ struct DashboardResponseModel: Codable {
     let data: DashboardResponseData
 }
 struct DashboardResponseData: Codable {
-//    let user: User
-//    let quizzes: [QuizItemResponseData]
-//    let quiz: QuizItemResponseData
     
     let user: User
     let quizzes: [QuizItemResponseData]
