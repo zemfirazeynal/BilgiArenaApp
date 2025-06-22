@@ -10,18 +10,6 @@ import UIKit
 
 protocol QuizStartViewModelProtocol {
     
-//    var questionNumberText: String { get }
-//       var questionText: String { get }
-//       var options: [String] { get }
-//       var selectedAnswerIndex: Int? { get }
-//       var correctAnswerIndex: Int { get }
-//       var isAnswerSubmitted: Bool { get }
-//
-//       func selectOption(at index: Int)
-//       func isOptionSelected(_ index: Int) -> Bool
-//       func isOptionCorrect(_ index: Int) -> Bool
-//       func submitAnswer()
-    
         var questionNumberText: String { get }
         var questionText: String { get }
         var options: [String] { get }
@@ -43,7 +31,7 @@ protocol QuizStartViewModelProtocol {
 }
 
 final class QuizStartViewModel: QuizStartViewModelProtocol {
-    private let questions: [QuestionResponseModel]
+    private let questions: [QuizStartResponseModel]
     weak var coordinator: QuizStartCoordinatorProtocol?
 
         private var currentIndex: Int = 0
@@ -51,18 +39,16 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         var onUpdate: (() -> Void)?
         var onQuizFinished: ((QuizResultModel) -> Void)?
 
-//        private(set) var selectedAnswerIndex: Int?
         private var selectedAnswers: [Int?] // n
 
-//        private(set) var isAnswerSubmitted: Bool = false
-         private var submittedAnswers: [Bool] // n
+        private var submittedAnswers: [Bool] // n
 
 
         private var correctCount = 0
         private var incorrectCount = 0
         private var skippedCount = 0
 
-        init(questions: [QuestionResponseModel], currentIndex: Int) {
+        init(questions: [QuizStartResponseModel], currentIndex: Int) {
             self.questions = questions
             self.currentIndex = currentIndex
             self.selectedAnswers = Array(repeating: nil, count: questions.count) //n
@@ -93,7 +79,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         var options: [String] {
-            questions[currentIndex].questionOptions.map { $0.option }
+            questions[currentIndex].option.map { $0.option }
         }
 
         var correctAnswerIndex: Int {
@@ -103,9 +89,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         // MARK: - Logic
 
         func selectOption(at index: Int) {
-//            guard !isAnswerSubmitted else { return }
-//            selectedAnswerIndex = index
-            
+
             selectedAnswers[currentIndex] = index
                 onUpdate?()
         }
@@ -181,56 +165,6 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
 
                 onQuizFinished?(result)
         }
-    
-    
-//    let questionNumberText: String
-//        let questionText: String
-//        let options: [String]
-//        let correctAnswerIndex: Int
-//
-//        private(set) var selectedAnswerIndex: Int?
-//        private(set) var isAnswerSubmitted: Bool = false
-//    
-//       var onQuizFinished: ((QuizResultModel) -> Void)?
-//
-//    
-//    init(question: Question, index: Int, total: Int) {
-//        self.questionNumberText = "QUESTION \(index + 1) OF \(total)"
-//        self.questionText = question.text
-//        self.options = question.options
-//        self.correctAnswerIndex = question.correctIndex
-//        
-//    }
-//        func selectOption(at index: Int) {
-//            guard !isAnswerSubmitted else { return }
-//            selectedAnswerIndex = index
-//        }
-//
-//        func isOptionSelected(_ index: Int) -> Bool {
-//            return selectedAnswerIndex == index
-//        }
-//
-//        func isOptionCorrect(_ index: Int) -> Bool {
-//            return index == correctAnswerIndex
-//        }
-//
-//    func submitAnswer() {
-//
-//
-//            let result = QuizResultModel(
-//                earnedPoints: 1,
-//                correctCount: 1,
-//                skippedCount: 0,
-//                incorrectCount: 0,
-//                completionRate: 100
-//            )
-//    
-//
-//            
-//            onQuizFinished?(result)
-//        }
-//
-    
     
 }
 

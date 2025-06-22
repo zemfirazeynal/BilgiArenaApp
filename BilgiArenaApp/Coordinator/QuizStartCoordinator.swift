@@ -19,10 +19,10 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
     private var resultCoordinator: QuizResultCoordinator?  //
 
     
-    private let questions: [QuestionResponseModel]
+    private let questions: [QuizStartResponseModel]
 
 
-    init(navigationController: UINavigationController,  questions: [QuestionResponseModel]) {
+    init(navigationController: UINavigationController,  questions: [QuizStartResponseModel]) {
         self.navigationController = navigationController
         self.questions = questions
     }

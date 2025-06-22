@@ -20,5 +20,5 @@ struct QuizDetailsResponseData: Codable {
     let count: Int
     let point: Int
     let description: String
-    let question: [QuestionResponseModel]
+    let question: [QuizStartResponseModel]
 }

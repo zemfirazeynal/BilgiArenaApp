@@ -13,6 +13,10 @@ protocol QuizDetailsViewModelProtocol {
     var onPlayTapped: (() -> Void)? { get set }
 
     var onQuizDetailsFetched: (() -> Void)? { get set }
+    
+    
+    var onDiscoverTapped: (() -> Void)? { get set }
+    var onStateChange: ((ViewState) -> Void)? { get set }
 
     var subjectText: String { get }
     var titleText: String { get }
@@ -20,32 +24,38 @@ protocol QuizDetailsViewModelProtocol {
     var pointsText: String { get }
     var descriptionText: String { get }
     
-    var questions: [QuestionResponseModel] { get }
+    var questions: [QuizStartResponseModel] { get }
 
 
     func fetchQuizDetails()
 
-    func playButtonTapped()
+//    func playButtonTapped()
+    func playQuiz()
 }
 
 final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
-
+    
     var onPlayTapped: (() -> Void)?
     var onQuizDetailsFetched: (() -> Void)?
-
+    
+    var onDiscoverTapped: (() -> Void)?
+    var onStateChange: ((ViewState) -> Void)? 
+    
     weak var coordinator: QuizDetailsCoordinatorProtocol?
-
+    
     private let quizId: Int
     private let manager: QuizDetailsManagerUseCase
-
+    private let playManager: QuizPlayManagerUseCase
+    
     private var details: QuizDetailsResponseData?
-
-    init(quizId: Int, manager: QuizDetailsManagerUseCase = QuizDetailsManager())
+    
+    init(quizId: Int, manager: QuizDetailsManagerUseCase = QuizDetailsManager(), playManager: QuizPlayManagerUseCase = QuizPlayManager())
     {
         self.quizId = quizId
         self.manager = manager
+        self.playManager = playManager
     }
-
+    
     func fetchQuizDetails() {
         manager.fetchQuizDetails(quizId: quizId) { [weak self] result in
             switch result {
@@ -59,62 +69,55 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
             }
         }
     }
-
+    
     var subjectText: String {
         details?.category.uppercased() ?? "SUBJECT"
     }
-
+    
     var titleText: String {
         details?.name ?? "Quiz Title"
     }
-
+    
     var questionCountText: String {
         "\(details?.count ?? 0)"
     }
     
- 
+    
     var pointsText: String {
         "+\(details?.point ?? 0)"
     }
-
+    
     var descriptionText: String {
         details?.description ?? "No description available"
     }
     
-    var questions: [QuestionResponseModel] { details?.question ?? [] }
-
-
-    func playButtonTapped() {
-        coordinator?.showQuizStartScreen()
-    }
-
-    //    var onPlayTapped: (() -> Void)?
-    //
-    //    weak var coordinator: QuizDetailsCoordinatorProtocol?
-    //
-    //    private let quiz: Quiz  // Burada bir ədəd quiz saxlayırsan
-    //
-    //    init(quiz: Quiz) {
-    //        self.quiz = quiz
-    //    }
-    //
-    //    var subjectText: String { quiz.subject.uppercased() }
-    //    var titleText: String { quiz.title }
-    //    var questionCountText: String { "\(quiz.questionCount) questions" }
-    //    var pointsText: String { "+100 points" }
-    //    var descriptionText: String {
-    //        "Any time is a good time for a quiz and even better if that happens to be a football themed quiz!"
-    //    }
-    //
+    var questions: [QuizStartResponseModel] { details?.question ?? [] }
+    
+    
     //    func playButtonTapped() {
-    //        print("✅ playButtonTapped called")
-    //
-    //        if coordinator == nil {
-    //            print("🛑 Coordinator is nil!")
-    //        } else {
-    //            print("✅ Coordinator exists")
-    //        }
     //        coordinator?.showQuizStartScreen()
     //    }
+    
+    func playQuiz() {
+        playManager.playQuiz(quizId: quizId) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        print("✅ Quiz başlatıldı. Suallar sayı: \(self.questions.count)")
 
+                        self.fetchQuizDetails() // sualları yenidən yüklə
+                        
+                        // 0.5 saniyə sonra növbəti ekrana keç
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.coordinator?.showQuizStartScreen(quizId: self.quizId)
+                        }
+                    case .failure(let error):
+                        print("❌ playQuiz error: \(error.localizedDescription)")
+
+                        self.onStateChange?(.error(message: error.localizedDescription))
+                    }
+                }
+            }
+        
+    }
 }

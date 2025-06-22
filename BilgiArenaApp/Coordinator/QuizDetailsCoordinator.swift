@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol QuizDetailsCoordinatorProtocol: AnyObject {
-    func showQuizStartScreen()
+    func showQuizStartScreen(quizId: Int)
 }
 
 final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
@@ -43,7 +43,7 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     }
 
     // MARK: - Navigation
-    func showQuizStartScreen() {
+    func showQuizStartScreen(quizId: Int) {
         
         guard let questions = quizDetailsViewModel?.questions else {
                     print("Suallar mövcud deyil.")
