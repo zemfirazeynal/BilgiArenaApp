@@ -32,10 +32,13 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
                    print("❌ No questions available to start the quiz.")
                    return
                }
+        let manager = QuizAnswerManager()
 
                let viewModel = QuizStartViewModel(
                    questions: questions,
                    currentIndex: 0,
+                   answerManager: manager
+
                )
 
                viewModel.coordinator = self
