@@ -33,6 +33,8 @@ protocol QuizStartViewModelProtocol {
 final class QuizStartViewModel: QuizStartViewModelProtocol {
     private let questions: [QuizStartResponseModel]
     weak var coordinator: QuizStartCoordinatorProtocol?
+    private let answerManager: QuizAnswerManagerUseCase
+
 
         private var currentIndex: Int = 0
 
@@ -48,11 +50,12 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         private var incorrectCount = 0
         private var skippedCount = 0
 
-        init(questions: [QuizStartResponseModel], currentIndex: Int) {
+        init(questions: [QuizStartResponseModel], currentIndex: Int,     answerManager: QuizAnswerManagerUseCase) {
             self.questions = questions
             self.currentIndex = currentIndex
             self.selectedAnswers = Array(repeating: nil, count: questions.count) //n
             self.submittedAnswers = Array(repeating: false, count: questions.count) // n
+            self.answerManager = answerManager
 
         }
 
@@ -103,19 +106,50 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         func submitAnswer() {
+//            submittedAnswers[currentIndex] = true
+//
+//            if let selected = selectedAnswerIndex {
+//                if selected == correctAnswerIndex {
+//                    correctCount += 1
+//                } else {
+//                    incorrectCount += 1
+//                }
+//            } else {
+//                skippedCount += 1
+//            }
+//
+//            onUpdate?()
+            
             submittedAnswers[currentIndex] = true
 
-            if let selected = selectedAnswerIndex {
-                if selected == correctAnswerIndex {
-                    correctCount += 1
-                } else {
-                    incorrectCount += 1
+                guard let selected = selectedAnswerIndex else {
+                    skippedCount += 1
+                    onUpdate?()
+                    return
                 }
-            } else {
-                skippedCount += 1
-            }
 
-            onUpdate?()
+                let optionId = questions[currentIndex].option[selected].id
+
+                // API çağırışı
+                answerManager.answerQuestion(optionId: optionId) { [weak self] result in
+                    guard let self = self else { return }
+
+                    switch result {
+                    case .success:
+                        print("✅ Cavab uğurla göndərildi")
+                    case .failure(let error):
+                        print("❌ Cavab göndərilərkən xəta: \(error.localizedDescription)")
+                    }
+
+                    // Lokal hesablama
+                    if selected == self.correctAnswerIndex {
+                        self.correctCount += 1
+                    } else {
+                        self.incorrectCount += 1
+                    }
+
+                    self.onUpdate?()
+                }
         }
 
         func nextQuestion() {
