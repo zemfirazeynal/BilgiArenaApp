@@ -59,7 +59,8 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
 //        startCoordinator.start()
         let startCoordinator = QuizStartCoordinator(
                 navigationController: internalNavigationController!,
-                questions: questions
+                questions: questions,
+                quizId: quizId
             )
             self.quizStartCoordinator = startCoordinator
             startCoordinator.start()

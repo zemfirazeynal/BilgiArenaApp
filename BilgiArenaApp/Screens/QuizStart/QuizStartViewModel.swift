@@ -34,6 +34,9 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
     private let questions: [QuizStartResponseModel]
     weak var coordinator: QuizStartCoordinatorProtocol?
     private let answerManager: QuizAnswerManagerUseCase
+    private let finishManager: QuizFinishManagerUseCase
+
+    private let quizId: Int
 
 
         private var currentIndex: Int = 0
@@ -50,12 +53,14 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         private var incorrectCount = 0
         private var skippedCount = 0
 
-        init(questions: [QuizStartResponseModel], currentIndex: Int,     answerManager: QuizAnswerManagerUseCase) {
+    init(quizId: Int, questions: [QuizStartResponseModel], currentIndex: Int,     answerManager: QuizAnswerManagerUseCase, finishManager: QuizFinishManagerUseCase) {
+        self.quizId = quizId
             self.questions = questions
             self.currentIndex = currentIndex
             self.selectedAnswers = Array(repeating: nil, count: questions.count) //n
             self.submittedAnswers = Array(repeating: false, count: questions.count) // n
             self.answerManager = answerManager
+            self.finishManager = finishManager
 
         }
 
@@ -106,19 +111,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
 
         func submitAnswer() {
-//            submittedAnswers[currentIndex] = true
-//
-//            if let selected = selectedAnswerIndex {
-//                if selected == correctAnswerIndex {
-//                    correctCount += 1
-//                } else {
-//                    incorrectCount += 1
-//                }
-//            } else {
-//                skippedCount += 1
-//            }
-//
-//            onUpdate?()
+
             
             submittedAnswers[currentIndex] = true
 
@@ -172,32 +165,23 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
 
         private func finishQuiz() {
             
-            for (index, selected) in selectedAnswers.enumerated() {
-                    let correct = correctAnswerIndex // əgər hər sualda fərqli olacaqsa, buranı dəyiş
-                    if let selected = selected {
-                        if selected == correct {
-                            correctCount += 1
-                        } else {
-                            incorrectCount += 1
-                        }
-                    } else {
-                        skippedCount += 1
+
+                finishManager.finishQuiz(quizId: quizId) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let finishResult):
+                        let result = QuizResultModel(
+                            earnedPoints: finishResult.point,
+                            correctCount: finishResult.correctAnswer,
+                            skippedCount: finishResult.skipped,
+                            incorrectCount: finishResult.inCorrectAnswer,
+                            completionRate: finishResult.completion
+                        )
+                        self.onQuizFinished?(result)
+                    case .failure(let error):
+                        print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
                     }
                 }
-
-                let total = questions.count
-                let earnedPoints = correctCount * 10
-                let completionRate = Int(Double(correctCount) / Double(total) * 100)
-
-                let result = QuizResultModel(
-                    earnedPoints: earnedPoints,
-                    correctCount: correctCount,
-                    skippedCount: skippedCount,
-                    incorrectCount: incorrectCount,
-                    completionRate: completionRate
-                )
-
-                onQuizFinished?(result)
         }
     
 }

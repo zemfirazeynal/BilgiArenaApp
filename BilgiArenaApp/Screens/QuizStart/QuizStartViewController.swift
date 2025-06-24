@@ -224,8 +224,19 @@ class QuizStartViewController: UIViewController {
         }
 
         @objc private func nextTapped() {
-            viewModel.submitAnswer()
-            viewModel.nextQuestion()
+//            viewModel.submitAnswer()
+//            viewModel.nextQuestion()
+            
+            // cavabı yadda saxla / API-yə göndər
+                viewModel.submitAnswer()
+
+//                if viewModel.isLastQuestion {
+//                    // sonuncu sualdır → ViewModel artıq finishQuiz() edəcək,
+//                    // onQuizFinished closure-ı koordinatora gedəcək
+//                    return
+//                } else {
+                    viewModel.nextQuestion()
+                
 
         }
 }
