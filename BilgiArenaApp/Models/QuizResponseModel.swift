@@ -27,6 +27,7 @@ struct QuizItemResponseData: Codable {
     let question: [QuestionResponseModel]?
 
     enum CodingKeys: String, CodingKey {
-            case id, name, count, description, photo, point, createDate, updateDate, category, question
-        }
+        case id, name, count, description, photo, point, createDate, updateDate,
+            category, question
+    }
 }

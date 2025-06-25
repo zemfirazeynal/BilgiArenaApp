@@ -18,4 +18,3 @@ struct QuizFinishResponseData: Codable {
     let inCorrectAnswer: Int
     let completion: Int
 }
-

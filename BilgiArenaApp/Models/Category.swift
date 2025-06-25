@@ -20,7 +20,5 @@ extension Category {
         self.quizCount = "\(response.count) Quizzes"
         self.imageName = response.photo
         self.id = response.id
-
     }
 }
-

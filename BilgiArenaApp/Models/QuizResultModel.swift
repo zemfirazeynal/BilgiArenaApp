@@ -12,4 +12,3 @@ struct QuizResultModel {
     let incorrectCount: Int
     let completionRate: Int
 }
-

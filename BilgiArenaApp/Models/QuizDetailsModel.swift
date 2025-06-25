@@ -8,9 +8,9 @@
 import Foundation
 
 struct QuizDetailsModel {
-    let subject: String          //  "SPORTS"
-    let title: String            //  "Basic Trivia Quiz"
-    let description: String      //   "Any time is a good time..."
-    let questionCount: Int       //   10
-    let points: Int              //  100
+    let subject: String
+    let title: String
+    let description: String
+    let questionCount: Int
+    let points: Int  
 }

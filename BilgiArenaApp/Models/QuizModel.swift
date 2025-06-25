@@ -16,11 +16,46 @@ struct Quiz {
     let subject: String
 
     static let sampleData: [Quiz] = [
-        Quiz(id: 1, title: "Statistics Math Quiz", category: "Math", questionCount: 15, iconName: "chart.bar.xaxis", subject: "Math"),
-        Quiz(id: 2, title: "Integers Quiz", category: "Math", questionCount: 10, iconName: "function", subject: "Math"),
-        Quiz(id: 3, title: "Algebra Quiz", category: "Math", questionCount: 8, iconName: "sum", subject: "Math"),
-        Quiz(id: 4, title: "Geometry Quiz", category: "Math", questionCount: 6, iconName: "triangle", subject: "Math"),
-        Quiz(id: 4,title: "Physics Quiz", category: "Science", questionCount: 15, iconName: "atom", subject: "Science"),
+        Quiz(
+            id: 1,
+            title: "Statistics Math Quiz",
+            category: "Math",
+            questionCount: 15,
+            iconName: "chart.bar.xaxis",
+            subject: "Math"
+        ),
+        Quiz(
+            id: 2,
+            title: "Integers Quiz",
+            category: "Math",
+            questionCount: 10,
+            iconName: "function",
+            subject: "Math"
+        ),
+        Quiz(
+            id: 3,
+            title: "Algebra Quiz",
+            category: "Math",
+            questionCount: 8,
+            iconName: "sum",
+            subject: "Math"
+        ),
+        Quiz(
+            id: 4,
+            title: "Geometry Quiz",
+            category: "Math",
+            questionCount: 6,
+            iconName: "triangle",
+            subject: "Math"
+        ),
+        Quiz(
+            id: 4,
+            title: "Physics Quiz",
+            category: "Science",
+            questionCount: 15,
+            iconName: "atom",
+            subject: "Science"
+        ),
     ]
 }
 
@@ -28,14 +63,13 @@ extension Quiz {
     init(from response: QuizItemResponseData) {
         self.id = response.id
         self.title = response.name
-                self.category = response.category.name
-                self.questionCount = response.count
-                self.iconName = "questionmark.circle"
-                self.subject = response.category.name
+        self.category = response.category.name
+        self.questionCount = response.count
+        self.iconName = "questionmark.circle"
+        self.subject = response.category.name
     }
 }
 
-// Search üçün initializer
 extension Quiz {
     init(fromSearch response: PublicQuizItemresponseData) {
         self.id = response.id
@@ -46,10 +80,3 @@ extension Quiz {
         self.subject = response.category
     }
 }
-
-
-//extension Quiz {
-//    static func sampleData(for category: Category) -> [Quiz] {
-//        return sampleData.filter { $0.category == category.subject }
-//    }
-//}
