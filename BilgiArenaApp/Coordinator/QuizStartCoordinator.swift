@@ -63,20 +63,19 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
 
     func showQuizResult(with result: QuizResultModel) {
 
-//        let resultCoordinator = QuizResultCoordinator(
-//            navigationController: navigationController
-//        )
-//        self.resultCoordinator = resultCoordinator
-//        resultCoordinator.start(with: result)
         
-        let viewModel = QuizResultViewModel(model: result)
-                
-                viewModel.onDoneTapped = { [weak self] in
-                    self?.navigationController.popToRootViewController(animated: true)
-                }
-
-                let viewController = QuizResultViewController(viewModel: viewModel)
-                navigationController.pushViewController(viewController, animated: true)
+//        let viewModel = QuizResultViewModel(model: result)
+//                
+//                viewModel.onDoneTapped = { [weak self] in
+//                    self?.navigationController.popToRootViewController(animated: true)
+//                }
+//
+//                let viewController = QuizResultViewController(viewModel: viewModel)
+//                navigationController.pushViewController(viewController, animated: true)
+        
+        let resultCoordinator = QuizResultCoordinator(navigationController: navigationController)
+            self.resultCoordinator = resultCoordinator
+            resultCoordinator.start(with: result)
       
     }
     

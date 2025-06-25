@@ -33,17 +33,44 @@ final class QuizResultCoordinator: QuizResultCoordinatorProtocol {
 
     func navigateToHome() {
 
+//        guard
+//            let scene = UIApplication.shared.connectedScenes.first
+//                as? UIWindowScene,
+//            let window = scene.windows.first
+//        else {
+//            return
+//        }
+//
+//        let tabBarController = MainTabBarController()
+//        window.rootViewController = tabBarController
+//        window.makeKeyAndVisible()
+        
+//        guard
+//                let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//                let window = scene.windows.first
+//            else { return }
+//
+//            // Əgər əsas görünən root controller TabBar-dısa:
+//            if let tabBar = window.rootViewController as? MainTabBarController {
+//                tabBar.selectedIndex = 0
+//                navigationController.dismiss(animated: true)
+//            } else {
+//                // Əks halda tabbarı yenidən qur:
+//                let tabBar = MainTabBarController()
+//                tabBar.selectedIndex = 0
+//                window.rootViewController = tabBar
+//                window.makeKeyAndVisible()
+//            }
+        
         guard
-            let scene = UIApplication.shared.connectedScenes.first
-                as? UIWindowScene,
-            let window = scene.windows.first
-        else {
-            return
-        }
+                let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let window = scene.windows.first
+            else { return }
 
-        let tabBarController = MainTabBarController()
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
+            let tabBarController = MainTabBarController()
+            tabBarController.selectedIndex = 0 // Home
+            window.rootViewController = tabBarController
+            window.makeKeyAndVisible()
 
     }
 }
