@@ -16,30 +16,30 @@ protocol LoginCoordinatorProtocol {
 
 final class LoginCoordinator: LoginCoordinatorProtocol {
     var navigationController: UINavigationController
-    
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     func start() {
         let loginVC = LoginViewController(viewModel: .init(coordinator: self))
         navigationController.show(loginVC, sender: nil)
     }
-    
+
     func showResetPassword() {
-        let resetPasswordCoordinator = ResetPasswordCoordinator(navigationController: navigationController)
-            resetPasswordCoordinator.start()
+        let resetPasswordCoordinator = ResetPasswordCoordinator(
+            navigationController: navigationController
+        )
+        resetPasswordCoordinator.start()
     }
-    
-    func showHomeScreen() { //+
+
+    func showHomeScreen() {  //+
         let homeVC = HomeViewController()
         navigationController.setViewControllers([homeVC], animated: true)
     }
-    
+
     func showMainApp() {
         let tabBarController = MainTabBarController()
         navigationController.show(tabBarController, sender: nil)
     }
 }
-

@@ -14,19 +14,11 @@ protocol ProfileCoordinatorProtocol: AnyObject {
 
 final class ProfileCoordinator: Coordinator, ProfileCoordinatorProtocol {
     var navigationController: UINavigationController
-    var onboardingCoordinator: OnboardingCoordinator? //  əlavə et
+    var onboardingCoordinator: OnboardingCoordinator?  //  əlavə et
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-
-    //    func start() {
-    //        let controller = ProfileViewController()
-    //        let tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "tab_profile"), selectedImage: nil)
-    //        tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-    //        controller.tabBarItem = tabBarItem
-    //        navigationController.setViewControllers([controller], animated: true)
-    //    }
 
     func start() {
         let controller = ProfileViewController()
@@ -35,18 +27,10 @@ final class ProfileCoordinator: Coordinator, ProfileCoordinatorProtocol {
     }
 
     func showSettings() {
-        //        print("coordinator tapped")
-        //        let controller = SettingsViewController()
-        //        let nav = UINavigationController(rootViewController: controller)
-        //        nav.modalPresentationStyle = .fullScreen
-        //        navigationController.present(nav, animated: true)
-
-        print("coordinator tapped")
-
         let settingsNav = UINavigationController()
         let settingsCoordinator = SettingsCoordinator(
             navigationController: settingsNav
-            
+
         )
         settingsCoordinator.start()
 

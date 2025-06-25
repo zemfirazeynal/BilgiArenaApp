@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F25273AA-E3AF-4E8A-866D-E56A11F5E4CA"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BilgiArenaApp/Coordinator/ProfileCoordinator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "showSettings()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "98819C25-527B-4846-9486-455D310BA9AD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -34,52 +18,6 @@
             endingLineNumber = "63"
             landmarkName = "setupView()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "99725539-776F-4EDB-B980-613E7F78498D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BilgiArenaApp/Screens/QuizStart/QuizStartViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "finishQuiz()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "99725539-776F-4EDB-B980-613E7F78498D - 2bf2f4e0374970d9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BilgiArenaApp.QuizStartViewModel.finishQuiz() -&gt; ()"
-                  moduleName = "BilgiArenaApp.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Screens/QuizStart/QuizStartViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169">
-               </Location>
-               <Location
-                  uuid = "99725539-776F-4EDB-B980-613E7F78498D - 4249784091521f3b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;BilgiArenaApp.QuizFinishResponseData, Swift.Error&gt;) -&gt; () in BilgiArenaApp.QuizStartViewModel.finishQuiz() -&gt; ()"
-                  moduleName = "BilgiArenaApp.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zasadzade/Documents/iOS%20Developing/ATL%20Course/Final%20Project/BilgiArenaApp/BilgiArenaApp/Screens/QuizStart/QuizStartViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "169"
-                  endingLineNumber = "169">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -17,10 +17,8 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     private let navigationController: UINavigationController
     private let quiz: Quiz
     private var internalNavigationController: UINavigationController?
-    private var quizStartCoordinator: QuizStartCoordinator?  //
-    
+    private var quizStartCoordinator: QuizStartCoordinator?
     private var quizDetailsViewModel: QuizDetailsViewModel?
-
 
     init(navigationController: UINavigationController, quiz: Quiz) {
         self.navigationController = navigationController
@@ -44,25 +42,16 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
 
     // MARK: - Navigation
     func showQuizStartScreen(quizId: Int) {
-        
         guard let questions = quizDetailsViewModel?.questions else {
-                    print("Suallar mövcud deyil.")
-                    return
-                }
-
-
-//        let startCoordinator = QuizStartCoordinator(
-//            navigationController: internalNavigationController!,
-//            quiz: quiz
-//        )
-//        self.quizStartCoordinator = startCoordinator  // referansı saxla
-//        startCoordinator.start()
+            print("Suallar mövcud deyil.")
+            return
+        }
         let startCoordinator = QuizStartCoordinator(
-                navigationController: internalNavigationController!,
-                questions: questions,
-                quizId: quizId
-            )
-            self.quizStartCoordinator = startCoordinator
-            startCoordinator.start()
+            navigationController: internalNavigationController!,
+            questions: questions,
+            quizId: quizId
+        )
+        self.quizStartCoordinator = startCoordinator
+        startCoordinator.start()
     }
 }

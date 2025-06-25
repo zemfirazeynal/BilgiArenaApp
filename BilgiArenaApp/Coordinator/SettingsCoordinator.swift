@@ -13,40 +13,41 @@ protocol SettingsCoordinatorProtocol: AnyObject {
 }
 
 final class SettingsCoordinator: SettingsCoordinatorProtocol {
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
     var onboardingCoordinator: OnboardingCoordinator?
-
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-       
-    }
-    
-    func start() {
-            let controller = SettingsViewController()
-            let viewModel = SettingsViewModel(coordinator: self)
-            controller.viewModel = viewModel
 
-            navigationController.pushViewController(controller, animated: true)
-        }
+    }
+
+    func start() {
+        let controller = SettingsViewController()
+        let viewModel = SettingsViewModel(coordinator: self)
+        controller.viewModel = viewModel
+
+        navigationController.pushViewController(controller, animated: true)
+    }
 
     func logout() {
-        print("Coordinator logout()")
-        
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let sceneDelegate = scene.delegate as? SceneDelegate,
-              let window = sceneDelegate.window else {
-            print("SceneDelegate.window not found")
+
+        guard
+            let scene = UIApplication.shared.connectedScenes.first
+                as? UIWindowScene,
+            let sceneDelegate = scene.delegate as? SceneDelegate,
+            let window = sceneDelegate.window
+        else {
             return
         }
-        
+
         let onboardingNav = UINavigationController()
-        let onboardingCoordinator = OnboardingCoordinator(navigationController: onboardingNav)
+        let onboardingCoordinator = OnboardingCoordinator(
+            navigationController: onboardingNav
+        )
         self.onboardingCoordinator = onboardingCoordinator
-        onboardingCoordinator.start() // Onboarding VC və ViewModel burada qurulacaq
-        
+        onboardingCoordinator.start()  // Onboarding VC və ViewModel burada qurulacaq
+
         window.rootViewController = onboardingNav
         window.makeKeyAndVisible()
-        print(" Root set olundu ")
     }
 }

@@ -9,20 +9,24 @@ import Foundation
 import UIKit
 
 class SignUpCoordinator: Coordinator {
-    
+
     var navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     func start() {
-        let signupFlowCoordinator = SignupFlowCoordinator(navigationController: navigationController)
-        signupFlowCoordinator.start() 
+        let signupFlowCoordinator = SignupFlowCoordinator(
+            navigationController: navigationController
+        )
+        signupFlowCoordinator.start()
     }
-    
+
     func showLogin() {
-        let coordinator = LoginCoordinator(navigationController: navigationController)
+        let coordinator = LoginCoordinator(
+            navigationController: navigationController
+        )
         coordinator.start()
     }
 }
