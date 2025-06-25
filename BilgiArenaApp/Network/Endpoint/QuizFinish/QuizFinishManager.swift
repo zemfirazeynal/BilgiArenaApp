@@ -21,12 +21,12 @@ final class QuizFinishManager: QuizFinishManagerUseCase {
         quizId: Int,
         completion: @escaping (Result<QuizFinishResponseData, Error>) -> Void
     ) {
-        
+
         let endpoint = QuizFinishEndpoint.finish(quizId: quizId).path
         let headers: [String: String] = [
-            "Authorization": "Bearer \(KeychainService.shared.read(key: "accessToken") ?? "")"
+            "Authorization":
+                "Bearer \(KeychainService.shared.read(key: "accessToken") ?? "")"
         ]
-        
 
         manager.request(
             endpoint: endpoint,
@@ -38,9 +38,20 @@ final class QuizFinishManager: QuizFinishManagerUseCase {
             isFullURL: true
         ) { resp, err in
             if let result = resp?.data {
-                completion(.success(result)) // result is of type QuizResultModel
+                completion(.success(result))  // result is of type QuizResultModel
             } else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: err ?? "Unknown error"])))
+                completion(
+                    .failure(
+                        NSError(
+                            domain: "",
+                            code: -1,
+                            userInfo: [
+                                NSLocalizedDescriptionKey: err
+                                    ?? "Unknown error"
+                            ]
+                        )
+                    )
+                )
             }
         }
     }

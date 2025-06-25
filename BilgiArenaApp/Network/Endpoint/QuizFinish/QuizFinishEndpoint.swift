@@ -10,10 +10,12 @@ import Foundation
 enum QuizFinishEndpoint {
     case finish(quizId: Int)
 
-        var path: String {
-            switch self {
-            case .finish(let quizId):
-                return NetworkHelper.shared.configureURL(endpoint: "quiz/finish?quizId=\(quizId)")
-            }
+    var path: String {
+        switch self {
+        case .finish(let quizId):
+            return NetworkHelper.shared.configureURL(
+                endpoint: "quiz/finish?quizId=\(quizId)"
+            )
         }
+    }
 }

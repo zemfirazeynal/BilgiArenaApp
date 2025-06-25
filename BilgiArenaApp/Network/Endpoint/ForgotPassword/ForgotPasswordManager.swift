@@ -5,13 +5,21 @@
 //  Created by Zemfira Asadzade on 09.05.25.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 protocol ForgotPasswordManagerUseCase {
     func sendOtp(email: String, completion: @escaping (Bool, String?) -> Void)
-    func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void)
-    func resetPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void)
+    func verifyOtp(
+        email: String,
+        otp: String,
+        completion: @escaping (String?, String?) -> Void
+    )
+    func resetPassword(
+        password: String,
+        token: String,
+        completion: @escaping (Bool, String?) -> Void
+    )
 }
 
 final class ForgotPasswordManager: ForgotPasswordManagerUseCase {
@@ -27,7 +35,11 @@ final class ForgotPasswordManager: ForgotPasswordManagerUseCase {
     }
 
     // 2. Verify OTP and get JWT
-    func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void) {
+    func verifyOtp(
+        email: String,
+        otp: String,
+        completion: @escaping (String?, String?) -> Void
+    ) {
         let path = ForgotPasswordEndpoint.verifyOtp(email: email, otp: otp).path
 
         manager.request(
@@ -49,11 +61,17 @@ final class ForgotPasswordManager: ForgotPasswordManagerUseCase {
     }
 
     // 3. Reset Password
-    func resetPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void) {
+    func resetPassword(
+        password: String,
+        token: String,
+        completion: @escaping (Bool, String?) -> Void
+    ) {
         let path = ForgotPasswordEndpoint.resetPassword(password: password).path
         let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
 
-        manager.rawRequest(path: path, method: .post, headers: headers) { success, error in
+        manager.rawRequest(path: path, method: .post, headers: headers) {
+            success,
+            error in
             completion(success, error)
         }
     }

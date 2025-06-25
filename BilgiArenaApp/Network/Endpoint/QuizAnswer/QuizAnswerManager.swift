@@ -8,17 +8,23 @@
 import Foundation
 
 protocol QuizAnswerManagerUseCase {
-    func answerQuestion(optionId: Int, completion: @escaping (Result<Void, Error>) -> Void)
+    func answerQuestion(
+        optionId: Int,
+        completion: @escaping (Result<Void, Error>) -> Void
+    )
 }
 
 final class QuizAnswerManager: QuizAnswerManagerUseCase {
     private let manager = NetworkManager()
 
-    func answerQuestion(optionId: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+    func answerQuestion(
+        optionId: Int,
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) {
         let token = KeychainService.shared.read(key: "accessToken") ?? ""
         let headers: [String: String] = [
             "Authorization": "Bearer \(token)",
-            "Accept": "*/*"
+            "Accept": "*/*",
         ]
 
         let path = QuizAnswerEndpoint.answer(optionId: optionId).path
@@ -34,7 +40,11 @@ final class QuizAnswerManager: QuizAnswerManagerUseCase {
             if success {
                 completion(.success(()))
             } else {
-                completion(.failure(NSError(domain: error ?? "Unknown error", code: -1)))
+                completion(
+                    .failure(
+                        NSError(domain: error ?? "Unknown error", code: -1)
+                    )
+                )
             }
         }
     }

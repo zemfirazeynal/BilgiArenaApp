@@ -5,8 +5,8 @@
 //  Created by Zemfira Asadzade on 22.05.25.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 protocol UserInfoManagerUseCase {
     func fetchUserInfo(
@@ -24,7 +24,7 @@ final class UserInfoManager: UserInfoManagerUseCase {
 
         let headers: [String: String] = [
             "Authorization": "Bearer \(token)",
-            "Accept": "application/json"
+            "Accept": "application/json",
         ]
 
         let path = UserInfoEndpoint.getUserInfo.path
@@ -42,7 +42,15 @@ final class UserInfoManager: UserInfoManagerUseCase {
                 completion(.success(response.data))
             } else {
                 let message = error ?? "Naməlum xəta baş verdi"
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: message])))
+                completion(
+                    .failure(
+                        NSError(
+                            domain: "",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: message]
+                        )
+                    )
+                )
             }
         }
     }

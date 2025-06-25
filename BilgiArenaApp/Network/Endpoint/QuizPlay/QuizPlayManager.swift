@@ -24,7 +24,7 @@ final class QuizPlayManager: QuizPlayManagerUseCase {
         let token = KeychainService.shared.read(key: "accessToken") ?? ""
         let headers: [String: String] = [
             "Authorization": "Bearer \(token)",
-            "Accept": "*/*"
+            "Accept": "*/*",
         ]
 
         let path = QuizPlayEndpoint.play(quizId: quizId).path
@@ -40,7 +40,11 @@ final class QuizPlayManager: QuizPlayManagerUseCase {
             if success {
                 completion(.success(()))
             } else {
-                completion(.failure(NSError(domain: error ?? "Unknown error", code: -1)))
+                completion(
+                    .failure(
+                        NSError(domain: error ?? "Unknown error", code: -1)
+                    )
+                )
             }
         }
     }

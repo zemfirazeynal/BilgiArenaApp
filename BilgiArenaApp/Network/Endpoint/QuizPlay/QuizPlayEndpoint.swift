@@ -13,7 +13,9 @@ enum QuizPlayEndpoint {
     var path: String {
         switch self {
         case .play(let quizId):
-            return NetworkHelper.shared.configureURL(endpoint: "quiz/play?quizId=\(quizId)")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "quiz/play?quizId=\(quizId)"
+            )
         }
     }
 }

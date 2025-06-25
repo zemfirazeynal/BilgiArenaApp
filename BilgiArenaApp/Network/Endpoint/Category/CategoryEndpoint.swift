@@ -13,6 +13,7 @@ enum CategoryEndpoint {
     var path: String {
         switch self {
         case .fetchAll:
-            return "category"        }
+            return "category"
+        }
     }
 }

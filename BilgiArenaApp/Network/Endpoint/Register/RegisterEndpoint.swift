@@ -15,11 +15,17 @@ enum RegisterEndpoint {
     var path: String {
         switch self {
         case .sendOtp(let email):
-            return NetworkHelper.shared.configureURL(endpoint: "register/with-email?email=\(email)")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "register/with-email?email=\(email)"
+            )
         case .verifyOtp(let email, let otp):
-            return NetworkHelper.shared.configureURL(endpoint: "check-otp?email=\(email)&otp=\(otp)")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "check-otp?email=\(email)&otp=\(otp)"
+            )
         case .setPassword(let password):
-            return NetworkHelper.shared.configureURL(endpoint: "resetPassword?password=\(password)")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "resetPassword?password=\(password)"
+            )
         }
     }
 }

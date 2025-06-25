@@ -9,7 +9,7 @@ import Foundation
 
 enum LoginEndpoint {
     case login
-    
+
     var path: String {
         switch self {
         case .login:
