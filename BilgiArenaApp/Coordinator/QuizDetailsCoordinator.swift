@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 
 protocol QuizDetailsCoordinatorProtocol: AnyObject {
-    func showQuizStartScreen(quizId: Int)
+    func showQuizStartScreen(quizId: Int) async
 }
 
-final class QuizDetailsCoordinator: @preconcurrency QuizDetailsCoordinatorProtocol {
+final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
 
     private let navigationController: UINavigationController
     private let quiz: Quiz
@@ -42,7 +42,7 @@ final class QuizDetailsCoordinator: @preconcurrency QuizDetailsCoordinatorProtoc
 
     // MARK: - Navigation
     @MainActor
-    func showQuizStartScreen(quizId: Int) {
+    func showQuizStartScreen(quizId: Int) async {
         guard let questions = quizDetailsViewModel?.questions else {
             print("Suallar mövcud deyil.")
             return
