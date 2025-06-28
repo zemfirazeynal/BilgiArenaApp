@@ -15,6 +15,7 @@ struct LoginRequestModel: Codable {
 extension Encodable {
     func asDictionary() throws -> [String: Any] {
         let data = try JSONEncoder().encode(self)
-        return try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+        return try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            ?? [:]
     }
 }

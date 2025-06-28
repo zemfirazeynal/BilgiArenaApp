@@ -13,9 +13,9 @@ enum UserInfoEndpoint {
     var path: String {
         switch self {
         case .getUserInfo:
-            return NetworkHelper.shared.configureURL(endpoint: "dashboard/userInfo")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "dashboard/userInfo"
+            )
         }
     }
 }
-
-

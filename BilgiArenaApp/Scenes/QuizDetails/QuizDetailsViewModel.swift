@@ -98,6 +98,7 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     //        coordinator?.showQuizStartScreen()
     //    }
     
+    
     func playQuiz() {
         playManager.playQuiz(quizId: quizId) { result in
                 DispatchQueue.main.async {
@@ -109,7 +110,9 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
                         
                         // 0.5 saniyə sonra növbəti ekrana keç
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.coordinator?.showQuizStartScreen(quizId: self.quizId)
+                            Task {
+                                await self.coordinator?.showQuizStartScreen(quizId: self.quizId)
+                            }
                         }
                     case .failure(let error):
                         print("❌ playQuiz error: \(error.localizedDescription)")

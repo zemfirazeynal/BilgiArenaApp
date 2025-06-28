@@ -7,6 +7,6 @@
 import Foundation
 
 struct EmptyResponseModel: Codable {
-    init(from decoder: Decoder) throws { }
-        init() { }
+    init(from decoder: Decoder) throws {}
+    init() {}
 }

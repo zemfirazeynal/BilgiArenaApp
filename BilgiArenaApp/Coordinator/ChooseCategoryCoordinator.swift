@@ -13,11 +13,9 @@ protocol ChooseCategoryCoordinatorProtocol: AnyObject {
 }
 
 final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
-   
-    
+
     private let navigationController: UINavigationController
-    
- 
+
     private var selectedCategoryCoordinator: SelectedCategoryCoordinator?
 
     private var internalNavigationController: UINavigationController?
@@ -27,7 +25,6 @@ final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
     }
 
     func start() {
-
         let viewModel = ChooseCategoryViewModel()
         viewModel.coordinator = self
         let viewController = ChooseCategoryViewController(viewModel: viewModel)
@@ -38,19 +35,14 @@ final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
         self.internalNavigationController = nav
 
         navigationController.present(nav, animated: true)
-
     }
 
     func showCategoryQuizList(for category: Category) {
-
-        
- 
         let selectedCoordinator = SelectedCategoryCoordinator(
-               navigationController: internalNavigationController!,
-               category: category
-           )
-           self.selectedCategoryCoordinator = selectedCoordinator
-           selectedCoordinator.start()
-       
+            navigationController: internalNavigationController!,
+            category: category
+        )
+        self.selectedCategoryCoordinator = selectedCoordinator
+        selectedCoordinator.start()
     }
 }

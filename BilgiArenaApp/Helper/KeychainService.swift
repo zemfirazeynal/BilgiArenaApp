@@ -5,13 +5,12 @@
 //  Created by Zemfira Asadzade on 07.05.25.
 //
 
-
 import Foundation
 import Security
 
 final class KeychainService {
     static let shared = KeychainService()
-    
+
     private init() {}
 
     func save(key: String, value: String) {
@@ -20,10 +19,9 @@ final class KeychainService {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
-            kSecValueData as String: data
+            kSecValueData as String: data,
         ]
-
-        SecItemDelete(query as CFDictionary) // Əvvəlkini sil
+        SecItemDelete(query as CFDictionary)  // Əvvəlkini sil
         SecItemAdd(query as CFDictionary, nil)
     }
 
@@ -32,25 +30,25 @@ final class KeychainService {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: key,
             kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
+            kSecMatchLimit as String: kSecMatchLimitOne,
         ]
 
         var item: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
 
         if status == errSecSuccess,
-           let data = item as? Data,
-           let value = String(data: data, encoding: .utf8) {
+            let data = item as? Data,
+            let value = String(data: data, encoding: .utf8)
+        {
             return value
         }
-
         return nil
     }
 
     func delete(key: String) {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key
+            kSecAttrAccount as String: key,
         ]
         SecItemDelete(query as CFDictionary)
     }

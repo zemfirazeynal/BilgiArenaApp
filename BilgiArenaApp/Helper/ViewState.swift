@@ -5,7 +5,6 @@
 //  Created by Zemfira Asadzade on 07.05.25.
 //
 
-
 enum ViewState {
     case idle
     case loading

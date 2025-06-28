@@ -10,9 +10,7 @@ import UIKit
 
 protocol ResetPasswordCoordinatorProtocol: AnyObject {
     func showOtpCodeScreen(email: String)
-
     func showNewPasswordScreen(token: String)
-
     func goToLoginScreen()
 }
 
@@ -30,7 +28,6 @@ final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
     }
 
     func showOtpCodeScreen(email: String) {
-
         let vc = ResetPasswordBuilder.buildOtpCode(
             coordinator: self,
             email: email

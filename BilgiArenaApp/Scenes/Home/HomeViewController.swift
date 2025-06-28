@@ -56,8 +56,8 @@ class HomeViewController: UIViewController{
     private let percentageCircleView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 24
-        view.backgroundColor = UIColor(red: 255/255, green: 143/255, blue: 162/255, alpha: 1.0)
+        view.layer.cornerRadius = 28
+        view.backgroundColor = .selectedCategory
         return view
     }()
     
@@ -158,7 +158,7 @@ class HomeViewController: UIViewController{
     private let newQuizzesContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 24
+        view.layer.cornerRadius = 16
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.layer.masksToBounds = true
         return view
@@ -175,16 +175,7 @@ class HomeViewController: UIViewController{
     
     var viewModel: HomeViewModel?
     
-    
-//
-//    init(viewModel: HomeViewModel) {
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,6 +184,16 @@ class HomeViewController: UIViewController{
         discoverCategoriesButton.addTarget(self, action: #selector(discoverCategoriesTapped), for: .touchUpInside)
         
         bindViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let selectedIndexPath = selectedIndexPath {
+            quizTableView.deselectRow(at: selectedIndexPath, animated: true)
+            self.selectedIndexPath = nil
+            quizTableView.reloadData()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -295,8 +296,8 @@ class HomeViewController: UIViewController{
             recentQuizNameLabel.topAnchor.constraint(equalTo: recentQuizLabel.bottomAnchor, constant: 8),
             recentQuizNameLabel.leadingAnchor.constraint(equalTo: iconImageView.leadingAnchor, constant: 28),
             
-            percentageCircleView.widthAnchor.constraint(equalToConstant: 48),
-            percentageCircleView.heightAnchor.constraint(equalToConstant: 48),
+            percentageCircleView.widthAnchor.constraint(equalToConstant: 56),
+            percentageCircleView.heightAnchor.constraint(equalToConstant: 56),
             percentageCircleView.trailingAnchor.constraint(equalTo: recentQuizView.trailingAnchor, constant: -16),
             percentageCircleView.centerYAnchor.constraint(equalTo: recentQuizView.centerYAnchor),
             
@@ -310,8 +311,8 @@ class HomeViewController: UIViewController{
             
             featuredAvatarLeftImageView.topAnchor.constraint(equalTo: featuredView.topAnchor, constant: 16),
             featuredAvatarLeftImageView.leadingAnchor.constraint(equalTo: featuredView.leadingAnchor, constant: 16),
-            featuredAvatarLeftImageView.widthAnchor.constraint(equalToConstant: 48),
-            featuredAvatarLeftImageView.heightAnchor.constraint(equalToConstant: 48),
+            featuredAvatarLeftImageView.widthAnchor.constraint(equalToConstant: 60),
+            featuredAvatarLeftImageView.heightAnchor.constraint(equalToConstant: 60),
             
             featuredAvatarRightImageView.bottomAnchor.constraint(equalTo: featuredView.bottomAnchor, constant: -40),
             featuredAvatarRightImageView.trailingAnchor.constraint(equalTo: featuredView.trailingAnchor, constant: -16),

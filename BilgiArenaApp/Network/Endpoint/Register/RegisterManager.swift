@@ -5,13 +5,21 @@
 //  Created by Zemfira Asadzade on 04.05.25.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 protocol RegisterManagerUseCase {
     func sendOtp(email: String, completion: @escaping (Bool, String?) -> Void)
-    func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void)
-    func setPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void)
+    func verifyOtp(
+        email: String,
+        otp: String,
+        completion: @escaping (String?, String?) -> Void
+    )
+    func setPassword(
+        password: String,
+        token: String,
+        completion: @escaping (Bool, String?) -> Void
+    )
 }
 
 final class RegisterManager: RegisterManagerUseCase {
@@ -25,32 +33,11 @@ final class RegisterManager: RegisterManagerUseCase {
         }
     }
 
-//    func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void) {
-//        let url = RegisterEndpoint.verifyOtp(email: email, otp: otp).url
-//
-////        manager.rawStringResponse(url: url, method: .post) { token, error in
-////            completion(token, error)
-////        }
-//        
-//        AF.request(url, method: .post)
-//                .validate()
-//                .responseData { response in
-//                    switch response.result {
-//                    case .success(let data):
-//                        do {
-//                            let decoded = try JSONDecoder().decode(VerifyOtpResponse.self, from: data)
-//                            completion(decoded.data.jwt, nil)
-//                        } catch {
-//                            print("Decode Error: \(error.localizedDescription)")
-//                            completion(nil, "Decode problemi: \(error.localizedDescription)")
-//                        }
-//                    case .failure(let error):
-//                        completion(nil, error.localizedDescription)
-//                    }
-//                }
-//    }
-
-    func verifyOtp(email: String, otp: String, completion: @escaping (String?, String?) -> Void) {
+    func verifyOtp(
+        email: String,
+        otp: String,
+        completion: @escaping (String?, String?) -> Void
+    ) {
         let path = RegisterEndpoint.verifyOtp(email: email, otp: otp).path
 
         manager.request(
@@ -70,14 +57,19 @@ final class RegisterManager: RegisterManagerUseCase {
             }
         }
     }
-    
-    func setPassword(password: String, token: String, completion: @escaping (Bool, String?) -> Void) {
-        let path = RegisterEndpoint.setPassword(password: password).path
-        let headers : HTTPHeaders = ["Authorization": "Bearer \(token)"]
 
-        manager.rawRequest(path: path, method: .post, headers: headers) { success, error in
+    func setPassword(
+        password: String,
+        token: String,
+        completion: @escaping (Bool, String?) -> Void
+    ) {
+        let path = RegisterEndpoint.setPassword(password: password).path
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(token)"]
+
+        manager.rawRequest(path: path, method: .post, headers: headers) {
+            success,
+            error in
             completion(success, error)
         }
     }
 }
-

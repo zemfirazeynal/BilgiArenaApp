@@ -18,5 +18,3 @@ struct QuizStartOptionResponseModel: Codable {
     let id: Int
     let option: String
 }
-
-

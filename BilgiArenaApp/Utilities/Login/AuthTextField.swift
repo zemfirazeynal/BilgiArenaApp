@@ -61,6 +61,10 @@ class AuthTextField : UIView {
             textField.font = .systemFont(ofSize: 16)
             textField.textColor = .black
             textField.borderStyle = .none
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
+            textField.keyboardType = isSecure ? .default : .emailAddress
+            textField.textContentType = isSecure ? .password : .emailAddress
             textField.translatesAutoresizingMaskIntoConstraints = false
             textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 

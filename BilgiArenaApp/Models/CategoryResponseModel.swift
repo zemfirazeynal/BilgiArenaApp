@@ -12,14 +12,6 @@ struct CategoryResponseModel: Codable {
     let data: [CategoryItemResponseData]
 }
 
-//struct CategoryItemResponseData: Codable {
-//        let id: Int
-//        let name: String
-//        let count: Int
-//        let description: String?
-//        let photo: String
-//}
-
 struct CategoryItemResponseData: Codable {
     let id: Int
     let name: String

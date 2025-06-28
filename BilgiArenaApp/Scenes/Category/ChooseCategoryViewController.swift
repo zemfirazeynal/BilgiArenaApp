@@ -70,6 +70,12 @@ final class ChooseCategoryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        if let selectedIndexPath = selectedIndexPath {
+                collectionView.deselectItem(at: selectedIndexPath, animated: true)
+                self.selectedIndexPath = nil
+                collectionView.reloadData()
+            }
     }
     private func setupLayout() {
         view.addSubview(navigationHeader)

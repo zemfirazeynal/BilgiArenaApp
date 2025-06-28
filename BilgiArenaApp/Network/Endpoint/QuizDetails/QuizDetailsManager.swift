@@ -24,7 +24,7 @@ final class QuizDetailsManager: QuizDetailsManagerUseCase {
         let token = KeychainService.shared.read(key: "accessToken") ?? ""
         let headers: [String: String] = [
             "Authorization": "Bearer \(token)",
-            "Accept": "application/json"
+            "Accept": "application/json",
         ]
 
         let path = QuizDetailsEndpoint.fetchQuizDetails(quizId: quizId).path

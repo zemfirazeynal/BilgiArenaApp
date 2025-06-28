@@ -16,7 +16,7 @@ protocol SignupFlowCoordinatorProtocol: AnyObject {
 }
 
 final class SignupFlowCoordinator: SignupFlowCoordinatorProtocol {
-    
+
     private let navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
@@ -31,20 +31,21 @@ final class SignupFlowCoordinator: SignupFlowCoordinatorProtocol {
         let vc = SignupEmailBuilder.build(coordinator: self)
         navigationController.pushViewController(vc, animated: true)
     }
-    
+
     func showOtpCodeStep(email: String) {
         let vc = OtpCodeBuilder.build(email: email, coordinator: self)
-            navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 
     func showPasswordStep(token: String) {
         let vc = SignupPasswordBuilder.build(coordinator: self, token: token)
-            navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(vc, animated: true)
     }
 
     func finishSignup() {
-        let loginCoordinator = LoginCoordinator(navigationController: navigationController)
-            loginCoordinator.start()
+        let loginCoordinator = LoginCoordinator(
+            navigationController: navigationController
+        )
+        loginCoordinator.start()
     }
 }
-

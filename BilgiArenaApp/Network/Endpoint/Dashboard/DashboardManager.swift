@@ -5,26 +5,30 @@
 //  Created by Zemfira Asadzade on 12.05.25.
 //
 
-import Foundation
 import Alamofire
+import Foundation
 
 protocol DashboardManagerUseCase {
-    func fetchDashboard(completion: @escaping (Result<DashboardResponseModel, Error>) -> Void)
+    func fetchDashboard(
+        completion: @escaping (Result<DashboardResponseModel, Error>) -> Void
+    )
 }
 
 final class DashboardManager: DashboardManagerUseCase {
     private let manager = NetworkManager()
-    
-    func fetchDashboard(completion: @escaping (Result<DashboardResponseModel, Error>) -> Void) {
+
+    func fetchDashboard(
+        completion: @escaping (Result<DashboardResponseModel, Error>) -> Void
+    ) {
         // 1. Token al
         let token = KeychainService.shared.read(key: "accessToken") ?? ""
-        
+
         // 2. Header hazırla
         let headers: [String: String] = [
             "Authorization": "Bearer \(token)",
-            "Accept": "application/json"
+            "Accept": "application/json",
         ]
-        
+
         // 3. Path təyin et
         let path = DashboardEndpoint.getDashboard.path
 
@@ -42,7 +46,15 @@ final class DashboardManager: DashboardManagerUseCase {
                 completion(.success(response))
             } else {
                 let message = error ?? "Naməlum xəta baş verdi"
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: message])))
+                completion(
+                    .failure(
+                        NSError(
+                            domain: "",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: message]
+                        )
+                    )
+                )
             }
         }
     }

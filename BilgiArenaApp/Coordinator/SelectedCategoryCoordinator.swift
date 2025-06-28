@@ -15,9 +15,7 @@ protocol SelectedCategoryCoordinatorProtocol: AnyObject {
 final class SelectedCategoryCoordinator: SelectedCategoryCoordinatorProtocol {
 
     private var internalNavigationController: UINavigationController?
-
     private var quizDetailsCoordinator: QuizDetailsCoordinator?
-
     private let navigationController: UINavigationController
     private let category: Category
 
@@ -29,20 +27,20 @@ final class SelectedCategoryCoordinator: SelectedCategoryCoordinatorProtocol {
     func start() {
         let viewModel = SelectedCategoryViewModel(
             categoryName: category.subject,
-                categoryId: category.id )
+            categoryId: category.id
+        )
         viewModel.coordinator = self
 
         let controller = SelectedCategoryViewController(viewModel: viewModel)
-        
-        navigationController.pushViewController(controller, animated: true)
 
+        navigationController.pushViewController(controller, animated: true)
     }
 
     func showQuizDetail(for quiz: Quiz) {
-
         let quizCoordinator = QuizDetailsCoordinator(
             navigationController: navigationController,
-            quiz: quiz)
+            quiz: quiz
+        )
 
         self.quizDetailsCoordinator = quizCoordinator  //  Mütləq saxlamaq lazımdır
         quizCoordinator.start()

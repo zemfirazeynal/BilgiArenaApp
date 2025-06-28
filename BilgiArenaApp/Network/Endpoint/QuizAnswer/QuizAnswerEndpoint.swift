@@ -13,7 +13,9 @@ enum QuizAnswerEndpoint {
     var path: String {
         switch self {
         case .answer(let optionId):
-            return NetworkHelper.shared.configureURL(endpoint: "quiz/answer?questionOptionID=\(optionId)")
+            return NetworkHelper.shared.configureURL(
+                endpoint: "quiz/answer?questionOptionID=\(optionId)"
+            )
         }
     }
 }

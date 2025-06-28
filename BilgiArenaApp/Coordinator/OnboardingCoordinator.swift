@@ -8,15 +8,15 @@
 import Foundation
 import UIKit
 
-class OnboardingCoordinator: Coordinator{
-    
+class OnboardingCoordinator: Coordinator {
+
     var navigationController: UINavigationController
     private var signupCoordinator: SignUpCoordinator?
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     func start() {
         let viewModel = OnboardingViewModel()
         viewModel.onLoginTapped = { [weak self] in
@@ -30,22 +30,26 @@ class OnboardingCoordinator: Coordinator{
         navigationController.show(onboardingVC, sender: nil)
 
     }
-    
+
     func showLogin() {
-        let coordinator = LoginCoordinator(navigationController: navigationController)
+        let coordinator = LoginCoordinator(
+            navigationController: navigationController
+        )
         coordinator.start()
     }
-    
+
     func showSignup() {
-        let signupCoordinator = SignUpCoordinator(navigationController: navigationController)
+        let signupCoordinator = SignUpCoordinator(
+            navigationController: navigationController
+        )
         let signupVC = SignUpViewController(coordinator: signupCoordinator)
         navigationController.pushViewController(signupVC, animated: true)
     }
-    
+
     func showMainApp() {
-        let homeCoordinator = HomeCoordinator(navigationController: navigationController)
+        let homeCoordinator = HomeCoordinator(
+            navigationController: navigationController
+        )
         _ = homeCoordinator.start()
-        
-        
     }
 }

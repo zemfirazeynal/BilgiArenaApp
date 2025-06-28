@@ -8,17 +8,23 @@
 import Foundation
 
 protocol LoginManagerUseCase {
-        func login(email: String, password: String, completion: @escaping (LoginResponseModel?, String?) -> Void)
-
+    func login(
+        email: String,
+        password: String,
+        completion: @escaping (LoginResponseModel?, String?) -> Void
+    )
 }
-
 
 class LoginManager: LoginManagerUseCase {
     private let manager = NetworkManager()
-    
-    func login(email: String, password: String, completion: @escaping (LoginResponseModel?, String?) -> Void) {
+
+    func login(
+        email: String,
+        password: String,
+        completion: @escaping (LoginResponseModel?, String?) -> Void
+    ) {
         let request = LoginRequestModel(email: email, password: password)
-        
+
         do {
             let params = try request.asDictionary()
             manager.request(
@@ -33,7 +39,5 @@ class LoginManager: LoginManagerUseCase {
         } catch {
             completion(nil, "Parametrlər çevrilə bilmədi")
         }
-        
     }
-    
 }
