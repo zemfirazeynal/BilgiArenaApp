@@ -60,6 +60,17 @@ final class SelectedCategoryViewController: UIViewController {
            bindViewModel() // ⬅️ Bunu əlavə et
                viewModel.fetchQuizzes() // ⬅️ Və buradan API çağır
        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Seçimi sıfırla və görünüşü yenilə
+        if let selectedIndexPath = selectedIndexPath {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
+            self.selectedIndexPath = nil
+            tableView.reloadData()
+        }
+    }
 
        private func setupActions() {
            navigationHeader.onBackTap = { [weak self] in

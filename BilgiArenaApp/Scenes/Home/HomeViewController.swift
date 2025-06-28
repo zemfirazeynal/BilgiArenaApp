@@ -195,6 +195,16 @@ class HomeViewController: UIViewController{
         bindViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if let selectedIndexPath = selectedIndexPath {
+            quizTableView.deselectRow(at: selectedIndexPath, animated: true)
+            self.selectedIndexPath = nil
+            quizTableView.reloadData()
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         //        view.bringSubviewToFront(floatingAddButton)
