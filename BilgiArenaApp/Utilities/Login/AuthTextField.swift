@@ -63,7 +63,8 @@ class AuthTextField : UIView {
             textField.borderStyle = .none
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
-            textField.keyboardType = isSecure ? .default : .emailAddress  
+            textField.keyboardType = isSecure ? .default : .emailAddress
+            textField.textContentType = isSecure ? .password : .emailAddress
             textField.translatesAutoresizingMaskIntoConstraints = false
             textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
