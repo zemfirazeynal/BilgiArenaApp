@@ -111,10 +111,12 @@ class NetworkManager {
         method: HTTPMethod = .get,
         params: Parameters? = nil,
         encodingType: EncodingType = .url,
-        header: [String: String]? = nil
+        header: [String: String]? = nil,
+        isFullURL: Bool = false
     ) async throws -> T {
-
-        let path = NetworkHelper.shared.configureURL(endpoint: endpoint)
+        let path = isFullURL
+            ? endpoint
+            : NetworkHelper.shared.configureURL(endpoint: endpoint)
 
         var headers: HTTPHeaders?
         if let paramHeader = header {
@@ -131,7 +133,6 @@ class NetworkManager {
                 headers: headers
             )
             .validate()
-
             .responseDecodable(of: model.self) { response in
                 let statusCode = response.response?.statusCode ?? 0
 
@@ -168,6 +169,60 @@ class NetworkManager {
                     continuation.resume(
                         throwing: NSError(
                             domain: "Bad request (\(statusCode))",
+                            code: statusCode,
+                            userInfo: nil
+                        )
+                    )
+                }
+            }
+        }
+    }
+    
+    func requestWithoutResponseAsync(
+        endpoint: String,
+        method: HTTPMethod = .post,
+        params: Parameters? = nil,
+        encodingType: EncodingType = .url,
+        header: [String: String]? = nil,
+        isFullURL: Bool = false
+    ) async throws {
+        
+        let path = isFullURL
+            ? endpoint
+            : NetworkHelper.shared.configureURL(endpoint: endpoint)
+
+        var headers: HTTPHeaders?
+        if let paramHeader = header {
+            headers = HTTPHeaders(paramHeader)
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            AF.request(
+                path,
+                method: method,
+                parameters: params,
+                encoding: encodingType == .url ? URLEncoding.default : JSONEncoding.default,
+                headers: headers
+            )
+            .validate(statusCode: 200..<300)
+            .response { response in
+                let statusCode = response.response?.statusCode ?? 0
+
+                switch response.result {
+                case .success:
+                    continuation.resume()
+                case .failure(let error):
+                    let message: String
+                    if statusCode == 401 {
+                        message = "Unauthorized – Sistemdən çıxmısınız"
+                    } else if statusCode == 500 {
+                        message = "Server xətası"
+                    } else {
+                        message = error.localizedDescription
+                    }
+                    continuation.resume(
+                        throwing: NSError(
+                            domain: message,
                             code: statusCode,
                             userInfo: nil
                         )

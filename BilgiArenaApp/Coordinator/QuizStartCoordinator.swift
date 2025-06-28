@@ -29,6 +29,7 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
         self.quizId = quizId
     }
 
+    @MainActor
     func start() {
         guard let firstQuestion = questions.first else {
             return

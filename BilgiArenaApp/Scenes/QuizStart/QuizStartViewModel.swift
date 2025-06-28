@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+@MainActor               // bütün public API-lər əsas treda düşür
 protocol QuizStartViewModelProtocol {
 
     var questionNumberText: String { get }
@@ -24,10 +25,12 @@ protocol QuizStartViewModelProtocol {
     func selectOption(at index: Int)
     func isOptionSelected(_ index: Int) -> Bool
     func isOptionCorrect(_ index: Int) -> Bool
-    func submitAnswer()
+    func submitAnswer() async
+    func previousQuestion()
 
 }
 
+@MainActor               // bütün public API-lər əsas treda düşür
 final class QuizStartViewModel: QuizStartViewModelProtocol {
     private let questions: [QuizStartResponseModel]
     weak var coordinator: QuizStartCoordinatorProtocol?
@@ -112,54 +115,87 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         return index == correctAnswerIndex
     }
 
-    func submitAnswer() {
-
+    func submitAnswer() async {
         submittedAnswers[currentIndex] = true
 
-        guard let selected = selectedAnswerIndex else {
-            skippedCount += 1
-            //                    onUpdate?()
-            handleNextStep()  // ➜ növbəti addım
-            return
+                guard let selected = selectedAnswerIndex else {
+                    skippedCount += 1
+                    await advanceFlow()
+                    return
+                }
+
+                let optionId = questions[currentIndex].option[selected].id
+
+                do {
+                    try await answerManager.answerQuestion(optionId: optionId)
+                    print("✅ Cavab uğurla göndərildi")
+                } catch {
+                    print("❌ Cavab göndərilərkən xəta: \(error.localizedDescription)")
+                }
+
+                if selected == correctAnswerIndex { correctCount += 1 }
+                else { incorrectCount += 1 }
+
+                onUpdate?()
+                await advanceFlow()
+//        submittedAnswers[currentIndex] = true
+//
+//        guard let selected = selectedAnswerIndex else {
+//            skippedCount += 1
+//            //                    onUpdate?()
+//            handleNextStep()  // ➜ növbəti addım
+//            return
+//        }
+//
+//        let optionId = questions[currentIndex].option[selected].id
+//
+//        // API çağırışı
+//        answerManager.answerQuestion(optionId: optionId) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success:
+//                print("✅ Cavab uğurla göndərildi")
+//            case .failure(let error):
+//                print(
+//                    "❌ Cavab göndərilərkən xəta: \(error.localizedDescription)"
+//                )
+//            }
+//
+//            // Lokal hesablama
+//            if selected == self.correctAnswerIndex {
+//                self.correctCount += 1
+//            } else {
+//                self.incorrectCount += 1
+//            }
+//
+//            self.onUpdate?()
+//            self.handleNextStep()  // ➜ cavabdan sonra növbəti addım
+
         }
-
-        let optionId = questions[currentIndex].option[selected].id
-
-        // API çağırışı
-        answerManager.answerQuestion(optionId: optionId) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success:
-                print("✅ Cavab uğurla göndərildi")
-            case .failure(let error):
-                print(
-                    "❌ Cavab göndərilərkən xəta: \(error.localizedDescription)"
-                )
-            }
-
-            // Lokal hesablama
-            if selected == self.correctAnswerIndex {
-                self.correctCount += 1
+    
+    // MARK: Flow controller
+        private func advanceFlow() async {
+            if isLastQuestion {
+                await finishQuiz()
             } else {
-                self.incorrectCount += 1
+                currentIndex += 1
+                onUpdate?()
             }
-
-            self.onUpdate?()
-            self.handleNextStep()  // ➜ cavabdan sonra növbəti addım
-
         }
-    }
+    
+    
+    
 
-    // Cavab göndərildikdən (və ya skip edildikdən) sonra
-    private func handleNextStep() {
-        if isLastQuestion {
-            finishQuiz()  // yalnız sonuncu sualın cavabından SONRA
-        } else {
-            currentIndex += 1
-            onUpdate?()
-        }
-    }
+//    // Cavab göndərildikdən (və ya skip edildikdən) sonra
+//    private func handleNextStep() {
+//        if isLastQuestion {
+//            finishQuiz()  // yalnız sonuncu sualın cavabından SONRA
+//        } else {
+//            currentIndex += 1
+//            onUpdate?()
+//        }
+//    }
 
     func previousQuestion() {
         if currentIndex > 0 {
@@ -170,23 +206,37 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
         }
     }
 
-    private func finishQuiz() {
-        finishManager.finishQuiz(quizId: quizId) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let finishResult):
-                let result = QuizResultModel(
-                    earnedPoints: finishResult.point,
-                    correctCount: finishResult.correctAnswer,
-                    skippedCount: finishResult.skipped,
-                    incorrectCount: finishResult.inCorrectAnswer,
-                    completionRate: finishResult.completion
-                )
-                self.onQuizFinished?(result)
-            case .failure(let error):
-                print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
+    private func finishQuiz() async {
+        do {
+                    let finish = try await finishManager.finish(quizId: quizId)
+                    let resultModel = QuizResultModel(
+                        earnedPoints: finish.point,
+                        correctCount: finish.correctAnswer,
+                        skippedCount: finish.skipped,
+                        incorrectCount: finish.inCorrectAnswer,
+                        completionRate: finish.completion
+                    )
+                    onQuizFinished?(resultModel)
+                } catch {
+                    print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
+                }
             }
-        }
-    }
+//        finishManager.finishQuiz(quizId: quizId) { [weak self] result in
+//            guard let self = self else { return }
+//            switch result {
+//            case .success(let finishResult):
+//                let result = QuizResultModel(
+//                    earnedPoints: finishResult.point,
+//                    correctCount: finishResult.correctAnswer,
+//                    skippedCount: finishResult.skipped,
+//                    incorrectCount: finishResult.inCorrectAnswer,
+//                    completionRate: finishResult.completion
+//                )
+//                self.onQuizFinished?(result)
+//            case .failure(let error):
+//                print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
+//            }
+//        }
+//    }
 }
 

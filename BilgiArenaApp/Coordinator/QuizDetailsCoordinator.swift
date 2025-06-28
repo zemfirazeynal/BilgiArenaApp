@@ -12,7 +12,7 @@ protocol QuizDetailsCoordinatorProtocol: AnyObject {
     func showQuizStartScreen(quizId: Int)
 }
 
-final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
+final class QuizDetailsCoordinator: @preconcurrency QuizDetailsCoordinatorProtocol {
 
     private let navigationController: UINavigationController
     private let quiz: Quiz
@@ -41,6 +41,7 @@ final class QuizDetailsCoordinator: QuizDetailsCoordinatorProtocol {
     }
 
     // MARK: - Navigation
+    @MainActor
     func showQuizStartScreen(quizId: Int) {
         guard let questions = quizDetailsViewModel?.questions else {
             print("Suallar mövcud deyil.")

@@ -98,6 +98,7 @@ final class QuizDetailsViewModel: QuizDetailsViewModelProtocol {
     //        coordinator?.showQuizStartScreen()
     //    }
     
+    
     func playQuiz() {
         playManager.playQuiz(quizId: quizId) { result in
                 DispatchQueue.main.async {

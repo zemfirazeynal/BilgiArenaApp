@@ -291,6 +291,8 @@ class QuizStartViewController: UIViewController {
     }
 
     @objc private func nextTapped() {
-        viewModel.submitAnswer()
+        Task {
+                await viewModel.submitAnswer()
+            }
     }
 }
