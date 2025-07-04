@@ -68,8 +68,10 @@ class CategoryCell: UICollectionViewCell {
     func configure(with category: Category, isSelected: Bool) {
         titleLabel.text = category.subject
         subtitleLabel.text = category.quizCount
-        iconImageView.image = UIImage(named: category.imageName)?
-            .withRenderingMode(.alwaysTemplate)
+//        iconImageView.image = UIImage(named: category.imageName)?
+//            .withRenderingMode(.alwaysTemplate)
+        iconImageView.image = UIImage(systemName: category.imageName)?
+                .withRenderingMode(.alwaysTemplate)
 
         if isSelected {
             backgroundColor = .selectedCategory

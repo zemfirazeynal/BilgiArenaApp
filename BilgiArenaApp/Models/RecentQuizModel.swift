@@ -14,9 +14,9 @@ struct RecentQuizModel {
 }
 
 extension RecentQuizModel {
-    init(title: String, completion: Int) {
+    init(title: String, iconName: String, completion: Int) {
         self.title = title
-        self.iconName = "default_icon.png"
+        self.iconName = "sum"
         self.completion = completion
     }
 }

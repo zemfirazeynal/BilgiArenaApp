@@ -66,16 +66,20 @@ final class ChooseCategoryViewController: UIViewController {
         bindViewModel()
 
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        if let selectedIndexPath = selectedIndexPath {
-                collectionView.deselectItem(at: selectedIndexPath, animated: true)
-                self.selectedIndexPath = nil
-                collectionView.reloadData()
-            }
+//        if let selectedIndexPath = selectedIndexPath {
+//                collectionView.deselectItem(at: selectedIndexPath, animated: true)
+//                self.selectedIndexPath = nil
+//                collectionView.reloadData()
+//            }
     }
     private func setupLayout() {
         view.addSubview(navigationHeader)
@@ -177,6 +181,7 @@ extension ChooseCategoryViewController: UICollectionViewDataSource,
 
         viewModel.didSelectItem(at: indexPath.item)
     }
+    
 
     func collectionView(
         _ collectionView: UICollectionView,
