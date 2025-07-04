@@ -370,7 +370,13 @@ class HomeViewController: UIViewController{
                     if let recent = self?.viewModel?.recentQuiz {
                         self?.recentQuizNameLabel.text = recent.title
                         self?.iconImageView.image = UIImage(named: recent.iconName)
-                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
+//                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
+                        if let percent = recent.completion {
+                            self?.recentQuizPercentageLabel.text = "\(percent)%"
+                        } else {
+                            self?.recentQuizPercentageLabel.text = "%" // yalnız faiz işarəsi
+                        }
+
                     }
 
                     self?.quizTableView.reloadData()

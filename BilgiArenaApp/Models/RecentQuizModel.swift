@@ -8,7 +8,7 @@
 import Foundation
 
 struct RecentQuizModel {
-    let title: String
+    let title: String?
     let iconName: String
     let completion: Int?
 }

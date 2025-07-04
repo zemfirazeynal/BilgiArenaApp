@@ -16,8 +16,8 @@ struct DashboardResponseData: Codable {
 
     let user: User
     let quizzes: [QuizItemResponseData]
-    let quizName: String
-    let completion: Int
+    let quizName: String?
+    let completion: Int?
 
     enum CodingKeys: String, CodingKey {
         case user, quizzes, quizName, completion

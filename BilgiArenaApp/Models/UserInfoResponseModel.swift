@@ -16,7 +16,7 @@ struct UserInfoResponse: Codable {
 struct UserInfoData: Codable {
     let userResp: UserResp
     let rank: Int
-    let totalPoint: Int
+    let totalPoint: Int?
     let userQuizCOUNT: Int
 }
 

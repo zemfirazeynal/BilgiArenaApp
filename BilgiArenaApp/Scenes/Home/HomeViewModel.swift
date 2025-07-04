@@ -96,10 +96,20 @@ final class HomeViewModel: HomeViewModelProtocol {
                 case .success(let response):
                     self.user = response.data.user
                     
-                    self.recentQuiz = RecentQuizModel(
-                        title: response.data.quizName,
-                        completion: response.data.completion
-                    )
+//                    self.recentQuiz = RecentQuizModel(
+//                        title: response.data.quizName,
+//                        completion: response.data.completion
+//                    )
+                    if let name = response.data.quizName,
+                       let percent = response.data.completion {
+                        // normal vəziyyət
+                        recentQuiz = RecentQuizModel(title: name,
+                                                     completion: percent)
+                    } else {
+                        // hələ heç nə oynamayıb
+                        recentQuiz = RecentQuizModel(title: "No quiz played",
+                                                     completion: 0)
+                    }
                     
                     self.quizList = response.data.quizzes.map { Quiz(from: $0) }
 

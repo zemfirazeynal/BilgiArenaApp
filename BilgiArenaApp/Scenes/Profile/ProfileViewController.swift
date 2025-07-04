@@ -268,7 +268,12 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                 case .success(let userInfo):
                     self?.profileHeaderView.configure(username: userInfo.userResp.username
                                                       /*imageName: userInfo.userResp.picture*/)
-                    self?.pointsView.update(value: "\(userInfo.totalPoint)")
+//                    self?.pointsView.update(value: "\(userInfo.totalPoint)")
+                    if let point = userInfo.totalPoint {
+                        self?.pointsView.update(value: "\(point)")
+                    } else {
+                        self?.pointsView.update(value: "0") // və ya "No points"
+                    }
                     self?.rankView.update(value: "#\(userInfo.rank)")
                     self?.statsSummaryView.update(with: userInfo.userQuizCOUNT) 
 
