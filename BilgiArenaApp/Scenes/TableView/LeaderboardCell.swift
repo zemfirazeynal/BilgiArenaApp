@@ -5,6 +5,7 @@
 //  Created by Zemfira Asadzade on 22.04.25.
 //
 import UIKit
+import Kingfisher
 
 final class LeaderboardCell: UITableViewCell {
 
@@ -125,9 +126,48 @@ final class LeaderboardCell: UITableViewCell {
 
     
     func configure(with user: LeaderboardUser) {
+        //        rankLabel.text = "\(user.rank)"
+        //        nameLabel.text = user.name
+        //        pointsLabel.text = "\(user.points) points"
+        //        avatarImageView.image = UIImage(named: user.avatarImageName)
+        
         rankLabel.text = "\(user.rank)"
         nameLabel.text = user.name
         pointsLabel.text = "\(user.points) points"
-        avatarImageView.image = UIImage(named: user.avatarImageName)
+        
+        let imageName = user.avatarImageName.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if !imageName.isEmpty,
+           let url = URL(string: "http://192.168.0.105:8099/resources/img/\(imageName)"),
+           let token = KeychainService.shared.read(key: "accessToken")
+        {
+            let modifier = AnyModifier { request in
+                var r = request
+                r.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+                return r
+            }
+            
+            print("📥 URL: \(url.absoluteString)")
+            print("🛡 Token: \(token.prefix(10))...")
+            
+            avatarImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "profile_image"),
+                options: [
+                    .requestModifier(modifier),
+                    .transition(.fade(0.3))
+                ]) { result in
+                    switch result {
+                    case .success(let value):
+                        print("✅ Şəkil yükləndi: \(value.source.url?.absoluteString ?? "")")
+                    case .failure(let error):
+                        print("❌ Xəta: \(error.localizedDescription)")
+                    }
+                }
+        } else {
+            avatarImageView.image = UIImage(systemName: "person.crop.circle")
+        }
     }
+    
+    
 }

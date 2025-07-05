@@ -100,7 +100,7 @@ extension LeaderboardUser {
             rank: page * size + index + 1,
             name: response.name,
             points: response.totalPoints,
-            avatarImageName: "sample_image"
+            avatarImageName: response.photo
         )
     }
 }
