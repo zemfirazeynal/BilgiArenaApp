@@ -18,4 +18,6 @@ struct PublicQuizItemresponseData: Codable {
     let name: String
     let category: String
     let count: Int
+    let photo: String
+
 }
