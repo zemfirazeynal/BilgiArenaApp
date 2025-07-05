@@ -59,10 +59,11 @@ final class HomeViewModel: HomeViewModelProtocol {
 //                        completion: response.data.completion
 //                    )
                     if let name = response.data.quizName,
-                       let percent = response.data.completion {
+                       let percent = response.data.completion,
+                       let iconName = response.data.iconName {
                        // normal vəziyyət
                         recentQuiz = RecentQuizModel(title: name,
-                                                     iconName: "sum",
+                                                     iconName: iconName,
                                                      completion: percent)
                     } else {
                         // hələ heç nə oynamayıb

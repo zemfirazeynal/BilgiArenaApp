@@ -16,6 +16,9 @@ final class ProfileHeaderView: UIView {
             imageView.contentMode = .scaleAspectFill
             imageView.clipsToBounds = true
             imageView.layer.cornerRadius = 40
+            imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+        
             return imageView
         }()
 
