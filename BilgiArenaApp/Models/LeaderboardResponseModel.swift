@@ -17,4 +17,5 @@ struct LeaderboardResponseData: Codable {
     let name: String
     let userId: Int
     let totalPoints: Int
+    let photo: String
 }

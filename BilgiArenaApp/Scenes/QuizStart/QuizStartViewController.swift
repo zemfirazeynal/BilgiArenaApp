@@ -74,6 +74,10 @@ class QuizStartViewController: UIViewController {
         configureContent()
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     // MARK: - Setup
     private func setupLayout() {
         view.addSubview(navigationHeader)

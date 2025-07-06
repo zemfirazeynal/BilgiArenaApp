@@ -186,6 +186,10 @@ class HomeViewController: UIViewController{
         bindViewModel()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -347,7 +351,7 @@ class HomeViewController: UIViewController{
             quizTableView.bottomAnchor.constraint(equalTo: newQuizzesContainer.bottomAnchor),
                         
         ])
-        headerView.configure(name: "Madelyn Dias", avatarImage: UIImage(named: "profile_image"))
+//        headerView.configure(name: "Madelyn Dias", avatarImageURL: user?.picture)
         
     }
     
@@ -363,14 +367,20 @@ class HomeViewController: UIViewController{
                     if let user = self?.viewModel?.user {
                         self?.headerView.configure(
                             name: user.username,
-                            avatarImage: UIImage(named: user.picture)
+                            avatarImageURL: user.picture
                         )
                     }
 
                     if let recent = self?.viewModel?.recentQuiz {
                         self?.recentQuizNameLabel.text = recent.title
-                        self?.iconImageView.image = UIImage(named: recent.iconName)
-                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
+                        self?.iconImageView.image = UIImage(systemName: recent.iconName)
+//                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
+                        if let percent = recent.completion {
+                            self?.recentQuizPercentageLabel.text = "\(percent)%"
+                        } else {
+                            self?.recentQuizPercentageLabel.text = "%" // yalnız faiz işarəsi
+                        }
+
                     }
 
                     self?.quizTableView.reloadData()

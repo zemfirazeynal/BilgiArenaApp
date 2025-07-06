@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18481B522DB6E55600C44543 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 18481B512DB6E55600C44543 /* KeychainSwift */; };
+		185562D02E185E23002C76D6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 185562CF2E185E23002C76D6 /* Kingfisher */; };
 		18FD94CC2DC6B8DB00644FD9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 18FD94CB2DC6B8DB00644FD9 /* Alamofire */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				185562D02E185E23002C76D6 /* Kingfisher in Frameworks */,
 				18481B522DB6E55600C44543 /* KeychainSwift in Frameworks */,
 				18FD94CC2DC6B8DB00644FD9 /* Alamofire in Frameworks */,
 			);
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				18481B512DB6E55600C44543 /* KeychainSwift */,
 				18FD94CB2DC6B8DB00644FD9 /* Alamofire */,
+				185562CF2E185E23002C76D6 /* Kingfisher */,
 			);
 			productName = BilgiArenaApp;
 			productReference = 1801AC672D9D4CB500EE8248 /* BilgiArenaApp.app */;
@@ -119,6 +122,7 @@
 			packageReferences = (
 				18481B502DB6E55600C44543 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 				18FD94CA2DC6B8DA00644FD9 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				185562CE2E185E23002C76D6 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1801AC682D9D4CB500EE8248 /* Products */;
@@ -358,6 +362,14 @@
 				minimumVersion = 24.0.0;
 			};
 		};
+		185562CE2E185E23002C76D6 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.4.0;
+			};
+		};
 		18FD94CA2DC6B8DA00644FD9 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -373,6 +385,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18481B502DB6E55600C44543 /* XCRemoteSwiftPackageReference "keychain-swift" */;
 			productName = KeychainSwift;
+		};
+		185562CF2E185E23002C76D6 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 185562CE2E185E23002C76D6 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		18FD94CB2DC6B8DB00644FD9 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

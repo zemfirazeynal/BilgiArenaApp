@@ -8,15 +8,15 @@
 import Foundation
 
 struct RecentQuizModel {
-    let title: String
+    let title: String?
     let iconName: String
     let completion: Int?
 }
 
 extension RecentQuizModel {
-    init(title: String, completion: Int) {
+    init(title: String, iconName: String, completion: Int) {
         self.title = title
-        self.iconName = "default_icon.png"
+        self.iconName = iconName
         self.completion = completion
     }
 }

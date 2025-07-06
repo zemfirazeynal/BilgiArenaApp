@@ -65,7 +65,7 @@ extension Quiz {
         self.title = response.name
         self.category = response.category.name
         self.questionCount = response.count
-        self.iconName = "questionmark.circle"
+        self.iconName = response.photo  
         self.subject = response.category.name
     }
 }
@@ -76,7 +76,7 @@ extension Quiz {
         self.title = response.name
         self.category = response.category
         self.questionCount = response.count
-        self.iconName = "questionmark.circle"
+        self.iconName = response.photo
         self.subject = response.category
     }
 }

@@ -9,34 +9,7 @@ import Foundation
 import UIKit
 
 protocol HomeViewModelProtocol {
-    //    var onDiscoverTapped: (() -> Void)? { get set }
-    //    func didTapDiscoverCategories()
-    //    func didSelectItem(at index: Int)
-    //
-    //}
-    //
-    //final class HomeViewModel: HomeViewModelProtocol {
-    //    var onDiscoverTapped: (() -> Void)?
-    //
-    //    var coordinator: HomeCoordinator
-    //
-    //    private let quizList: [Quiz] = Quiz.sampleData
-    //
-    //
-    //    init(coordinator: HomeCoordinator) {
-    //        self.coordinator = coordinator
-    //    }
-    //
-    //    func didTapDiscoverCategories() {
-    ////        onDiscoverTapped?()
-    //        coordinator.showChooseCategoryScreen()
-    //    }
-    //
-    //    func didSelectItem(at index: Int) {
-    //        let quiz = quizList[index]
-    //        coordinator.showQuizDetail(for: quiz)
-    //    }
-
+    
     var onDiscoverTapped: (() -> Void)? { get set }
     var onStateChange: ((ViewState) -> Void)? { get set }
 
@@ -69,22 +42,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     func fetchDashboard() {
-//        onStateChange?(.loading)
-//
-//        dashboardManager.fetchDashboard { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let response):
-//                self.user = response.data.user
-//                    self.recentQuiz = RecentQuizModel(from: response.data.quiz)
-//                    self.quizList = response.data.quizzes.map { Quiz(from: $0) }
-//                    self.onStateChange?(.success(message: ""))
-//
-//            case .failure(let error):
-//                self.onStateChange?(.error(message: error.localizedDescription))
-//            }
-//        }
+
         
         
         onStateChange?(.loading)
@@ -96,10 +54,23 @@ final class HomeViewModel: HomeViewModelProtocol {
                 case .success(let response):
                     self.user = response.data.user
                     
-                    self.recentQuiz = RecentQuizModel(
-                        title: response.data.quizName,
-                        completion: response.data.completion
-                    )
+//                    self.recentQuiz = RecentQuizModel(
+//                        title: response.data.quizName,
+//                        completion: response.data.completion
+//                    )
+                    if let name = response.data.quizName,
+                       let percent = response.data.completion,
+                       let iconName = response.data.iconName {
+                       // normal vəziyyət
+                        recentQuiz = RecentQuizModel(title: name,
+                                                     iconName: iconName,
+                                                     completion: percent)
+                    } else {
+                        // hələ heç nə oynamayıb
+                        recentQuiz = RecentQuizModel(title: "No quiz played",
+                                                     iconName: "questionmark.circle",
+                                                     completion: 0)
+                    }
                     
                     self.quizList = response.data.quizzes.map { Quiz(from: $0) }
 

@@ -81,10 +81,10 @@ final class StatsSummaryView: UIView {
             statsBackgrounImageView.bottomAnchor.constraint(
                 equalTo: bottomAnchor, constant: -16),
             statsBackgrounImageView.heightAnchor.constraint(
-                equalToConstant: 160),
+                equalToConstant: 280),
 
             titleLabel.topAnchor.constraint(
-                equalTo: statsBackgrounImageView.topAnchor, constant: 60),
+                equalTo: statsBackgrounImageView.topAnchor, constant: 100),
             titleLabel.leadingAnchor.constraint(
                 equalTo: leadingAnchor, constant: 28),
             titleLabel.trailingAnchor.constraint(

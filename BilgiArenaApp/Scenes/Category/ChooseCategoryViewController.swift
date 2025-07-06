@@ -66,6 +66,10 @@ final class ChooseCategoryViewController: UIViewController {
         bindViewModel()
 
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -177,6 +181,7 @@ extension ChooseCategoryViewController: UICollectionViewDataSource,
 
         viewModel.didSelectItem(at: indexPath.item)
     }
+    
 
     func collectionView(
         _ collectionView: UICollectionView,

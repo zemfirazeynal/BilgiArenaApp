@@ -77,6 +77,10 @@ class OnboardingViewController: UIViewController {
         updateButtonStates()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     private func configureActions() {
         loginButton.addTarget(
             self,
