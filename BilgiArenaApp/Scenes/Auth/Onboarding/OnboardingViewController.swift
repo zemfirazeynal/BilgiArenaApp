@@ -15,11 +15,8 @@ private enum SelectedAction {
 class OnboardingViewController: UIViewController {
     private var selectedAction: SelectedAction = .login
 
-    var onLoginTapped: (() -> Void)?
-    var onCreateTapped: (() -> Void)?
-
     private let illustrationImageView = UIImageView(
-        image: UIImage(named: "login_illustration")
+        image: UIImage(named: "onboarding_illustration")
     )
 
     private let whiteCardView: UIView = {

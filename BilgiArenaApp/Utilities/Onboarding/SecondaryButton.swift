@@ -7,17 +7,17 @@
 
 import UIKit
 
-class SecondaryButton: UIButton {
+class SecondaryButton: BaseButton {
 
     init(title: String) {
-            super.init(frame: .zero)
-            setTitle(title, for: .normal)
-            backgroundColor = UIColor.systemGray5
-            setTitleColor(.systemGray, for: .normal)
-            layer.cornerRadius = 12
-            titleLabel?.font = .boldSystemFont(ofSize: 16)
-            translatesAutoresizingMaskIntoConstraints = false
+            super.init(
+                title: title,
+                backgroundColor: .systemGray5,
+                titleColor: .systemGray
+            )
         }
-        required init?(coder: NSCoder) { fatalError() }
 
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
 }

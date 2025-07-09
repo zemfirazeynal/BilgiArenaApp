@@ -7,21 +7,13 @@
 
 import UIKit
 
-class PrimaryButton: UIButton {
-    override var isHighlighted: Bool {
-            didSet {
-                alpha = isHighlighted ? 0.6 : 1.0
-            }
-        }
-
-        init(title: String) {
-            super.init(frame: .zero)
-            setTitle(title, for: .normal)
-            backgroundColor = UIColor(named: "app_color")
-            setTitleColor(.white, for: .normal)
-            titleLabel?.font = .boldSystemFont(ofSize: 16)
-            layer.cornerRadius = 12
-            translatesAutoresizingMaskIntoConstraints = false
+class PrimaryButton: BaseButton {
+    init(title: String) {
+            super.init(
+                title: title,
+                backgroundColor: UIColor(named: "app_color") ?? .systemBlue,
+                titleColor: .white
+            )
         }
 
         required init?(coder: NSCoder) {
