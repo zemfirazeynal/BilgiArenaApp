@@ -15,7 +15,6 @@ class AuthTextField : UIView {
         private let toggleSecureButton = UIButton(type: .system)
         var onTextChanged: ((String) -> Void)?
 
-//        let textField = UITextField()
     
     private let textField = UITextField()
 

@@ -110,16 +110,27 @@ class SignUpViewController: UIViewController {
         return label
     }()
 
-    private var coordinator: SignUpCoordinator
+//    private var coordinator: SignUpCoordinator
+//
+//    init(coordinator: SignUpCoordinator) {
+//        self.coordinator = coordinator
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    
+    private let viewModel: SignUpViewModelProtocol
 
-    init(coordinator: SignUpCoordinator) {
-        self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-    }
+        init(viewModel: SignUpViewModelProtocol) {
+            self.viewModel = viewModel
+            super.init(nibName: nil, bundle: nil)
+        }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -232,10 +243,10 @@ class SignUpViewController: UIViewController {
     }
 
     @objc private func handleLoginTap() {
-        coordinator.showLogin()
+        viewModel.showLogin()
     }
 
     @objc private func handleEmailSignup() {
-        coordinator.start()
+        viewModel.startEmailSignupFlow()
     }
 }

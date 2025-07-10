@@ -11,17 +11,42 @@ import UIKit
 class SignUpCoordinator: Coordinator {
 
     var navigationController: UINavigationController
+    private var signupFlowCoordinator: SignupFlowCoordinator?
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        let signupFlowCoordinator = SignupFlowCoordinator(
-            navigationController: navigationController
-        )
-        signupFlowCoordinator.start()
+//        let signupFlowCoordinator = SignupFlowCoordinator(
+//            navigationController: navigationController
+//        )
+//        signupFlowCoordinator.start()
+        
+        
+//        let signupVC = SignUpViewController(coordinator: self)
+//            navigationController.pushViewController(signupVC, animated: true)
+        
+        let viewModel = SignUpViewModel()
+            
+            viewModel.onLoginTapped = { [weak self] in
+                self?.showLogin()
+            }
+            
+            viewModel.onEmailSignupTapped = { [weak self] in
+                self?.startSignupFlow()
+            }
+
+            let signupVC = SignUpViewController(viewModel: viewModel)
+            navigationController.pushViewController(signupVC, animated: true)
     }
+    
+    // Bu isə SignUpViewController-dən sonra çağrılacaq
+        func startSignupFlow() {
+            let flow = SignupFlowCoordinator(navigationController: navigationController)
+            signupFlowCoordinator = flow
+            flow.start()
+        }
 
     func showLogin() {
         let coordinator = LoginCoordinator(
