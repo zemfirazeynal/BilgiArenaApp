@@ -25,17 +25,7 @@ class LoginViewController: UIViewController {
         showsBackButton: showsBackButton,
         titleColor: .black
     )
-    private let viewModel: LoginViewModel  //+
-
-    init(viewModel: LoginViewModel, showsBackButton: Bool = true) {
-        self.viewModel = viewModel
-        self.showsBackButton = showsBackButton
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {  //+
-        fatalError("init(coder:) has not been implemented")
-    }
+    
 
     private let googleButton = LoginSocialButton(
         title: "Login with Google",
@@ -93,6 +83,17 @@ class LoginViewController: UIViewController {
         return label
     }()
 
+    private let viewModel: LoginViewModel
+
+    init(viewModel: LoginViewModel, showsBackButton: Bool = true) {
+        self.viewModel = viewModel
+        self.showsBackButton = showsBackButton
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -200,7 +201,7 @@ class LoginViewController: UIViewController {
 
             passwordField.topAnchor.constraint(
                 equalTo: passwordLabel.bottomAnchor,
-                constant: 16
+                constant: 12
             ),
             passwordField.leadingAnchor.constraint(
                 equalTo: emailField.leadingAnchor
