@@ -57,11 +57,11 @@ class OtpCodeViewController: UIViewController {
     }()
 
     private let progressView: UIProgressView = {
-        let progress = UIProgressView(progressViewStyle: .default)
-        progress.progress = 2.0 / 3.0
-        progress.tintColor = UIColor(named: "app_color") ?? .systemPurple
-        progress.translatesAutoresizingMaskIntoConstraints = false
-        return progress
+        let progressBar = UIProgressView(progressViewStyle: .default)
+        progressBar.progress = 2.0 / 3.0
+        progressBar.tintColor = UIColor(named: "app_color") ?? .systemPurple
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        return progressBar
     }()
 
     // MARK: - Init
@@ -84,15 +84,19 @@ class OtpCodeViewController: UIViewController {
         navigationHeader.onBackTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
-        setupLayout()
-        setupActions()
+        configureLayout()
+        configureActions()
         configureForFlowType()
         bindViewModel()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        otpCodeTextField.focus()
     }
 
     private func configureForFlowType() {
         switch viewModel.flowType {
-
         case .signup:
             progressView.isHidden = false
             progressLabel.isHidden = false
@@ -102,12 +106,8 @@ class OtpCodeViewController: UIViewController {
         }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        otpCodeTextField.focus()  // bu, klaviaturanı göstərir
-    }
 
-    private func setupActions() {
+    private func configureActions() {
         nextButton.addTarget(
             self,
             action: #selector(didTapNext),
@@ -116,7 +116,7 @@ class OtpCodeViewController: UIViewController {
     }
 
     // MARK: - Layout
-    private func setupLayout() {
+    private func configureLayout() {
 
         [
             navigationHeader, titleLabel, otpCodeLabel, otpCodeTextField,
