@@ -52,7 +52,7 @@ class NewPasswordViewController: UIViewController {
         imageView.image = UIImage(systemName: "checkmark.circle.fill")
         imageView.tintColor = UIColor(named: "app_color")
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isHidden = true  // default olaraq gizlidir
+        imageView.isHidden = true
         return imageView
     }()
 
@@ -214,8 +214,7 @@ class NewPasswordViewController: UIViewController {
                 equalTo: ruleLabel.centerYAnchor
             ),
             checkmarkImageView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -24
+                equalTo: descriptionLabel.trailingAnchor
             ),
             checkmarkImageView.widthAnchor.constraint(equalToConstant: 20),
             checkmarkImageView.heightAnchor.constraint(equalToConstant: 20),
@@ -242,7 +241,7 @@ class NewPasswordViewController: UIViewController {
 
             resetButton.bottomAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -24
+                constant: -16
             ),
             resetButton.leadingAnchor.constraint(
                 equalTo: passwordField.leadingAnchor
@@ -289,11 +288,11 @@ class NewPasswordViewController: UIViewController {
 
     @objc private func textFieldsDidChange() {
         let passwordText = passwordField.text ?? ""
-        let confirmText = confirmPasswordField.text ?? ""
+        let confirmPasswordText = confirmPasswordField.text ?? ""
 
         checkmarkImageView.isHidden = passwordText.count < 8
 
-        if !confirmText.isEmpty && passwordText == confirmText {
+        if !confirmPasswordText.isEmpty && passwordText == confirmPasswordText {
             confirmPasswordField.layer.borderColor =
                 UIColor(named: "app_color")?.cgColor
             passwordField.layer.borderColor =
