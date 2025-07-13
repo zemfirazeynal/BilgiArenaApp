@@ -140,21 +140,11 @@ final class SelectedCategoryViewController: UIViewController {
 
    extension SelectedCategoryViewController: UITableViewDelegate, UITableViewDataSource {
        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//           return viewModel.quizList.count
            return viewModel.numberOfQuizList()
 
        }
 
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//           guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
-//                   return UITableViewCell()
-//               }
-//
-//               let quiz = viewModel.quizList[indexPath.row]
-//               let isSelected = (indexPath == selectedIndexPath) // seçilmişsə true olacaq
-//               cell.configure(with: quiz, isSelected: isSelected)
-//               
-//               return cell
            
            guard let cell = tableView.dequeueReusableCell(withIdentifier: "QuizCell", for: indexPath) as? QuizTableViewCell else {
                    return UITableViewCell()
