@@ -79,12 +79,9 @@ class OtpCodeViewController: UIViewController {
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "app_background_color")
-        navigationHeader.onBackTap = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }
+        super.viewDidLoad()        
         configureLayout()
+        configureNavigationHeader()
         configureActions()
         configureForFlowType()
         bindViewModel()
@@ -103,6 +100,16 @@ class OtpCodeViewController: UIViewController {
         case .forgotPassword:
             progressView.isHidden = true
             progressLabel.isHidden = true
+        }
+    }
+    
+    private func configureViewAppearance() {
+        view.backgroundColor = .appBackground
+    }
+    
+    private func configureNavigationHeader() {
+        navigationHeader.onBackTap = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
         }
     }
 

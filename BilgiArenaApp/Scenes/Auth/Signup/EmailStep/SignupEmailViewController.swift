@@ -94,7 +94,7 @@ final class SignupEmailViewController: UIViewController {
     }
     
     private func configureViewAppearance() {
-        view.backgroundColor = UIColor(named: "app_background_color")
+        view.backgroundColor = .appBackground
     }
     
     private func configureNavigationHeader() {

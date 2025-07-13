@@ -112,7 +112,7 @@ final class SignupPasswordViewController: UIViewController {
     }
     
     private func configureViewAppearance() {
-        view.backgroundColor = UIColor(named: "app_background_color")
+        view.backgroundColor = .appBackground
     }
     
     private func configureNavigationHeader() {
@@ -122,7 +122,6 @@ final class SignupPasswordViewController: UIViewController {
     }
 
     private func configureActions() {
-
         passwordTextField.onTextChanged = { [weak self] text in
             self?.updatePasswordValidation(text)
         }
