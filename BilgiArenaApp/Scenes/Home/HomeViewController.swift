@@ -9,7 +9,6 @@ import UIKit
 
 class HomeViewController: UIViewController{
     
-//    private let quizList: [Quiz] = Quiz.sampleData
     
     //MARK: UI Elements
     
@@ -202,14 +201,12 @@ class HomeViewController: UIViewController{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        //        view.bringSubviewToFront(floatingAddButton)
         recentQuizView.bringSubviewToFront(percentageCircleView) // bu sətir əlavə olundu
         recentQuizView.bringSubviewToFront(recentQuizPercentageLabel)
         
     }
     private func configureUI() {
-        
-//        viewModel = .init(coordinator: .init(navigationController: navigationController ?? UINavigationController()))
+
         view.backgroundColor = UIColor(named: "app_color")
         
         addSubviews()
@@ -274,7 +271,6 @@ class HomeViewController: UIViewController{
         featuredLabel.translatesAutoresizingMaskIntoConstraints = false
         discoverCategoriesButton.translatesAutoresizingMaskIntoConstraints = false
         quizTableView.translatesAutoresizingMaskIntoConstraints = false
-        //        floatingAddButton.translatesAutoresizingMaskIntoConstraints = false
         newQuizzesContainer.translatesAutoresizingMaskIntoConstraints = false
         liveQuizzesTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -351,7 +347,6 @@ class HomeViewController: UIViewController{
             quizTableView.bottomAnchor.constraint(equalTo: newQuizzesContainer.bottomAnchor),
                         
         ])
-//        headerView.configure(name: "Madelyn Dias", avatarImageURL: user?.picture)
         
     }
     
@@ -374,7 +369,6 @@ class HomeViewController: UIViewController{
                     if let recent = self?.viewModel?.recentQuiz {
                         self?.recentQuizNameLabel.text = recent.title
                         self?.iconImageView.image = UIImage(systemName: recent.iconName)
-//                        self?.recentQuizPercentageLabel.text = "\(recent.completion ?? 0) %"
                         if let percent = recent.completion {
                             self?.recentQuizPercentageLabel.text = "\(percent)%"
                         } else {
