@@ -39,17 +39,11 @@ class OnboardingCoordinator: Coordinator {
     }
 
     func showSignup() {
-//        let signupCoordinator = SignUpCoordinator(
-//            navigationController: navigationController
-//        )
-//        let signupVC = SignUpViewController(coordinator: signupCoordinator)
-//        navigationController.pushViewController(signupVC, animated: true)
-        
         let signupCoordinator = SignUpCoordinator(
                 navigationController: navigationController
             )
             self.signupCoordinator = signupCoordinator  // Yadda saxla (retain)
-            signupCoordinator.start() // Bunu MÜTLƏQ çağır!
+            signupCoordinator.start() 
     }
 
     func showMainApp() {

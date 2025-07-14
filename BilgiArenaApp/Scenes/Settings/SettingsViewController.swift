@@ -101,7 +101,6 @@ class SettingsViewController: UIViewController {
     }
 
     @objc private func didTapLogout() {
-        print(" Logout tapped")
         viewModel?.logout()
     }
 }
