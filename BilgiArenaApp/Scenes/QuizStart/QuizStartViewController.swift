@@ -68,8 +68,9 @@ class QuizStartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .app
-        setupLayout()
-        setupActions()
+        configureNavigationHeader()
+        configureLayout()
+        configureActions()
         bindViewModel()
         configureContent()
     }
@@ -79,15 +80,14 @@ class QuizStartViewController: UIViewController {
     }
     
     // MARK: - Setup
-    private func setupLayout() {
-        view.addSubview(navigationHeader)
-        view.addSubview(whiteContentView)
-        view.addSubview(nextButton)
-        whiteContentView.addSubview(questionNumberLabel)
-        whiteContentView.addSubview(questionLabel)
-        whiteContentView.addSubview(nextButton)
+    private func configureLayout() {
+        [ navigationHeader, whiteContentView].forEach {
+            view.addSubview($0)
+        }
 
-        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
+        [ questionNumberLabel, questionLabel, nextButton ].forEach {
+            whiteContentView.addSubview($0)
+        }
 
         NSLayoutConstraint.activate([
             navigationHeader.topAnchor.constraint(
@@ -160,15 +160,14 @@ class QuizStartViewController: UIViewController {
         ])
 
     }
-
-    private func setupActions() {
-        //        navigationHeader.onBackTap = { [weak self] in
-        //                        self?.navigationController?.popViewController(animated: true)
-        //        }
+    
+    private func configureNavigationHeader() {
         navigationHeader.onBackTap = { [weak self] in
             self?.viewModel.previousQuestion()
         }
+    }
 
+    private func configureActions() {
         nextButton.addTarget(
             self,
             action: #selector(nextTapped),
@@ -224,7 +223,7 @@ class QuizStartViewController: UIViewController {
 
     private func configureContent() {
         questionNumberLabel.text = viewModel.questionNumberText
-        setQuestionText(viewModel.questionText)
+        configureQuestionText(viewModel.questionText)
 
         // Köhnə cavab düymələrini sil
         for button in optionButtons {
@@ -241,12 +240,9 @@ class QuizStartViewController: UIViewController {
             viewModel.isLastQuestion ? "Finish" : "Next",
             for: .normal
         )
-
-        //            let buttonTitle = viewModel.isAnswerSubmitted
-        //            nextButton.setTitle(buttonTitle, for: .normal)
     }
 
-    private func setQuestionText(_ text: String) {
+    private func configureQuestionText(_ text: String) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
 
