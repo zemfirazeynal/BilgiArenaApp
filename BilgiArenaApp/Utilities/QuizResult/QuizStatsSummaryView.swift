@@ -11,7 +11,6 @@ import UIKit
 final class QuizStatsSummaryView: UIView {
 
     // MARK: - UI
-
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "ACCURATION ANSWER"
@@ -31,19 +30,17 @@ final class QuizStatsSummaryView: UIView {
     }()
 
     // MARK: - Init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupLayout()
+        configureLayout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupLayout()
+        configureLayout()
     }
 
     // MARK: - Public
-    
     func configure(with model: QuizStatsModel) {
         gridStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
@@ -61,17 +58,13 @@ final class QuizStatsSummaryView: UIView {
             $0.spacing = 16
             $0.distribution = .fillEqually
         }
-
         gridStackView.addArrangedSubview(topRow)
         gridStackView.addArrangedSubview(bottomRow)
     }
 
 
     // MARK: - Helpers
-
     private func createStatItem(from model: QuizStatItemModel) -> UIStackView {
-        
-
         let titleLabel = UILabel()
         titleLabel.text = model.title
         titleLabel.font = .systemFont(ofSize: 14, weight: .medium)
@@ -89,9 +82,11 @@ final class QuizStatsSummaryView: UIView {
         return stack
     }
 
-    private func setupLayout() {
+    private func configureLayout() {
         addSubview(titleLabel)
         addSubview(gridStackView)
+        
+        translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),

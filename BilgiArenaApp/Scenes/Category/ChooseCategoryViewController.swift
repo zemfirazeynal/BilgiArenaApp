@@ -101,14 +101,13 @@ final class ChooseCategoryViewController: UIViewController {
     }
     
     private func configureLayout() {
-        view.addSubview(navigationHeader)
-        view.addSubview(whiteContainerView)
-        view.addSubview(collectionView)
+        [navigationHeader, whiteContainerView, collectionView].forEach {
+            view.addSubview($0)
+        }
         
         whiteContainerView.addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            
             navigationHeader.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor
             ),
