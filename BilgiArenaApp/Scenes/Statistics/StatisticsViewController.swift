@@ -9,13 +9,11 @@ import UIKit
 
 class StatisticsViewController: UIViewController {
     
-//    private let navigationHeader = CustomNavigationHeaderView()
-
-
-    private let navigationHeader: CustomNavigationHeaderView = {
-        let header = CustomNavigationHeaderView(title: "Leaderboard", showsBackButton: false, titleColor: .white)
-        return header
-    }()
+    private let navigationHeader = CustomNavigationHeaderView(
+        title: "Leaderboard",
+        showsBackButton: false,
+        titleColor: .white
+    )
 
     private let containerView: UIView = {
         let view = UIView()
@@ -34,10 +32,8 @@ class StatisticsViewController: UIViewController {
 
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(
-            LeaderboardCell.self, forCellReuseIdentifier: "LeaderboardCell")
-        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
 
@@ -47,30 +43,37 @@ class StatisticsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor(named: "app_color")
 
-        tableView.dataSource = self
-        tableView.delegate = self
-
-//        navigationHeader.onBackTap = { [weak self] in
-//            self?.navigationController?.popViewController(animated: true)
-//        }
-
-        setupLayout()
-
+        configureTableView()
+        configureLayout()
         bindViewModel()
 
     }
+    
+    // MARK: - Setup Methods
+    private func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(
+            LeaderboardCell.self,
+            forCellReuseIdentifier: "LeaderboardCell"
+        )
+        tableView.separatorStyle = .none
+        tableView.separatorInset = .zero
+        tableView.layoutMargins = .zero
+        tableView.contentInset = .zero
+        tableView.preservesSuperviewLayoutMargins = false
+        tableView.showsVerticalScrollIndicator = false
+    }
 
-    private func setupLayout() {
-        [navigationHeader, /*titleLabel,*/ containerView].forEach {
+    private func configureLayout() {
+        [navigationHeader, containerView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
 
         containerView.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            // Navigation Header
             navigationHeader.topAnchor.constraint(
                 equalTo: view.topAnchor, constant: 60),
             navigationHeader.leadingAnchor.constraint(
@@ -78,8 +81,6 @@ class StatisticsViewController: UIViewController {
             navigationHeader.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor),
 
-
-            // Container View
             containerView.topAnchor.constraint(
                 equalTo: navigationHeader.bottomAnchor, constant: 12),
             containerView.leadingAnchor.constraint(
@@ -89,7 +90,6 @@ class StatisticsViewController: UIViewController {
             containerView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor, constant: -20),
 
-            // Table View — BUNLAR HAMISI CONTAINERVIEW-Ə BAĞLANMALIDIR
             tableView.topAnchor.constraint(
                 equalTo: containerView.topAnchor, constant: 16),
             tableView.leadingAnchor.constraint(
@@ -147,5 +147,4 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
     ) -> CGFloat {
         return 92
     }
-
 }
