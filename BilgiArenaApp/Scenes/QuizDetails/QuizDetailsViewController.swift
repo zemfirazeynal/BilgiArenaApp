@@ -51,12 +51,18 @@ class QuizDetailsViewController: UIViewController {
 
     private let subjectLabel = UILabel()
     private let titleLabel = UILabel()
-    
+
     private var questionsView = QuizInfoBoxView(
-        iconName: "quizdetails_question_icon", value: "15", title: "questions")
+        iconName: "quizdetails_question_icon",
+        value: "15",
+        title: "questions"
+    )
     private var pointsView = QuizInfoBoxView(
-        iconName: "quizdetails_points_icon", value: "+100", title: "points")
-    
+        iconName: "quizdetails_points_icon",
+        value: "+100",
+        title: "points"
+    )
+
     private let dividerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +88,7 @@ class QuizDetailsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     private let descriptionTitleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let playButton = UIButton(type: .system)
@@ -91,10 +97,11 @@ class QuizDetailsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupBackground()
-        setupLayout()
-        setupContent()
-        setupActions()
+        configureNavigationHeader()
+        configureBackground()
+        configureLayout()
+        configureContent()
+        configureActions()
         bindViewModel()
     }
 
@@ -108,143 +115,8 @@ class QuizDetailsViewController: UIViewController {
 
     // MARK: - Setup
 
-    private func setupBackground() {
-        let backgroundImageView = UIImageView(
-            image: UIImage(named: "quizdetails_background_view"))
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(backgroundImageView)
-        view.sendSubviewToBack(backgroundImageView)
+    private func configureContent() {
 
-        NSLayoutConstraint.activate([
-            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundImageView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor),
-            backgroundImageView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            backgroundImageView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-        ])
-    }
-
-    private func setupLayout() {
-        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
-        subjectLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        playButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(navigationHeader)
-        view.addSubview(illustrationView)
-        view.addSubview(quizInfoBoxContainerView)
-        view.addSubview(whiteContentView)
-        
-        // mövcud label və button-ları əlavə etdikdən sonra:
-        quizInfoBoxContainerView.addSubview(quizInfoBoxStackView)
-        quizInfoBoxContainerView.addSubview(dividerView)
-        quizInfoBoxStackView.addArrangedSubview(questionsView)
-        quizInfoBoxStackView.addArrangedSubview(pointsView)
-        
-        
-        whiteContentView.addSubview(subjectLabel)
-        whiteContentView.addSubview(titleLabel)
-        whiteContentView.addSubview(descriptionTitleLabel)
-        whiteContentView.addSubview(descriptionLabel)
-        whiteContentView.addSubview(quizInfoBoxContainerView)
-        
-        whiteContentView.addSubview(playButton)
-        
-        NSLayoutConstraint.activate([
-            navigationHeader.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationHeader.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            navigationHeader.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-            navigationHeader.heightAnchor.constraint(equalToConstant: 48),
-            
-            illustrationView.topAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.topAnchor),
-            illustrationView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor),
-            illustrationView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor),
-            illustrationView.heightAnchor.constraint(
-                equalTo: view.heightAnchor, multiplier: 0.35),
-            
-            whiteContentView.topAnchor.constraint(
-                equalTo: illustrationView.bottomAnchor, constant: -12),
-            whiteContentView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 8),
-            whiteContentView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -8),
-            whiteContentView.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor, constant: -20),
-            
-            subjectLabel.topAnchor.constraint(
-                equalTo: whiteContentView.topAnchor, constant: 24),
-            subjectLabel.leadingAnchor.constraint(
-                equalTo: whiteContentView.leadingAnchor, constant: 16),
-            
-            titleLabel.topAnchor.constraint(
-                equalTo: subjectLabel.bottomAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(
-                equalTo: subjectLabel.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(
-                equalTo: whiteContentView.trailingAnchor, constant: -16),
-            
-            
-            descriptionTitleLabel.topAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.bottomAnchor, constant: 24),
-            descriptionTitleLabel.leadingAnchor.constraint(
-                equalTo: subjectLabel.leadingAnchor),
-            
-            descriptionLabel.topAnchor.constraint(
-                equalTo: descriptionTitleLabel.bottomAnchor, constant: 8),
-            descriptionLabel.leadingAnchor.constraint(
-                equalTo: subjectLabel.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(
-                equalTo: titleLabel.trailingAnchor),
-            
-            
-            quizInfoBoxContainerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            quizInfoBoxContainerView.leadingAnchor.constraint(equalTo: whiteContentView.leadingAnchor, constant: 20),
-            quizInfoBoxContainerView.trailingAnchor.constraint(equalTo: whiteContentView.trailingAnchor, constant: -20),
-            quizInfoBoxContainerView.heightAnchor.constraint(equalToConstant: 64),
-
-            
-            // InfoBox Stack
-            quizInfoBoxStackView.topAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.topAnchor, constant: 12),
-            quizInfoBoxStackView.bottomAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.bottomAnchor, constant: -12),
-            quizInfoBoxStackView.leadingAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.leadingAnchor, constant: 12),
-            quizInfoBoxStackView.trailingAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.trailingAnchor, constant: -12),
-            
-            dividerView.centerXAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.centerXAnchor),
-            dividerView.topAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.topAnchor, constant: 16),
-            dividerView.bottomAnchor.constraint(
-                equalTo: quizInfoBoxContainerView.bottomAnchor, constant: -16),
-            dividerView.widthAnchor.constraint(equalToConstant: 1),
-            
-            playButton.bottomAnchor.constraint(
-                equalTo: whiteContentView.bottomAnchor, constant: -24),
-            playButton.leadingAnchor.constraint(
-                equalTo: subjectLabel.leadingAnchor, constant: 120),
-            playButton.trailingAnchor.constraint(
-                equalTo: titleLabel.trailingAnchor, constant: -120),
-            
-            playButton.heightAnchor.constraint(equalToConstant: 56),
-        ])
-    }
-
-    private func setupContent() {
-        
         subjectLabel.text = viewModel.subjectText
         subjectLabel.font = .systemFont(ofSize: 14, weight: .semibold)
         subjectLabel.textColor = .systemGray
@@ -256,20 +128,18 @@ class QuizDetailsViewController: UIViewController {
         descriptionTitleLabel.text = "DESCRIPTION"
         descriptionTitleLabel.font = .systemFont(ofSize: 14, weight: .semibold)
         descriptionTitleLabel.textColor = .black
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 6 // məsələn, 6 pt spacing
+        paragraphStyle.lineSpacing = 6
 
         let attributedDescription = NSAttributedString(
             string: viewModel.descriptionText,
             attributes: [
                 .paragraphStyle: paragraphStyle,
                 .font: UIFont.systemFont(ofSize: 16),
-                .foregroundColor: UIColor.darkGray
+                .foregroundColor: UIColor.darkGray,
             ]
         )
-
-
         descriptionLabel.text = viewModel.descriptionText
         descriptionLabel.font = .systemFont(ofSize: 16)
         descriptionLabel.textColor = .darkGray
@@ -280,8 +150,222 @@ class QuizDetailsViewController: UIViewController {
         playButton.setTitleColor(.white, for: .normal)
         playButton.backgroundColor = .app
         playButton.layer.cornerRadius = 20
-        playButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16) // Bold və ölçüsü 
+        playButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)  // Bold və ölçüsü
+    }
 
+    private func configureBackground() {
+        let backgroundImageView = UIImageView(
+            image: UIImage(named: "quizdetails_background_view")
+        )
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)
+
+        NSLayoutConstraint.activate([
+            backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundImageView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor
+            ),
+            backgroundImageView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            backgroundImageView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+        ])
+    }
+
+    private func configureNavigationHeader() {
+        navigationHeader.onBackTap = { [weak self] in
+            self?.navigationController?.dismiss(animated: true)
+        }
+    }
+
+    private func configureActions() {
+        playButton.addTarget(
+            self,
+            action: #selector(didTapPlay),
+            for: .touchUpInside
+        )
+    }
+
+    private func configureLayout() {
+        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
+        subjectLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+
+        [
+            navigationHeader, illustrationView, quizInfoBoxContainerView,
+            whiteContentView,
+        ]
+        .forEach { view.addSubview($0) }
+
+        [quizInfoBoxStackView, dividerView].forEach {
+            quizInfoBoxContainerView.addSubview($0)
+        }
+
+        [questionsView, pointsView].forEach {
+            quizInfoBoxStackView.addArrangedSubview($0)
+        }
+
+        [
+            subjectLabel,
+            titleLabel,
+            descriptionTitleLabel,
+            descriptionLabel,
+            quizInfoBoxContainerView,
+            playButton,
+        ].forEach { whiteContentView.addSubview($0) }
+
+        NSLayoutConstraint.activate([
+            navigationHeader.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
+            navigationHeader.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            navigationHeader.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+            navigationHeader.heightAnchor.constraint(equalToConstant: 48),
+
+            illustrationView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
+            illustrationView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            illustrationView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+            illustrationView.heightAnchor.constraint(
+                equalTo: view.heightAnchor,
+                multiplier: 0.35
+            ),
+
+            whiteContentView.topAnchor.constraint(
+                equalTo: illustrationView.bottomAnchor,
+                constant: -12
+            ),
+            whiteContentView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 8
+            ),
+            whiteContentView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -8
+            ),
+            whiteContentView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -20
+            ),
+
+            subjectLabel.topAnchor.constraint(
+                equalTo: whiteContentView.topAnchor,
+                constant: 24
+            ),
+            subjectLabel.leadingAnchor.constraint(
+                equalTo: whiteContentView.leadingAnchor,
+                constant: 16
+            ),
+
+            titleLabel.topAnchor.constraint(
+                equalTo: subjectLabel.bottomAnchor,
+                constant: 16
+            ),
+            titleLabel.leadingAnchor.constraint(
+                equalTo: subjectLabel.leadingAnchor
+            ),
+            titleLabel.trailingAnchor.constraint(
+                equalTo: whiteContentView.trailingAnchor,
+                constant: -16
+            ),
+
+            descriptionTitleLabel.topAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.bottomAnchor,
+                constant: 24
+            ),
+            descriptionTitleLabel.leadingAnchor.constraint(
+                equalTo: subjectLabel.leadingAnchor
+            ),
+
+            descriptionLabel.topAnchor.constraint(
+                equalTo: descriptionTitleLabel.bottomAnchor,
+                constant: 8
+            ),
+            descriptionLabel.leadingAnchor.constraint(
+                equalTo: subjectLabel.leadingAnchor
+            ),
+            descriptionLabel.trailingAnchor.constraint(
+                equalTo: titleLabel.trailingAnchor
+            ),
+
+            quizInfoBoxContainerView.topAnchor.constraint(
+                equalTo: titleLabel.bottomAnchor,
+                constant: 20
+            ),
+            quizInfoBoxContainerView.leadingAnchor.constraint(
+                equalTo: whiteContentView.leadingAnchor,
+                constant: 20
+            ),
+            quizInfoBoxContainerView.trailingAnchor.constraint(
+                equalTo: whiteContentView.trailingAnchor,
+                constant: -20
+            ),
+            quizInfoBoxContainerView.heightAnchor.constraint(
+                equalToConstant: 64
+            ),
+
+            // InfoBox Stack
+            quizInfoBoxStackView.topAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.topAnchor,
+                constant: 12
+            ),
+            quizInfoBoxStackView.bottomAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.bottomAnchor,
+                constant: -12
+            ),
+            quizInfoBoxStackView.leadingAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.leadingAnchor,
+                constant: 12
+            ),
+            quizInfoBoxStackView.trailingAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.trailingAnchor,
+                constant: -12
+            ),
+
+            dividerView.centerXAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.centerXAnchor
+            ),
+            dividerView.topAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.topAnchor,
+                constant: 16
+            ),
+            dividerView.bottomAnchor.constraint(
+                equalTo: quizInfoBoxContainerView.bottomAnchor,
+                constant: -16
+            ),
+            dividerView.widthAnchor.constraint(equalToConstant: 1),
+
+            playButton.bottomAnchor.constraint(
+                equalTo: whiteContentView.bottomAnchor,
+                constant: -24
+            ),
+            playButton.leadingAnchor.constraint(
+                equalTo: subjectLabel.leadingAnchor,
+                constant: 120
+            ),
+            playButton.trailingAnchor.constraint(
+                equalTo: titleLabel.trailingAnchor,
+                constant: -120
+            ),
+
+            playButton.heightAnchor.constraint(equalToConstant: 56),
+        ])
     }
 
     private func bindViewModel() {
@@ -293,39 +377,30 @@ class QuizDetailsViewController: UIViewController {
         viewModel.fetchQuizDetails()
 
     }
-    
+
     private func updateUIWithFetchedData() {
         subjectLabel.text = viewModel.subjectText
-            titleLabel.text = viewModel.titleText
+        titleLabel.text = viewModel.titleText
 
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 6
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
 
-            let attributedDescription = NSAttributedString(
-                string: viewModel.descriptionText,
-                attributes: [
-                    .paragraphStyle: paragraphStyle,
-                    .font: UIFont.systemFont(ofSize: 16),
-                    .foregroundColor: UIColor.darkGray
-                ]
-            )
+        let attributedDescription = NSAttributedString(
+            string: viewModel.descriptionText,
+            attributes: [
+                .paragraphStyle: paragraphStyle,
+                .font: UIFont.systemFont(ofSize: 16),
+                .foregroundColor: UIColor.darkGray,
+            ]
+        )
 
-            descriptionLabel.attributedText = attributedDescription
-            questionsView.update(value:viewModel.questionCountText)
-            pointsView.update(value: viewModel.pointsText)
+        descriptionLabel.attributedText = attributedDescription
+        questionsView.update(value: viewModel.questionCountText)
+        pointsView.update(value: viewModel.pointsText)
     }
 
-    private func setupActions() {
-        navigationHeader.onBackTap = { [weak self] in
-            self?.navigationController?.dismiss(animated: true)
-        }
-        playButton.addTarget(self, action: #selector(didTapPlay), for: .touchUpInside)
-
+    @objc private func didTapPlay() {
+        print("View Controller didTapPlay called")
+        viewModel.playQuiz()
     }
-
-           @objc private func didTapPlay() {
-               print("View Controller didTapPlay called")
-               viewModel.playQuiz()
-           }
-
 }
