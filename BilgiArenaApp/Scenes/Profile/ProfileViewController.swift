@@ -7,11 +7,10 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
+class ProfileViewController: UIViewController {
     
     private let profileHeaderView = ProfileHeaderView()
-    let navigationHeader = ProfileNavigationHeaderView(/*hideBackButton: true*/)
-
+    let navigationHeader = ProfileNavigationHeaderView()
 
     private let whiteContainerView: UIView = {
         let view = UIView()
@@ -20,7 +19,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         view.layer.cornerRadius = 32
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]  // üst künclər
         view.clipsToBounds = false
-
         return view
     }()
 
@@ -60,7 +58,7 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
     private let statsScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
@@ -70,61 +68,43 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         return view
     }()
     
-
     var viewModel: ProfileViewModel?
-
-    //    init(viewModel: ProfileViewModel) {
-    //        self.viewModel = viewModel
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
-    //
-    //    required init?(coder: NSCoder) {
-    //        fatalError("init(coder:) has not been implemented")
-    //    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureUI()
         bindViewModel()
     }
     
-//    override func viewDidAppear(_ animated: Bool) { //new
-//        super.viewDidAppear(animated)
-//        navigationController?.interactivePopGestureRecognizer?.delegate = self
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
         viewModel?.fetchUserInfo() // hər dəfə yenilə
-
     }
     
- 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
-
     private func configureUI() {
-        setupBackground()
-        setupLayout()
-        setupActions()
+        configureBackground()
+        configureLayout()
+        configureButtonActions()
     }
-    private func setupActions() {
-        navigationHeader.translatesAutoresizingMaskIntoConstraints = false
+    
+   
+    private func configureButtonActions() {
         navigationHeader.setSettingsTarget(
                 target: self,
                 action: #selector(didTapSettings)
             )
     }
 
-    private func setupBackground() {
+    private func configureBackground() {
         let backgroundImageView = UIImageView(
             image: UIImage(named: "profile_background_view"))
+        
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(backgroundImageView)
@@ -140,30 +120,19 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
         view.sendSubviewToBack(backgroundImageView)
     }
 
-    private func setupLayout() {
-
-
-        // Sabit hissələr
-        view.addSubview(navigationHeader)
-        view.addSubview(profileHeaderView)
-        view.addSubview(infoBoxContainerView)
-        view.addSubview(whiteContainerView)
-
-        // White container içində yalnız scrollView olacaq
+    private func configureLayout() {
+        [navigationHeader, profileHeaderView, infoBoxContainerView, whiteContainerView].forEach {
+            view.addSubview($0)
+        }
+        
         statsScrollView.addSubview(statsContentView)
         statsContentView.addSubview(statsSummaryView)
-
-        // Info box setup
-        infoBoxContainerView.addSubview(infoBoxStackView)
-        infoBoxContainerView.addSubview(dividerView)
-        infoBoxStackView.addArrangedSubview(pointsView)
-        infoBoxStackView.addArrangedSubview(rankView)
-        whiteContainerView.addSubview(infoBoxContainerView)
-        whiteContainerView.addSubview(profileHeaderView)
-        whiteContainerView.addSubview(statsScrollView)
-
-        profileHeaderView.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        [infoBoxStackView, dividerView].forEach { infoBoxContainerView.addSubview($0) }
+        
+        [infoBoxContainerView, profileHeaderView, statsScrollView].forEach {
+            whiteContainerView.addSubview($0)
+        }
 
         NSLayoutConstraint.activate([
 
@@ -217,7 +186,6 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                 equalTo: infoBoxContainerView.topAnchor, constant: 16),
             dividerView.bottomAnchor.constraint(
                 equalTo: infoBoxContainerView.bottomAnchor, constant: -16),
-            dividerView.widthAnchor.constraint(equalToConstant: 1),
 
             // ScrollView setup
             statsScrollView.topAnchor.constraint(
@@ -248,28 +216,21 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                 equalTo: statsContentView.trailingAnchor, constant: -8),
             statsSummaryView.bottomAnchor.constraint(
                 equalTo: statsContentView.bottomAnchor),
-
-           
-
         ])
-       
     }
+    
     private func bindViewModel() {
         viewModel?.onStateChange = { [weak self] state in
             DispatchQueue.main.async {
                 switch state {
                 case .idle:
                     break
-
                 case .loading:
-                    // Gələcəkdə loading göstərə bilərsən
                     break
-
                 case .success(let userInfo):
                     self?.profileHeaderView.configure(username: userInfo.userResp.username,
                                                       imageName: userInfo.userResp.picture
                                                      )
-//                    self?.pointsView.update(value: "\(userInfo.totalPoint)")
                     if let point = userInfo.totalPoint {
                         self?.pointsView.update(value: "\(point)")
                     } else {
@@ -287,13 +248,10 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate {
                 }
             }
         }
-
         viewModel?.fetchUserInfo()
     }
 
     @objc private func didTapSettings() {
         viewModel?.didTapSettings()
     }
-    
-    
 }

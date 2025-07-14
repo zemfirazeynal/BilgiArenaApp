@@ -10,11 +10,8 @@ import UIKit
 final class QuizInfoBoxView: UIView {
     private let iconImageView = UIImageView()
     private let valueLabel = UILabel()
-
     private let titleLabel = UILabel()
     
-     
-
         init(iconName: String, value: String, title: String ) {
             super.init(frame: .zero)
             translatesAutoresizingMaskIntoConstraints = false
@@ -51,20 +48,12 @@ final class QuizInfoBoxView: UIView {
             ])
         }
     
-
-//        func update(value: String) {
-//            self.valueLabel.text = value
-//        }
+        required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+        }
     
         func update(value: String) {
             valueLabel.text = value
         }
-
-    
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-    
-    
 }
 

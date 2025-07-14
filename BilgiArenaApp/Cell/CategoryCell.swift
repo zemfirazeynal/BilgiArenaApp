@@ -35,14 +35,14 @@ class CategoryCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        configureView()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupView() {
+    private func configureView() {
         layer.cornerRadius = 16
         clipsToBounds = true
 
@@ -68,8 +68,6 @@ class CategoryCell: UICollectionViewCell {
     func configure(with category: Category, isSelected: Bool) {
         titleLabel.text = category.subject
         subtitleLabel.text = category.quizCount
-//        iconImageView.image = UIImage(named: category.imageName)?
-//            .withRenderingMode(.alwaysTemplate)
         iconImageView.image = UIImage(systemName: category.imageName)?
                 .withRenderingMode(.alwaysTemplate)
 

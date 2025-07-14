@@ -15,7 +15,6 @@ class AuthTextField : UIView {
         private let toggleSecureButton = UIButton(type: .system)
         var onTextChanged: ((String) -> Void)?
 
-//        let textField = UITextField()
     
     private let textField = UITextField()
 
@@ -30,7 +29,7 @@ class AuthTextField : UIView {
             configureIcon(named: icon)
             configureTextField(with: placeholder, isSecure: isSecure)
             configureEyeButton(isSecure: isSecure)
-            layoutUI()
+            configureLayout()
         }
 
         required init?(coder: NSCoder) {
@@ -82,7 +81,7 @@ class AuthTextField : UIView {
 
         // MARK: - Layout
         
-        private func layoutUI() {
+        private func configureLayout() {
             NSLayoutConstraint.activate([
                 iconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
                 iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),

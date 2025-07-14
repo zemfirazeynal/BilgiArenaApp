@@ -29,14 +29,12 @@ final class LeaderboardCell: UITableViewCell {
         label.layer.cornerRadius = 12
         label.clipsToBounds = true
         return label
-
     }()
 
     private let avatarImageView: UIImageView = {
         let iv = UIImageView()
         iv.layer.cornerRadius = 20
         iv.clipsToBounds = true
-
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -64,7 +62,7 @@ final class LeaderboardCell: UITableViewCell {
 
     private lazy var hStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            rankLabel, avatarImageView, vStack, UIView(),
+            rankLabel, avatarImageView, vStack
         ])
         stack.axis = .horizontal
         stack.spacing = 12
@@ -73,11 +71,10 @@ final class LeaderboardCell: UITableViewCell {
     }()
 
     // MARK: - Initializer
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-        setupConstraints()
+        configureViews()
+        configureLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -85,14 +82,14 @@ final class LeaderboardCell: UITableViewCell {
     }
 
     // MARK: - Setup
-    private func setupViews() {
+    private func configureViews() {
         backgroundColor = .clear
         selectionStyle = .none
         contentView.addSubview(containerView)
         containerView.addSubview(hStack)
     }
 
-    private func setupConstraints() {
+    private func configureLayout() {
         [containerView, hStack, rankLabel, avatarImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -126,11 +123,6 @@ final class LeaderboardCell: UITableViewCell {
 
     
     func configure(with user: LeaderboardUser) {
-        //        rankLabel.text = "\(user.rank)"
-        //        nameLabel.text = user.name
-        //        pointsLabel.text = "\(user.points) points"
-        //        avatarImageView.image = UIImage(named: user.avatarImageName)
-        
         rankLabel.text = "\(user.rank)"
         nameLabel.text = user.name
         pointsLabel.text = "\(user.points) points"
@@ -146,10 +138,7 @@ final class LeaderboardCell: UITableViewCell {
                 r.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
                 return r
             }
-            
-            print("📥 URL: \(url.absoluteString)")
-            print("🛡 Token: \(token.prefix(10))...")
-            
+
             avatarImageView.kf.setImage(
                 with: url,
                 placeholder: UIImage(named: "profile_image"),
@@ -159,15 +148,13 @@ final class LeaderboardCell: UITableViewCell {
                 ]) { result in
                     switch result {
                     case .success(let value):
-                        print("✅ Şəkil yükləndi: \(value.source.url?.absoluteString ?? "")")
+                        print("Success: \(value.source.url?.absoluteString ?? "")")
                     case .failure(let error):
-                        print("❌ Xəta: \(error.localizedDescription)")
+                        print("Error: \(error.localizedDescription)")
                     }
                 }
         } else {
             avatarImageView.image = UIImage(systemName: "person.crop.circle")
         }
     }
-    
-    
 }

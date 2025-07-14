@@ -24,9 +24,6 @@ class SettingsViewController: UIViewController {
     
     var viewModel: SettingsViewModel?
     
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .appBackground
@@ -56,8 +53,6 @@ class SettingsViewController: UIViewController {
         
 
     }
-    
-    
     
     private func setupNavigationHeader() {
         view.addSubview(navigationHeader)
@@ -108,7 +103,6 @@ class SettingsViewController: UIViewController {
     @objc private func didTapLogout() {
         print(" Logout tapped")
         viewModel?.logout()
-
     }
 }
 

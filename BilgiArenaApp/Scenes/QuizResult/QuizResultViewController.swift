@@ -29,7 +29,6 @@ class QuizResultViewController: UIViewController {
         titleColor: .black
     )
 
-    
     private let illustrationContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .quizresultTrophyBackground
@@ -63,7 +62,6 @@ class QuizResultViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         button.layer.cornerRadius = 28
         button.translatesAutoresizingMaskIntoConstraints = false
-
         return button
     }()
 
@@ -81,35 +79,37 @@ class QuizResultViewController: UIViewController {
     }()
 
     // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupLayout()
-
+        configureViewAppearance()
+        configureLayout()
+        configureButtonActions()
         bindViewModel()
-        print("🧩 VC-də ViewModel ID:", ObjectIdentifier(viewModel))
-
-
+    }
+    
+    private func configureViewAppearance() {
+        view.backgroundColor = .white
+    }
+    
+    
+    private func configureButtonActions() {
+        doneButton.addTarget(
+            self, action: #selector(doneTapped), for: .touchUpInside)
+        checkAnswerButton.addTarget(
+            self, action: #selector(checkAnswerTapped), for: .touchUpInside)
     }
 
     // MARK: - Layout
+    private func configureLayout() {
+        [ navigationHeader, illustrationContainerView, summaryView, doneButton ].forEach {
+            view.addSubview($0)
+        }
 
-    private func setupLayout() {
-
-        view.addSubview(navigationHeader)
-//        view.addSubview(trophyContainerView)
-        view.addSubview(illustrationContainerView)
-        view.addSubview(summaryView)
-        view.addSubview(doneButton)
-
-        illustrationContainerView.addSubview(illustrationImageView)
-        illustrationContainerView.addSubview(pointsLabel)
-        illustrationContainerView.addSubview(checkAnswerButton)
+        [ illustrationImageView, pointsLabel, checkAnswerButton ].forEach {
+            illustrationContainerView.addSubview($0)
+        }
         illustrationContainerView.bringSubviewToFront(checkAnswerButton)
         
-        summaryView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             navigationHeader.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -167,25 +167,17 @@ class QuizResultViewController: UIViewController {
     }
 
     // MARK: - Bindings
-
     private func bindViewModel() {
         pointsLabel.text = viewModel.earnedPointsText
-        doneButton.addTarget(
-            self, action: #selector(doneTapped), for: .touchUpInside)
-        checkAnswerButton.addTarget(
-            self, action: #selector(checkAnswerTapped), for: .touchUpInside)
         summaryView.configure(with: viewModel.statsModel)
 
     }
 
     @objc private func doneTapped() {
-        print("✅ Done button tapped in VC")
-
         viewModel.doneTapped()
     }
 
     @objc private func checkAnswerTapped() {
         viewModel.checkAnswerTapped()
     }
-
 }

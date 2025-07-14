@@ -62,16 +62,15 @@ class CustomHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
+        configureView()
         
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    private func configureView() {
         let sunStack = UIStackView(arrangedSubviews: [sunIconImageView, greetingLabel])
         sunStack.axis = .horizontal
         sunStack.spacing = 6
@@ -101,41 +100,15 @@ class CustomHeaderView: UIView {
             container.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         greetingLabel.text = greetingText()
-        
     }
     
     func configure(name: String, avatarImageURL: String?) {
         usernameLabel.text = name
-        //            avatarImageView.image = avatarImage
-        //            if let imageName = avatarImageURL,
-        //                   let url = URL(string: "http://localhost:8099/resources/img/\(imageName)") {
-        //                print("Loading image from URL: \(url)")
-        //                    avatarImageView.kf.setImage(
-        //                        with: url,
-        //                        placeholder: UIImage(systemName: "person"),
-        //                        options: [.transition(.fade(0.3))],
-        //                        completionHandler: { result in
-        //                                switch result {
-        //                                case .success(let value):
-        //                                    print("✅ Şəkil yükləndi: \(value.source.url?.absoluteString ?? "")")
-        //                                case .failure(let error):
-        //                                    print("❌ Şəkil yükləmə xətası: \(error.localizedDescription)")
-        //                                }
-        //                            }
-        //                        )
-        //
-        //                } else {
-        //                    avatarImageView.image = UIImage(systemName: "person")
-        //                }
-        //        }
         
         if let imageName = avatarImageURL,
            let url = URL(string: "http://192.168.0.105:8099/resources/img/\(imageName)"),
-           let token = KeychainService.shared.read(key: "accessToken")  // ✅ token-i Keychain-dən oxu
+           let token = KeychainService.shared.read(key: "accessToken")
         {
-            print("➡️ Yüklənəcək şəkil URL: \(url)")
-            print("🛡️ Token: \(token.prefix(10))...")
-            
             let modifier = AnyModifier { request in
                 var r = request
                 r.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -152,15 +125,14 @@ class CustomHeaderView: UIView {
                 completionHandler: { result in
                     switch result {
                     case .success(let value):
-                        print("✅ Şəkil yükləndi: \(value.source.url?.absoluteString ?? "")")
+                        print("Success: \(value.source.url?.absoluteString ?? "")")
                     case .failure(let error):
-                        print("❌ Şəkil yükləmə xətası: \(error.localizedDescription)")
+                        print("Error \(error.localizedDescription)")
                     }
                 }
             )
             
         } else {
-            print("⚠️ Token tapılmadı və ya URL səhvdir.")
             avatarImageView.image = UIImage(systemName: "person.crop.circle")
         }
     }

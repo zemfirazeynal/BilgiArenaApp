@@ -10,7 +10,6 @@ import UIKit
 final class StatsSummaryView: UIView {
 
     // MARK: - UI Components
-
     private let statsBackgrounImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profile_stats_summery_view")
@@ -18,7 +17,6 @@ final class StatsSummaryView: UIView {
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
         return imageView
     }()
 
@@ -41,18 +39,16 @@ final class StatsSummaryView: UIView {
                     .foregroundColor: UIColor.systemIndigo,
                 ]))
 
-
         label.attributedText = attributed
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     // MARK: - Init
-
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        setupLayout()
+        configureView()
+        configureLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -60,18 +56,15 @@ final class StatsSummaryView: UIView {
     }
 
     // MARK: - Setup
-
-    private func setupView() {
-        layer.cornerRadius = 16
+    private func configureView() {
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         addSubview(statsBackgrounImageView)
         sendSubviewToBack(statsBackgrounImageView)
-
         addSubview(titleLabel)
     }
 
-    private func setupLayout() {
+    private func configureLayout() {
         NSLayoutConstraint.activate([
             statsBackgrounImageView.topAnchor.constraint(equalTo: topAnchor),
             statsBackgrounImageView.leadingAnchor.constraint(

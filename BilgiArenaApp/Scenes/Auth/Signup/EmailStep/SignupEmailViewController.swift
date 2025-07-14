@@ -57,11 +57,11 @@ final class SignupEmailViewController: UIViewController {
     }()
 
     private let progressView: UIProgressView = {
-        let progress = UIProgressView(progressViewStyle: .default)
-        progress.progress = 1.0 / 3.0
-        progress.tintColor = UIColor(named: "app_color") ?? .systemPurple
-        progress.translatesAutoresizingMaskIntoConstraints = false
-        return progress
+        let progressBar = UIProgressView(progressViewStyle: .default)
+        progressBar.progress = 1.0 / 3.0
+        progressBar.tintColor = UIColor(named: "app_color") ?? .systemPurple
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        return progressBar
     }()
 
     // MARK: - Init
@@ -94,7 +94,7 @@ final class SignupEmailViewController: UIViewController {
     }
     
     private func configureViewAppearance() {
-        view.backgroundColor = UIColor(named: "app_background_color")
+        view.backgroundColor = .appBackground
     }
     
     private func configureNavigationHeader() {
@@ -206,7 +206,6 @@ final class SignupEmailViewController: UIViewController {
                    case .loading:
                        break
                    case .success:
-                       
                        break
                    case .error(let message):
                        self?.present(

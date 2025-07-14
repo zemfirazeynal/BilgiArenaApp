@@ -33,14 +33,6 @@ class QuizTableViewCell: UITableViewCell {
         return label
     }()
 
-//    private let arrowImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(systemName: "chevron.right")
-//        imageView.tintColor = .gray
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        return imageView
-//    }()
-
     private let containerView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 16
@@ -73,7 +65,6 @@ class QuizTableViewCell: UITableViewCell {
             iconImageView,
             titleLabel,
             subtitleLabel,
-//            arrowImageView,
         ].forEach { containerView.addSubview($0) }
     }
     private func configureConstraints() {
@@ -94,17 +85,11 @@ class QuizTableViewCell: UITableViewCell {
             iconImageView.widthAnchor.constraint(equalToConstant: 36),
             iconImageView.heightAnchor.constraint(equalToConstant: 36),
 
-//            arrowImageView.centerYAnchor.constraint(
-//                equalTo: containerView.centerYAnchor),
-//            arrowImageView.trailingAnchor.constraint(
-//                equalTo: containerView.trailingAnchor, constant: -16),
-//            arrowImageView.widthAnchor.constraint(equalToConstant: 12),
-
             titleLabel.topAnchor.constraint(
                 equalTo: containerView.topAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(
                 equalTo: iconImageView.trailingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16), // ✅ DÜZGÜN
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
 
 
             subtitleLabel.topAnchor.constraint(
@@ -113,8 +98,7 @@ class QuizTableViewCell: UITableViewCell {
                 equalTo: titleLabel.leadingAnchor),
             subtitleLabel.bottomAnchor.constraint(
                 equalTo: containerView.bottomAnchor, constant: -12),
-            subtitleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16), // ✅ DÜZGÜN
-
+            subtitleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
         ])
     }
     

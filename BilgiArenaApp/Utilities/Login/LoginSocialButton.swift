@@ -11,7 +11,6 @@ class LoginSocialButton: UIButton {
     init(title: String, imageName: String, backgroundColor: UIColor = .white) {
         super.init(frame: .zero)
         
-//        setTitle(title, for: .normal)
         setTitleColor(.black, for: .normal)
         self.backgroundColor = backgroundColor
         layer.cornerRadius = 20

@@ -46,33 +46,6 @@ class MainTabBarController: UITabBarController {
         )
     }
 
-    //    private func configureViewControllers() {
-    //
-    //        let homeController = HomeViewController()
-    //        homeController.tabBarItem = UITabBarItem.customImageItem(named: "tab_home") ?? UITabBarItem()
-    //        let homeNav = UINavigationController(rootViewController: homeController)
-    //        homeController.viewModel = .init(coordinator: .init(navigationController: homeNav))
-    //
-    //
-    //        let searchController = SearchViewController()
-    //        searchController.tabBarItem = UITabBarItem.customImageItem(named: "tab_search") ?? UITabBarItem()
-    //        let searchNav = UINavigationController(rootViewController: searchController)
-    //        searchController.viewModel = .init(coordinator: .init(navigationController: searchNav))
-    //
-    //
-    //        let statisticsVC = StatisticsViewController()
-    //          statisticsVC.tabBarItem = UITabBarItem.customImageItem(named: "tab_statistics") ?? UITabBarItem()
-    //        _ = UINavigationController(rootViewController: statisticsVC)
-    //
-    //
-    //        let profileController = ProfileViewController()
-    //        profileController.tabBarItem = UITabBarItem.customImageItem(named: "tab_profile") ?? UITabBarItem()
-    //        let profileNav = UINavigationController(rootViewController: profileController)
-    //        profileController.viewModel = .init(coordinator: .init(navigationController: profileNav))
-    //
-    //
-    //        viewControllers = [homeNav, searchNav, statisticsVC, profileNav]
-    //    }
 
     private func configureViewControllers() {
         let tabItems = TabType.allCases.map { $0.makeTabItem() }
@@ -98,33 +71,6 @@ class MainTabBarController: UITabBarController {
         tabBar.isTranslucent = true
     }
 
-//    private func createTabNavController(
-//        rootVC: UIViewController,
-//        imageName: String,
-//        tag: Int
-//    ) -> UINavigationController {
-//        let nav = UINavigationController(rootViewController: rootVC)
-//
-//        if let originalImage = UIImage(named: imageName) {
-//            let resizedImage = originalImage.resized(
-//                to: CGSize(width: 24, height: 24)
-//            ).withRenderingMode(.alwaysTemplate)
-//
-//            let tabBarItem = UITabBarItem(
-//                title: nil,
-//                image: resizedImage,
-//                selectedImage: nil
-//            )
-//            tabBarItem.imageInsets = UIEdgeInsets(
-//                top: 6,
-//                left: 0,
-//                bottom: -6,
-//                right: 0
-//            )
-//            nav.tabBarItem = tabBarItem
-//        }
-//        return nav
-//    }
 
 }
 extension UITabBarItem {
@@ -142,3 +88,11 @@ extension UITabBarItem {
     }
 }
 
+extension UIImage {
+    func resized(to size: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+}
