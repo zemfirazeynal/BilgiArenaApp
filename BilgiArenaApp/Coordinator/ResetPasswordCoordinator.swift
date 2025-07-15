@@ -23,7 +23,7 @@ final class ResetPasswordCoordinator: ResetPasswordCoordinatorProtocol {
     }
 
     func start() {
-        let vc = ResetPasswordBuilder.build(coordinator: self)
+        let vc = ResetPasswordBuilder.buildResetPassword(coordinator: self)
         navigationController.pushViewController(vc, animated: true)
     }
 
