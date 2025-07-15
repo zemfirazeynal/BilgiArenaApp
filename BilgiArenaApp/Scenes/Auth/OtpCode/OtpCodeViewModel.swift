@@ -51,9 +51,6 @@ final class OtpCodeViewModel: OtpCodeViewModelProtocol {
             onStateChange?(.error(message: "OTP code must be 6 digits long."))
             return
         }
-        print("📨 Verifying OTP: \(otpCode) for email: \(email)")
-
-
         onStateChange?(.loading)
 
         registerManager.verifyOtp(email: email, otp: otpCode) {

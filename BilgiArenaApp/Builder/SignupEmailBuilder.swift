@@ -14,7 +14,7 @@ struct SignupEmailBuilder {
     {
         let viewModel = SignupEmailViewModel()
         viewModel.onNextStep = {
-            coordinator.showOtpCodeStep(email: viewModel.email)  // <-- Email addımından Password addımına keçid buradadır
+            coordinator.showOtpCodeStep(email: viewModel.email)  // Email addımından Password addımına keçid buradadır
         }
         return SignupEmailViewController(
             viewModel: viewModel,
