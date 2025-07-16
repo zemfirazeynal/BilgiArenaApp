@@ -11,7 +11,7 @@ import UIKit
 
 class NetworkManager {
 
-    func request<T: Codable>(
+    func request<T: Codable>( //+
         endpoint: String,
         model: T.Type,
         method: HTTPMethod = .get,
@@ -233,7 +233,7 @@ class NetworkManager {
     }
 
     // JSON cavab gözləməyən sadə success/fail request
-    func rawRequest(
+    func rawRequest( // +
         path: String,
         method: HTTPMethod,
         headers: HTTPHeaders? = nil,

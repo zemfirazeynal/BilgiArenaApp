@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
 
     //MARK: UI Elements
     private var selectedIndexPath: IndexPath?
-    private let headerView = CustomHeaderView()
+    private let headerView = ProfileHeaderView()
 
     private let recentQuizView: UIImageView = {
         let imageView = UIImageView()
@@ -519,7 +519,7 @@ class HomeViewController: UIViewController {
 
                 case .error(let message):
                     self?.present(
-                        Alert.showAlert(title: "Xəta", message: message),
+                        Alert.showAlert(title: "Error", message: message),
                         animated: true
                     )
                 }

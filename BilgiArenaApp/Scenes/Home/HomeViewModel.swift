@@ -42,9 +42,6 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
 
     func fetchDashboard() {
-
-        
-        
         onStateChange?(.loading)
 
             dashboardManager.fetchDashboard { [weak self] result in
@@ -54,10 +51,6 @@ final class HomeViewModel: HomeViewModelProtocol {
                 case .success(let response):
                     self.user = response.data.user
                     
-//                    self.recentQuiz = RecentQuizModel(
-//                        title: response.data.quizName,
-//                        completion: response.data.completion
-//                    )
                     if let name = response.data.quizName,
                        let percent = response.data.completion,
                        let iconName = response.data.iconName {

@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class CustomHeaderView: UIView {
+class ProfileHeaderView: UIView {
     
     private let sunIconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "sun.max.fill"))
@@ -63,7 +63,6 @@ class CustomHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -133,7 +132,7 @@ class CustomHeaderView: UIView {
             )
             
         } else {
-            avatarImageView.image = UIImage(systemName: "person.crop.circle")
+            avatarImageView.image = UIImage(named: "profile_image")
         }
     }
 }
