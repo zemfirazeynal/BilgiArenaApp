@@ -8,9 +8,8 @@
 import Foundation
 import UIKit
 
-@MainActor               // bütün public API-lər əsas treda düşür
+@MainActor               // bütün public API-lər əsas threada düşür
 protocol QuizStartViewModelProtocol {
-
     var questionNumberText: String { get }
     var questionText: String { get }
     var options: [String] { get }
@@ -30,7 +29,7 @@ protocol QuizStartViewModelProtocol {
 
 }
 
-@MainActor               // bütün public API-lər əsas treda düşür
+@MainActor               // bütün public API-lər əsas threada düşür
 final class QuizStartViewModel: QuizStartViewModelProtocol {
     private let questions: [QuizStartResponseModel]
     weak var coordinator: QuizStartCoordinatorProtocol?
@@ -44,9 +43,9 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
     var onUpdate: (() -> Void)?
     var onQuizFinished: ((QuizResultModel) -> Void)?
 
-    private var selectedAnswers: [Int?]  // n
+    private var selectedAnswers: [Int?]
 
-    private var submittedAnswers: [Bool]  // n
+    private var submittedAnswers: [Bool]
 
     private var correctCount = 0
     private var incorrectCount = 0
@@ -70,7 +69,6 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
     }
 
     // MARK: - UI Binding Properties
-
     var isLastQuestion: Bool {
         return currentIndex == questions.count - 1
     }
@@ -100,9 +98,7 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
     }
 
     // MARK: - Logic
-
     func selectOption(at index: Int) {
-
         selectedAnswers[currentIndex] = index
         onUpdate?()
     }
@@ -128,9 +124,9 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
 
                 do {
                     try await answerManager.answerQuestion(optionId: optionId)
-                    print("✅ Cavab uğurla göndərildi")
+                    print("Cavab uğurla göndərildi")
                 } catch {
-                    print("❌ Cavab göndərilərkən xəta: \(error.localizedDescription)")
+                    print("Cavab göndərilərkən xəta: \(error.localizedDescription)")
                 }
 
                 if selected == correctAnswerIndex { correctCount += 1 }
@@ -138,40 +134,6 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
 
                 onUpdate?()
                 await advanceFlow()
-//        submittedAnswers[currentIndex] = true
-//
-//        guard let selected = selectedAnswerIndex else {
-//            skippedCount += 1
-//            //                    onUpdate?()
-//            handleNextStep()  // ➜ növbəti addım
-//            return
-//        }
-//
-//        let optionId = questions[currentIndex].option[selected].id
-//
-//        // API çağırışı
-//        answerManager.answerQuestion(optionId: optionId) { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success:
-//                print("✅ Cavab uğurla göndərildi")
-//            case .failure(let error):
-//                print(
-//                    "❌ Cavab göndərilərkən xəta: \(error.localizedDescription)"
-//                )
-//            }
-//
-//            // Lokal hesablama
-//            if selected == self.correctAnswerIndex {
-//                self.correctCount += 1
-//            } else {
-//                self.incorrectCount += 1
-//            }
-//
-//            self.onUpdate?()
-//            self.handleNextStep()  // ➜ cavabdan sonra növbəti addım
-
         }
     
     // MARK: Flow controller
@@ -184,19 +146,6 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
             }
         }
     
-    
-    
-
-//    // Cavab göndərildikdən (və ya skip edildikdən) sonra
-//    private func handleNextStep() {
-//        if isLastQuestion {
-//            finishQuiz()  // yalnız sonuncu sualın cavabından SONRA
-//        } else {
-//            currentIndex += 1
-//            onUpdate?()
-//        }
-//    }
-
     func previousQuestion() {
         if currentIndex > 0 {
             currentIndex -= 1
@@ -218,25 +167,8 @@ final class QuizStartViewModel: QuizStartViewModelProtocol {
                     )
                     onQuizFinished?(resultModel)
                 } catch {
-                    print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
+                    print("Quiz bitirərkən xəta: \(error.localizedDescription)")
                 }
             }
-//        finishManager.finishQuiz(quizId: quizId) { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case .success(let finishResult):
-//                let result = QuizResultModel(
-//                    earnedPoints: finishResult.point,
-//                    correctCount: finishResult.correctAnswer,
-//                    skippedCount: finishResult.skipped,
-//                    incorrectCount: finishResult.inCorrectAnswer,
-//                    completionRate: finishResult.completion
-//                )
-//                self.onQuizFinished?(result)
-//            case .failure(let error):
-//                print("❌ Quiz bitirərkən xəta: \(error.localizedDescription)")
-//            }
-//        }
-//    }
 }
 

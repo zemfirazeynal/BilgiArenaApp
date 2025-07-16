@@ -105,7 +105,7 @@ class NetworkManager {
         }
     }
 
-    func request<T: Codable>(
+    func request<T: Codable>( //+
         endpoint: String,
         model: T.Type,
         method: HTTPMethod = .get,
@@ -178,7 +178,7 @@ class NetworkManager {
         }
     }
     
-    func requestWithoutResponseAsync(
+    func requestWithoutResponseAsync( //+
         endpoint: String,
         method: HTTPMethod = .post,
         params: Parameters? = nil,

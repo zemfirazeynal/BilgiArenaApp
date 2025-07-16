@@ -58,7 +58,6 @@ final class QuizStartCoordinator: QuizStartCoordinatorProtocol {
     }
 
     func showQuizResult(with result: QuizResultModel) {
-
         let resultCoordinator = QuizResultCoordinator(
             navigationController: navigationController
         )
