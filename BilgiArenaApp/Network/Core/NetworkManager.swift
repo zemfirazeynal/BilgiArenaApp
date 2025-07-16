@@ -59,8 +59,8 @@ class NetworkManager {
             }
         }
     }
-
-    func requestWithoutResponse(
+ 
+    func requestWithoutResponse( //+
         endpoint: String,
         method: HTTPMethod = .post,
         params: Parameters? = nil,
