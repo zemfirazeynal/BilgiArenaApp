@@ -41,7 +41,6 @@ final class SelectedCategoryCoordinator: SelectedCategoryCoordinatorProtocol {
             navigationController: navigationController,
             quiz: quiz
         )
-
         self.quizDetailsCoordinator = quizCoordinator  //  Mütləq saxlamaq lazımdır
         quizCoordinator.start()
     }

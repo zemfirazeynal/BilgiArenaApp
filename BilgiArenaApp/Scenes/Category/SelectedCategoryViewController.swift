@@ -157,7 +157,7 @@ final class SelectedCategoryViewController: UIViewController {
         viewModel.onError = { [weak self] message in
             DispatchQueue.main.async {
                 let alert = UIAlertController(
-                    title: "Xəta",
+                    title: "Error",
                     message: message,
                     preferredStyle: .alert
                 )
