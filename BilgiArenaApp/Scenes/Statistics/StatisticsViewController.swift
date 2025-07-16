@@ -147,4 +147,8 @@ extension StatisticsViewController: UITableViewDataSource, UITableViewDelegate {
     ) -> CGFloat {
         return 92
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            viewModel.pagination(at: indexPath.row)
+        }
 }
