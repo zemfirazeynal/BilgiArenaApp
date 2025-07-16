@@ -15,9 +15,7 @@ protocol ChooseCategoryCoordinatorProtocol: AnyObject {
 final class ChooseCategoryCoordinator: ChooseCategoryCoordinatorProtocol {
 
     private let navigationController: UINavigationController
-
     private var selectedCategoryCoordinator: SelectedCategoryCoordinator?
-
     private var internalNavigationController: UINavigationController?
 
     init(navigationController: UINavigationController) {
