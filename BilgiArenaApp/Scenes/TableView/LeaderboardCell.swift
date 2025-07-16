@@ -154,7 +154,7 @@ final class LeaderboardCell: UITableViewCell {
                     }
                 }
         } else {
-            avatarImageView.image = UIImage(systemName: "person.crop.circle")
+            avatarImageView.image = UIImage(named: "profile_image")
         }
     }
 }

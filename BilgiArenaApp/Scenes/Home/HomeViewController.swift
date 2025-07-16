@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
 
     //MARK: UI Elements
     private var selectedIndexPath: IndexPath?
-    private let headerView = ProfileHeaderView()
+    private let headerView = CustomHeaderView()
 
     private let recentQuizView: UIImageView = {
         let imageView = UIImageView()

@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class ProfileHeaderView: UIView {
+class CustomHeaderView: UIView {
     
     private let sunIconImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "sun.max.fill"))
