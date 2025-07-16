@@ -253,7 +253,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     ) -> CGFloat {
         return 80
     }
-
 }
 
 extension SearchViewController: UISearchBarDelegate {

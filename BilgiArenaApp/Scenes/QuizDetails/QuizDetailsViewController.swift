@@ -114,7 +114,6 @@ class QuizDetailsViewController: UIViewController {
     }
 
     // MARK: - Setup
-
     private func configureContent() {
 
         subjectLabel.text = viewModel.subjectText
@@ -375,7 +374,6 @@ class QuizDetailsViewController: UIViewController {
             }
         }
         viewModel.fetchQuizDetails()
-
     }
 
     private func updateUIWithFetchedData() {
@@ -400,7 +398,6 @@ class QuizDetailsViewController: UIViewController {
     }
 
     @objc private func didTapPlay() {
-        print("View Controller didTapPlay called")
         viewModel.playQuiz()
     }
 }

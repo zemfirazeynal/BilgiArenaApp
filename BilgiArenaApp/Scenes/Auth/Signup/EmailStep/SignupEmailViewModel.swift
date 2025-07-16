@@ -46,7 +46,6 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
         
         manager.sendOtp(email: email) { [weak self] success, error in
             DispatchQueue.main.async {
-                //                        self?.onStateChange?(.error(message: error ?? "Failed to send OTP"))
                 if success {
                     self?.onStateChange?(.success(message: ""))
                     self?.onEmailValidated?(self?.email ?? "")
@@ -56,12 +55,7 @@ final class SignupEmailViewModel: SignUpEmailViewModelProtocol {
             }
         }
     }
-    
-    
-    
-    //    private func isValidEmail(_ email: String) -> Bool {
-    //        return email.contains("@") && email.contains(".")
-    //    }
+
     
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"

@@ -8,11 +8,11 @@
 import Foundation
 
 enum QuizEndpoint {
-    case fetchByCategory(Int)
+    case fetchByCategoryId(Int)
 
     var path: String {
         switch self {
-        case .fetchByCategory(let categoryId):
+        case .fetchByCategoryId(let categoryId):
             return "quiz?catId=\(categoryId)"
         }
     }

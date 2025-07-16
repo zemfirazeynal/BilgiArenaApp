@@ -11,7 +11,6 @@ final class SignupPasswordViewController: UIViewController {
 
     private let navigationHeader = CustomNavigationHeaderView()
 
-
     // MARK: - UI Elements
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -267,5 +266,4 @@ final class SignupPasswordViewController: UIViewController {
         let isValid = text.count >= 8
         checkmarkImageView.isHidden = !isValid
     }
-
 }

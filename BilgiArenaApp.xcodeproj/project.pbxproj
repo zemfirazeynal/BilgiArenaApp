@@ -12,8 +12,27 @@
 		18FD94CC2DC6B8DB00644FD9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 18FD94CB2DC6B8DB00644FD9 /* Alamofire */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		18A21A742E26EC4600D8EC24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1801AC5F2D9D4CB500EE8248 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1801AC662D9D4CB500EE8248;
+			remoteInfo = BilgiArenaApp;
+		};
+		18A21BCC2E26EC9B00D8EC24 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1801AC5F2D9D4CB500EE8248 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1801AC662D9D4CB500EE8248;
+			remoteInfo = BilgiArenaApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1801AC672D9D4CB500EE8248 /* BilgiArenaApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BilgiArenaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A21A702E26EC4600D8EC24 /* BilgiArenaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BilgiArenaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		18A21BC62E26EC9B00D8EC24 /* BilgiArenaAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BilgiArenaAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -35,6 +54,16 @@
 			path = BilgiArenaApp;
 			sourceTree = "<group>";
 		};
+		18A21A712E26EC4600D8EC24 /* BilgiArenaAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BilgiArenaAppTests;
+			sourceTree = "<group>";
+		};
+		18A21BC72E26EC9B00D8EC24 /* BilgiArenaAppUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BilgiArenaAppUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +77,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18A21A6D2E26EC4600D8EC24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18A21BC32E26EC9B00D8EC24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -55,6 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				1801AC692D9D4CB500EE8248 /* BilgiArenaApp */,
+				18A21A712E26EC4600D8EC24 /* BilgiArenaAppTests */,
+				18A21BC72E26EC9B00D8EC24 /* BilgiArenaAppUITests */,
 				1801AC682D9D4CB500EE8248 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				1801AC672D9D4CB500EE8248 /* BilgiArenaApp.app */,
+				18A21A702E26EC4600D8EC24 /* BilgiArenaAppTests.xctest */,
+				18A21BC62E26EC9B00D8EC24 /* BilgiArenaAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +142,52 @@
 			productReference = 1801AC672D9D4CB500EE8248 /* BilgiArenaApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		18A21A6F2E26EC4600D8EC24 /* BilgiArenaAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18A21A762E26EC4600D8EC24 /* Build configuration list for PBXNativeTarget "BilgiArenaAppTests" */;
+			buildPhases = (
+				18A21A6C2E26EC4600D8EC24 /* Sources */,
+				18A21A6D2E26EC4600D8EC24 /* Frameworks */,
+				18A21A6E2E26EC4600D8EC24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18A21A752E26EC4600D8EC24 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				18A21A712E26EC4600D8EC24 /* BilgiArenaAppTests */,
+			);
+			name = BilgiArenaAppTests;
+			packageProductDependencies = (
+			);
+			productName = BilgiArenaAppTests;
+			productReference = 18A21A702E26EC4600D8EC24 /* BilgiArenaAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		18A21BC52E26EC9B00D8EC24 /* BilgiArenaAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18A21BD02E26EC9B00D8EC24 /* Build configuration list for PBXNativeTarget "BilgiArenaAppUITests" */;
+			buildPhases = (
+				18A21BC22E26EC9B00D8EC24 /* Sources */,
+				18A21BC32E26EC9B00D8EC24 /* Frameworks */,
+				18A21BC42E26EC9B00D8EC24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18A21BCD2E26EC9B00D8EC24 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				18A21BC72E26EC9B00D8EC24 /* BilgiArenaAppUITests */,
+			);
+			name = BilgiArenaAppUITests;
+			packageProductDependencies = (
+			);
+			productName = BilgiArenaAppUITests;
+			productReference = 18A21BC62E26EC9B00D8EC24 /* BilgiArenaAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -102,11 +195,19 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1620;
+				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					1801AC662D9D4CB500EE8248 = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					18A21A6F2E26EC4600D8EC24 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 1801AC662D9D4CB500EE8248;
+					};
+					18A21BC52E26EC9B00D8EC24 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 1801AC662D9D4CB500EE8248;
 					};
 				};
 			};
@@ -130,12 +231,28 @@
 			projectRoot = "";
 			targets = (
 				1801AC662D9D4CB500EE8248 /* BilgiArenaApp */,
+				18A21A6F2E26EC4600D8EC24 /* BilgiArenaAppTests */,
+				18A21BC52E26EC9B00D8EC24 /* BilgiArenaAppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1801AC652D9D4CB500EE8248 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18A21A6E2E26EC4600D8EC24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18A21BC42E26EC9B00D8EC24 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -152,7 +269,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		18A21A6C2E26EC4600D8EC24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18A21BC22E26EC9B00D8EC24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		18A21A752E26EC4600D8EC24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1801AC662D9D4CB500EE8248 /* BilgiArenaApp */;
+			targetProxy = 18A21A742E26EC4600D8EC24 /* PBXContainerItemProxy */;
+		};
+		18A21BCD2E26EC9B00D8EC24 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1801AC662D9D4CB500EE8248 /* BilgiArenaApp */;
+			targetProxy = 18A21BCC2E26EC9B00D8EC24 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1801AC7B2D9D4CB600EE8248 /* Debug */ = {
@@ -330,6 +474,80 @@
 			};
 			name = Release;
 		};
+		18A21A772E26EC4600D8EC24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5GF67AW776;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zemfira.BilgiArenaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BilgiArenaApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BilgiArenaApp";
+			};
+			name = Debug;
+		};
+		18A21A782E26EC4600D8EC24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5GF67AW776;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zemfira.BilgiArenaAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BilgiArenaApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/BilgiArenaApp";
+			};
+			name = Release;
+		};
+		18A21BCE2E26EC9B00D8EC24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5GF67AW776;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zemfira.BilgiArenaAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BilgiArenaApp;
+			};
+			name = Debug;
+		};
+		18A21BCF2E26EC9B00D8EC24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5GF67AW776;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zemfira.BilgiArenaAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BilgiArenaApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -347,6 +565,24 @@
 			buildConfigurations = (
 				1801AC7B2D9D4CB600EE8248 /* Debug */,
 				1801AC7C2D9D4CB600EE8248 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18A21A762E26EC4600D8EC24 /* Build configuration list for PBXNativeTarget "BilgiArenaAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18A21A772E26EC4600D8EC24 /* Debug */,
+				18A21A782E26EC4600D8EC24 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18A21BD02E26EC9B00D8EC24 /* Build configuration list for PBXNativeTarget "BilgiArenaAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18A21BCE2E26EC9B00D8EC24 /* Debug */,
+				18A21BCF2E26EC9B00D8EC24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -165,7 +165,7 @@ final class ChooseCategoryViewController: UIViewController {
         viewModel.onError = { [weak self] message in
             DispatchQueue.main.async {
                 self?.present(
-                    Alert.showAlert(title: "Xəta", message: message),
+                    Alert.showAlert(title: "Error", message: message),
                     animated: true
                 )
             }

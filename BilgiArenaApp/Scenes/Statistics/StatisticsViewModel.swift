@@ -7,10 +7,6 @@
 
 import Foundation
 
-//final class StatisticsViewModel {
-//    let users: [LeaderboardUser] = LeaderboardUser.users
-//}
-
 protocol StatisticsViewModelProtocol {
     var users: [LeaderboardUser] { get }
         var onDataUpdated: (() -> Void)? { get set }
@@ -36,8 +32,6 @@ enum StatisticsViewState {
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
     
-    
-    
     // MARK: - Dependencies
     private let manager: LeaderboardManagerUseCase
     
@@ -48,14 +42,9 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     private var isLoading = false
     private var hasMorePages = true
     
-    
-    
-      
     // MARK: - Bindings
-    
     var onStateChanged: ((StatisticsViewState) -> Void)?
     var onDataUpdated: (() -> Void)?
-    
     
     private var state: StatisticsViewState = .idle {
         didSet {
@@ -99,7 +88,6 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
     
     // MARK: - Private
-    
     private func loadLeaderboard() {
         isLoading = true
         state = .loading

@@ -10,7 +10,6 @@ import Foundation
 protocol LoginViewModelProtocol {
     var email: String { get set }
     var password: String { get set }
-    var onError: ((String) -> Void)? { get set }
 
     var onStateChange: ((ViewState) -> Void)? { get set }
 
@@ -26,7 +25,6 @@ final class LoginViewModel: LoginViewModelProtocol {
     var email: String = ""
     var password: String = ""
 
-    var onError: ((String) -> Void)?
 
     var onStateChange: ((ViewState) -> Void)?
 
@@ -42,7 +40,7 @@ final class LoginViewModel: LoginViewModelProtocol {
         coordinator?.showResetPassword()
     }
 
-    func loginTapped() {  //+
+    func loginTapped() {
         if let errorMessage = validateCredentials(
             email: email,
             password: password
@@ -90,7 +88,7 @@ final class LoginViewModel: LoginViewModelProtocol {
     }
     
     private func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailRegEx = "[A-Z0-9a-z._]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPredicate.evaluate(with: email)
     }

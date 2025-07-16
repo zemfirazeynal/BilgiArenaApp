@@ -18,14 +18,6 @@ class SignUpCoordinator: Coordinator {
     }
 
     func start() {
-//        let signupFlowCoordinator = SignupFlowCoordinator(
-//            navigationController: navigationController
-//        )
-//        signupFlowCoordinator.start()
-        
-        
-//        let signupVC = SignUpViewController(coordinator: self)
-//            navigationController.pushViewController(signupVC, animated: true)
         
         let viewModel = SignUpViewModel()
             
@@ -41,7 +33,7 @@ class SignUpCoordinator: Coordinator {
             navigationController.pushViewController(signupVC, animated: true)
     }
     
-    // Bu isə SignUpViewController-dən sonra çağrılacaq
+    // Bu SignUpViewController-dən sonra çağrılacaq
         func startSignupFlow() {
             let flow = SignupFlowCoordinator(navigationController: navigationController)
             signupFlowCoordinator = flow

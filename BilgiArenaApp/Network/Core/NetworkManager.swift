@@ -11,7 +11,7 @@ import UIKit
 
 class NetworkManager {
 
-    func request<T: Codable>(
+    func request<T: Codable>( //+
         endpoint: String,
         model: T.Type,
         method: HTTPMethod = .get,
@@ -59,8 +59,8 @@ class NetworkManager {
             }
         }
     }
-
-    func requestWithoutResponse(
+ 
+    func requestWithoutResponse( //+
         endpoint: String,
         method: HTTPMethod = .post,
         params: Parameters? = nil,
@@ -105,7 +105,7 @@ class NetworkManager {
         }
     }
 
-    func request<T: Codable>(
+    func request<T: Codable>( //+
         endpoint: String,
         model: T.Type,
         method: HTTPMethod = .get,
@@ -178,7 +178,7 @@ class NetworkManager {
         }
     }
     
-    func requestWithoutResponseAsync(
+    func requestWithoutResponseAsync( //+
         endpoint: String,
         method: HTTPMethod = .post,
         params: Parameters? = nil,
@@ -233,7 +233,7 @@ class NetworkManager {
     }
 
     // JSON cavab gözləməyən sadə success/fail request
-    func rawRequest(
+    func rawRequest( // +
         path: String,
         method: HTTPMethod,
         headers: HTTPHeaders? = nil,
@@ -269,5 +269,4 @@ class NetworkManager {
                 }
             }
     }
-
 }

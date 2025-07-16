@@ -22,7 +22,7 @@ final class QuizManager: QuizManagerUseCase {
         by categoryId: Int,
         completion: @escaping (Result<[QuizItemResponseData], Error>) -> Void
     ) {
-        let endpoint = QuizEndpoint.fetchByCategory(categoryId).path
+        let endpoint = QuizEndpoint.fetchByCategoryId(categoryId).path
         let headers: [String: String] = [
             "Authorization":
                 "Bearer \(KeychainService.shared.read(key: "accessToken") ?? "")"
@@ -37,7 +37,7 @@ final class QuizManager: QuizManagerUseCase {
             header: headers
         ) { response, error in
             if let response = response {
-                completion(.success(response.data))  // ✅ SADƏCƏ data-nı ötür
+                completion(.success(response.data))  //  SADƏCƏ data-nı ötür
             } else {
                 let err = error ?? "Naməlum xəta"
                 completion(

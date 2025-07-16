@@ -33,7 +33,7 @@ final class LoginCoordinator: LoginCoordinatorProtocol {
         resetPasswordCoordinator.start()
     }
 
-    func showHomeScreen() {  //+
+    func showHomeScreen() {
         let homeVC = HomeViewController()
         navigationController.setViewControllers([homeVC], animated: true)
     }

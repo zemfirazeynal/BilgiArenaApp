@@ -44,13 +44,13 @@ final class CategoryManager: CategoryManagerUseCase {
             if let response = response {
                 completion(.success(response))
             } else {
-                let err = error ?? "Naməlum xəta"
+                let error = error ?? "Naməlum xəta"
                 completion(
                     .failure(
                         NSError(
                             domain: "",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: err]
+                            userInfo: [NSLocalizedDescriptionKey: error]
                         )
                     )
                 )

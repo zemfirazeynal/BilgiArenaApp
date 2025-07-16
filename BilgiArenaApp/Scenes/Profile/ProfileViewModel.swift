@@ -11,7 +11,6 @@ protocol ProfileViewModelProtocol {
     var onStateChange: ((ProfileViewModel.State) -> Void)? { get set }
     func didTapSettings()
     func fetchUserInfo()
-
 }
 
 final class ProfileViewModel: ProfileViewModelProtocol {
@@ -22,25 +21,24 @@ final class ProfileViewModel: ProfileViewModelProtocol {
         case error(message: String)
     }
     var onStateChange: ((State) -> Void)?
-    
+
     let coordinator: ProfileCoordinator
-    
+
     private let userInfoManager: UserInfoManager
-        
-        init(coordinator: ProfileCoordinator, userInfoManager: UserInfoManager = UserInfoManager()) {
-            self.coordinator = coordinator
-            self.userInfoManager = userInfoManager
-        }
-    func didTapSettings() {
-        print("viewmodel tapped")
-        coordinator.showSettings()
+
+    init(
+        coordinator: ProfileCoordinator,
+        userInfoManager: UserInfoManager = UserInfoManager()
+    ) {
+        self.coordinator = coordinator
+        self.userInfoManager = userInfoManager
     }
-    
+
     func fetchUserInfo() {
         DispatchQueue.main.async { [weak self] in
             self?.onStateChange?(.loading)
         }
-        
+
         userInfoManager.fetchUserInfo { [weak self] result in
             switch result {
             case .success(let user):
@@ -49,9 +47,16 @@ final class ProfileViewModel: ProfileViewModelProtocol {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.onStateChange?(.error(message: error.localizedDescription))
+                    self?.onStateChange?(
+                        .error(message: error.localizedDescription)
+                    )
                 }
             }
         }
+    }
+    
+    func didTapSettings() {
+        print("viewmodel tapped")
+        coordinator.showSettings()
     }
 }

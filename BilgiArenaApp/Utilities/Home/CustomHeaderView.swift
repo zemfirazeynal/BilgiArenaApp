@@ -63,7 +63,6 @@ class CustomHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -133,7 +132,7 @@ class CustomHeaderView: UIView {
             )
             
         } else {
-            avatarImageView.image = UIImage(systemName: "person.crop.circle")
+            avatarImageView.image = UIImage(named: "profile_image")
         }
     }
 }

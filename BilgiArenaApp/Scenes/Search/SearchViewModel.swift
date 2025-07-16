@@ -9,10 +9,11 @@ import Foundation
 
 protocol SearchViewModelProtocol {
     var filteredQuizzes: [Quiz] { get }
+    
     func filterQuizzes(with text: String)
-    func loadAllQuizzes()  // new
-
+    func loadAllQuizzes()
     func numberOfQuizzes() -> Int
+    
     func quiz(at index: Int) -> Quiz
 
     var onUpdate: (() -> Void)? { get set }
@@ -65,10 +66,10 @@ final class SearchViewModel: SearchViewModelProtocol {
             return
         }
 
-        let lowercased = text.lowercased()
+        let searchedText = text.lowercased()
         filteredQuizzes = allQuizzes.filter {
-            $0.title.lowercased().contains(lowercased)
-                || $0.subject.lowercased().contains(lowercased)
+            $0.title.lowercased().contains(searchedText)
+                || $0.subject.lowercased().contains(searchedText)
         }
 
         onUpdate?()
@@ -86,6 +87,4 @@ final class SearchViewModel: SearchViewModelProtocol {
         let quiz = filteredQuizzes[index]
         coordinator.showQuizDetail(for: quiz)
     }
-
-
 }

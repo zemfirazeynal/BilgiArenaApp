@@ -25,6 +25,7 @@ final class SettingsViewModel: SettingsViewModelProtocol {
 
     func logout() {
         print("ViewModel logout()")
+        
         // Access token silinir
         KeychainService.shared.delete(key: "accessToken")
         

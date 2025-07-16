@@ -110,17 +110,6 @@ class SignUpViewController: UIViewController {
         return label
     }()
 
-//    private var coordinator: SignUpCoordinator
-//
-//    init(coordinator: SignUpCoordinator) {
-//        self.coordinator = coordinator
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     private let viewModel: SignUpViewModelProtocol
 
         init(viewModel: SignUpViewModelProtocol) {

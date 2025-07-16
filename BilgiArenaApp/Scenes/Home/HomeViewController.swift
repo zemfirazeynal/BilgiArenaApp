@@ -519,7 +519,7 @@ class HomeViewController: UIViewController {
 
                 case .error(let message):
                     self?.present(
-                        Alert.showAlert(title: "Xəta", message: message),
+                        Alert.showAlert(title: "Error", message: message),
                         animated: true
                     )
                 }

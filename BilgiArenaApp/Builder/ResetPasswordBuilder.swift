@@ -8,7 +8,7 @@ import Foundation
 import UIKit
 
 struct ResetPasswordBuilder {
-    static func build(
+    static func buildResetPassword(
         coordinator: ResetPasswordCoordinatorProtocol,
         manager: ForgotPasswordManagerUseCase = ForgotPasswordManager()
     )

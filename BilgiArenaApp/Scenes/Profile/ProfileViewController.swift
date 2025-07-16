@@ -130,6 +130,9 @@ class ProfileViewController: UIViewController {
         
         [infoBoxStackView, dividerView].forEach { infoBoxContainerView.addSubview($0) }
         
+        infoBoxStackView.addArrangedSubview(pointsView)
+        infoBoxStackView.addArrangedSubview(rankView)
+        
         [infoBoxContainerView, profileHeaderView, statsScrollView].forEach {
             whiteContainerView.addSubview($0)
         }
@@ -220,36 +223,37 @@ class ProfileViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        viewModel?.onStateChange = { [weak self] state in
-            DispatchQueue.main.async {
-                switch state {
-                case .idle:
-                    break
-                case .loading:
-                    break
-                case .success(let userInfo):
-                    self?.profileHeaderView.configure(username: userInfo.userResp.username,
-                                                      imageName: userInfo.userResp.picture
-                                                     )
-                    if let point = userInfo.totalPoint {
-                        self?.pointsView.update(value: "\(point)")
-                    } else {
-                        self?.pointsView.update(value: "0") // və ya "No points"
+            viewModel?.onStateChange = { [weak self] state in
+                DispatchQueue.main.async {
+                    switch state {
+                    case .idle:
+                        break
+                    case .loading:
+                        break
+                    case .success(let userInfo):
+                        self?.profileHeaderView.configure(username: userInfo.userResp.username,
+                                                          imageName: userInfo.userResp.picture
+                                                         )
+                        if let point = userInfo.totalPoint {
+                            self?.pointsView.update(value: "\(point)")
+                        } else {
+                            self?.pointsView.update(value: "0") // və ya "No points"
+                        }
+                        self?.rankView.update(value: "#\(userInfo.rank)")
+                        self?.statsSummaryView.update(with: userInfo.userQuizCOUNT)
+
+
+                    case .error(let message):
+                        self?.present(
+                            Alert.showAlert(title: "Xəta", message: message),
+                            animated: true
+                        )
                     }
-                    self?.rankView.update(value: "#\(userInfo.rank)")
-                    self?.statsSummaryView.update(with: userInfo.userQuizCOUNT) 
-
-
-                case .error(let message):
-                    self?.present(
-                        Alert.showAlert(title: "Xəta", message: message),
-                        animated: true
-                    )
                 }
             }
+            viewModel?.fetchUserInfo()
         }
-        viewModel?.fetchUserInfo()
-    }
+
 
     @objc private func didTapSettings() {
         viewModel?.didTapSettings()

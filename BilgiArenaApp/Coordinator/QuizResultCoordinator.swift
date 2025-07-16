@@ -21,6 +21,7 @@ final class QuizResultCoordinator: QuizResultCoordinatorProtocol {
 
     func start(with model: QuizResultModel) {
         let viewModel = QuizResultViewModel(model: model)
+        
         viewModel.onDoneTapped = { [weak self] in
             self?.navigateToHome()
         }
