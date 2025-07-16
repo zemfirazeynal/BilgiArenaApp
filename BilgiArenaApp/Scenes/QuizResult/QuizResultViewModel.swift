@@ -77,7 +77,6 @@ final class QuizResultViewModel: QuizResultViewModelProtocol {
     }
 
     func doneTapped() {
-
         onDoneTapped?()
     }
 }
